@@ -126,19 +126,19 @@ var _hmt = _hmt || [];
   <meta name="keywords" content="Hexo, NexT" />
 
 
-<meta name="description" content="上回说到，安装HEXO之前还需要其他组件，其一叫做Node.js,其二是叫做git。不能着急，咱们一一解决。俗话说的好，”不如虎穴，焉得虎子”。为了搞清楚Node.js,我们来到了它的官网:可以看到说明文字: Node.js® is a JavaScript runtime built on Chrome&amp;#39;s V8 JavaScript engine. Node.js uses an ev">
+<meta name="description" content="上回说到，安装HEXO之前还需要其他组件，其一叫做Node.js, 其二是叫做git。不能着急，咱们一一解决。俗话说的好，”不如虎穴，焉得虎子”。为了搞清楚Node.js,我们来到了它的官网:可以看到说明文字: Node.js® is a JavaScript runtime built on Chrome&amp;#39;s V8 JavaScript engine. Node.js uses an e">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用HEXO+Github打造你的blog(二)">
 <meta property="og:url" content="http://LuuMing.github.io/2018/03/04/blog-2/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="上回说到，安装HEXO之前还需要其他组件，其一叫做Node.js,其二是叫做git。不能着急，咱们一一解决。俗话说的好，”不如虎穴，焉得虎子”。为了搞清楚Node.js,我们来到了它的官网:可以看到说明文字: Node.js® is a JavaScript runtime built on Chrome&amp;#39;s V8 JavaScript engine. Node.js uses an ev">
+<meta property="og:description" content="上回说到，安装HEXO之前还需要其他组件，其一叫做Node.js, 其二是叫做git。不能着急，咱们一一解决。俗话说的好，”不如虎穴，焉得虎子”。为了搞清楚Node.js,我们来到了它的官网:可以看到说明文字: Node.js® is a JavaScript runtime built on Chrome&amp;#39;s V8 JavaScript engine. Node.js uses an e">
 <meta property="og:locale" content="zh">
 <meta property="og:image" content="http://luuming.github.io/2018/03/04/blog-2/1.png">
 <meta property="og:image" content="http://luuming.github.io/2018/03/04/blog-2/2.png">
-<meta property="og:updated_time" content="2018-03-28T02:18:03.078Z">
+<meta property="og:updated_time" content="2018-03-31T07:48:57.123Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用HEXO+Github打造你的blog(二)">
-<meta name="twitter:description" content="上回说到，安装HEXO之前还需要其他组件，其一叫做Node.js,其二是叫做git。不能着急，咱们一一解决。俗话说的好，”不如虎穴，焉得虎子”。为了搞清楚Node.js,我们来到了它的官网:可以看到说明文字: Node.js® is a JavaScript runtime built on Chrome&amp;#39;s V8 JavaScript engine. Node.js uses an ev">
+<meta name="twitter:description" content="上回说到，安装HEXO之前还需要其他组件，其一叫做Node.js, 其二是叫做git。不能着急，咱们一一解决。俗话说的好，”不如虎穴，焉得虎子”。为了搞清楚Node.js,我们来到了它的官网:可以看到说明文字: Node.js® is a JavaScript runtime built on Chrome&amp;#39;s V8 JavaScript engine. Node.js uses an e">
 <meta name="twitter:image" content="http://luuming.github.io/2018/03/04/blog-2/1.png">
 
 
@@ -366,7 +366,7 @@ var _hmt = _hmt || [];
       
 
       
-        <p><a href="https://luuming.github.io/2018/02/26/blog/">上回</a>说到，安装HEXO之前还需要其他组件，其一叫做Node.js,其二是叫做git。不能着急，咱们一一解决。<br>俗话说的好，”不如虎穴，焉得虎子”。为了搞清楚Node.js,我们来到了它的官网:<br><a href="https://nodejs.org/en/" target="_blank" rel="noopener"><img src="/2018/03/04/blog-2/./1.png" alt="Node.js"></a><br>可以看到说明文字:</p>
+        <p><a href="https://luuming.github.io/2018/02/26/blog/">上回</a>说到，安装HEXO之前还需要其他组件，其一叫做Node.js, 其二是叫做git。不能着急，咱们一一解决。<br>俗话说的好，”不如虎穴，焉得虎子”。为了搞清楚Node.js,我们来到了它的官网:<br><a href="https://nodejs.org/en/" target="_blank" rel="noopener"><img src="/2018/03/04/blog-2/./1.png" alt="Node.js"></a><br>可以看到说明文字:</p>
 <pre><code>Node.js® is a JavaScript runtime built on Chrome&#39;s V8 JavaScript engine. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient. Node.js&#39; package ecosystem, npm, is the largest ecosystem of open source libraries in the world.
 </code></pre><p>根据以上定义，我们可以得出:</p>
 <pre><code>1. Node.js 是基于javascript的运行库
@@ -378,6 +378,7 @@ var _hmt = _hmt || [];
 </code></pre><p>我们知道</p>
 <pre><code>源代码(source code)是程序员的语言，二进制码是机器的语言。源代码需要经过一些列编译等过程才能成为二进制码让机器读得懂。
 </code></pre><p>为了节省时间，我们根据机器<a href="">CPU处理架构</a>选择相应的二进制代码。(P.S.不过，这种方式也有<a href="">行不通</a>的时候。)<br>安装过程如下(偷懒):<br>Windows的同学<a href="https://www.baidu.com/s?ie=utf-8&amp;f=3&amp;rsv_bp=1&amp;rsv_idx=1&amp;tn=baidu&amp;wd=nodejs%20windows&amp;oq=nodejs%2520windows&amp;rsv_pq=d1ecff2a00015836&amp;rsv_t=3c66DrXGvZ%2FXxclN8LikKGU0%2FrSHCjVGg0%2FvaJicOuipqMdxkRdka4DyCNc&amp;rqlang=cn&amp;rsv_enter=0&amp;prefixsug=nodejs%2520windows&amp;rsp=0&amp;rsv_sug=1" target="_blank" rel="noopener">点击这里</a><br>Linux的同学<a href="https://www.baidu.com/s?ie=utf-8&amp;f=8&amp;rsv_bp=1&amp;rsv_idx=1&amp;tn=baidu&amp;wd=Linux%20nodejs%20&amp;oq=nodejs%2520windows&amp;rsv_pq=e226409a00011256&amp;rsv_t=70eaj8NvWt7cxQTdHN9r7Klg6Ztg3ME2rddKQlqjroXg0BMWDSe0bD87l0c&amp;rqlang=cn&amp;rsv_enter=0&amp;rsv_sug3=118&amp;rsv_sug1=53&amp;rsv_sug7=100&amp;rsv_sug2=0&amp;inputT=3834&amp;rsv_sug4=3946" target="_blank" rel="noopener">点击这里</a></p>
+<p>恭喜~你已经完成了本教程的三分之一 :grin:</p>
 
       
     </div>
