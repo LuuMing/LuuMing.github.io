@@ -128,14 +128,14 @@ var _hmt = _hmt || [];
 
 <meta name="description" content="上次我们已经成功安装了Node.js，接下来我们就要开始安装git了。不过在开始之前，我们先统一一下观点: 1.你所访问的网页本质上是一个一个有组织的文件 2.你访问网页的过程本质上是与其他计算机进行的通信 举个例子: 1.当你访问[百度首页](www.baidu.com)时候，你实质上在与公网IP地址为180.149.132.151的某台计算机进行通信。 2.你所看到的网页是这台计算机中的某个文">
 <meta property="og:type" content="article">
-<meta property="og:title" content="blog-3">
+<meta property="og:title" content="使用HEXO+Github打造你的blog(三)">
 <meta property="og:url" content="http://LuuMing.github.io/2018/03/31/blog-3/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
 <meta property="og:description" content="上次我们已经成功安装了Node.js，接下来我们就要开始安装git了。不过在开始之前，我们先统一一下观点: 1.你所访问的网页本质上是一个一个有组织的文件 2.你访问网页的过程本质上是与其他计算机进行的通信 举个例子: 1.当你访问[百度首页](www.baidu.com)时候，你实质上在与公网IP地址为180.149.132.151的某台计算机进行通信。 2.你所看到的网页是这台计算机中的某个文">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-03-31T09:51:30.539Z">
+<meta property="og:updated_time" content="2018-05-14T15:55:00.069Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="blog-3">
+<meta name="twitter:title" content="使用HEXO+Github打造你的blog(三)">
 <meta name="twitter:description" content="上次我们已经成功安装了Node.js，接下来我们就要开始安装git了。不过在开始之前，我们先统一一下观点: 1.你所访问的网页本质上是一个一个有组织的文件 2.你访问网页的过程本质上是与其他计算机进行的通信 举个例子: 1.当你访问[百度首页](www.baidu.com)时候，你实质上在与公网IP地址为180.149.132.151的某台计算机进行通信。 2.你所看到的网页是这台计算机中的某个文">
 
 
@@ -152,7 +152,7 @@ var _hmt = _hmt || [];
     sidebar: "",
   };
 </script>
-  <title>blog-3 | LuMing's blog</title>
+  <title>使用HEXO+Github打造你的blog(三) | LuMing's blog</title>
   
 
 
@@ -314,7 +314,7 @@ var _hmt = _hmt || [];
 
         
         
-          <h1 class="post-title" itemprop="name headline">blog-3</h1>
+          <h1 class="post-title" itemprop="name headline">使用HEXO+Github打造你的blog(三)</h1>
         
 
         <div class="post-meta">
@@ -370,8 +370,11 @@ var _hmt = _hmt || [];
 <pre><code>1.当你访问[百度首页](www.baidu.com)时候，你实质上在与公网IP地址为180.149.132.151的某台计算机进行通信。
 2.你所看到的网页是这台计算机中的某个文件。(不懂的回看第一篇)
 </code></pre><p>顺着这个思路，是不是只要别人能够通过IP地址访问到我们的计算机，他就能够打开我们制作好的博客了呢？<br>是的，但是困难重重。<br>为什么呢？让我们继续往下分析<br>我连上网的电脑有没有IP地址呢？<br>答案是:有<br>那是不是直接把IP地址告诉对方，对方就能与你的计算机进行通信了呢？<br>答案是:不行<br>为什么呢？<br>这还得从IP地址说起：</p>
-<pre><code>
-</code></pre><p>那么怎么做呢？直接了当的告诉你，内网穿透。<br>但是，太难了，还好有别的办法。</p>
+<pre><code>一句话，公网IP地址不够用了。因此为了珍惜IP，我们一向使用内网IP。
+因此你的IP不是公网的IP，只是某个运营商公司的某个子公司的某个路由器下的某个通过DHCP分到的IP。
+你电脑的IP地址是&quot;192.168.1.1&quot;，这个IP就好比写着“我住在牛家村”
+我想要和你通信，除非我跟你在同一个区。否则，世界上牛家村千千万，我肯定联络不到你。
+</code></pre><p>那么怎么做呢？直接了当的告诉你，内网穿透，就是某个人把自己的公网IP借给你，让大家从公网能和你进行通信。<br>但是，1.太麻烦，2.得花钱<br>不过，还好有别的办法…</p>
 
       
     </div>
