@@ -556,7 +556,8 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<h6 id="来源-中国大学MOOC数据结构-陈越、何钦铭"><a href="#来源-中国大学MOOC数据结构-陈越、何钦铭" class="headerlink" title="来源: 中国大学MOOC数据结构 陈越、何钦铭"></a>来源: 中国大学MOOC数据结构 陈越、何钦铭</h6>
+<h6 id="来源-中国大学MOOC数据结构-陈越、何钦铭"><a href="#来源-中国大学MOOC数据结构-陈越、何钦铭" class="headerlink" title="来源: 中国大学MOOC数据结构 陈越、何钦铭"></a>来源: 中国大学MOOC数据结构 陈越、何钦铭</h6><p>注: 希尔排序中d取决于增量的选取，其可能小于2<br>基数排序中，B代表有多少个桶，P为收集的趟数</p>
+
           
         
       
@@ -887,7 +888,7 @@ var _hmt = _hmt || [];
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/22/hackerinstruction/" itemprop="url">hacker_instruction</a></h1>
+                <a class="post-title-link" href="/2018/03/22/hackerinstruction/" itemprop="url">hackerinstruction</a></h1>
         
 
         <div class="post-meta">
@@ -938,12 +939,27 @@ var _hmt = _hmt || [];
       
         
           
-            <p>扫描同一网络主机</p>
-<pre><code>nmap -sP 192.168.43.*
-</code></pre><p>破解ssh</p>
-<pre><code>hydra -l 用户名 -p 密码字典  -t 线程数 -e ns ip ssh
-</code></pre><p>生成密码字典</p>
-<pre><code>crunch  最小长度 最大长度  字符  -o 生成位置
+            <p>nmap</p>
+<pre><code># 扫描主机
+nmap -sP 192.168.43.*
+# 查看端口
+nmap 192.168.1.1
+# 查看系统
+nmap -O 192.168.1.1
+</code></pre><p>hydra</p>
+<pre><code># 破解ssh
+ hydra -l 用户名 -p 密码字典  -t 线程数 -e ns ip ssh
+</code></pre><p>crunch</p>
+<pre><code># 生成密码字典
+crunch  最小长度 最大长度  字符  -o 生成位置
+</code></pre><p>dnsenum</p>
+<pre><code>#二级域名
+dnsenum ww.baidu.com
+# 指定字典
+dnsenum -f  wordlist.txt  www.baidu.com
+</code></pre><p>lbd</p>
+<pre><code>#负载均衡
+lbd www.github.com
 </code></pre>
           
         
