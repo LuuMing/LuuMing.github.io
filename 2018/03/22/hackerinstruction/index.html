@@ -126,18 +126,18 @@ var _hmt = _hmt || [];
   <meta name="keywords" content="半吊子," />
 
 
-<meta name="description" content="nmap # 扫描主机 nmap -sP 192.168.43.* # 查看端口 nmap 192.168.1.1 # 查看系统 nmap -O 192.168.1.1 hydra # 破解ssh  hydra -l 用户名 -p 密码字典  -t 线程数 -e ns ip ssh crunch # 生成密码字典 crunch  最小长度 最大长度  字符  -o 生成位置 dnsenum #二级">
+<meta name="description" content="nmap # 扫描主机 nmap -sP 192.168.43.* # 查看端口 nmap 192.168.1.1 # 查看系统 nmap -O 192.168.1.1 hydra # 破解ssh  hydra -l 用户名 -p 密码字典  -t 线程数 -e ns ip ssh crunch # 生成密码字典 crunch  最小长度 最大长度  字符  -o 生成位置 dnsenum #查看">
 <meta name="keywords" content="半吊子">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hackerinstruction">
 <meta property="og:url" content="http://LuuMing.github.io/2018/03/22/hackerinstruction/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="nmap # 扫描主机 nmap -sP 192.168.43.* # 查看端口 nmap 192.168.1.1 # 查看系统 nmap -O 192.168.1.1 hydra # 破解ssh  hydra -l 用户名 -p 密码字典  -t 线程数 -e ns ip ssh crunch # 生成密码字典 crunch  最小长度 最大长度  字符  -o 生成位置 dnsenum #二级">
+<meta property="og:description" content="nmap # 扫描主机 nmap -sP 192.168.43.* # 查看端口 nmap 192.168.1.1 # 查看系统 nmap -O 192.168.1.1 hydra # 破解ssh  hydra -l 用户名 -p 密码字典  -t 线程数 -e ns ip ssh crunch # 生成密码字典 crunch  最小长度 最大长度  字符  -o 生成位置 dnsenum #查看">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-05-26T15:34:44.976Z">
+<meta property="og:updated_time" content="2018-05-27T04:04:54.201Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hackerinstruction">
-<meta name="twitter:description" content="nmap # 扫描主机 nmap -sP 192.168.43.* # 查看端口 nmap 192.168.1.1 # 查看系统 nmap -O 192.168.1.1 hydra # 破解ssh  hydra -l 用户名 -p 密码字典  -t 线程数 -e ns ip ssh crunch # 生成密码字典 crunch  最小长度 最大长度  字符  -o 生成位置 dnsenum #二级">
+<meta name="twitter:description" content="nmap # 扫描主机 nmap -sP 192.168.43.* # 查看端口 nmap 192.168.1.1 # 查看系统 nmap -O 192.168.1.1 hydra # 破解ssh  hydra -l 用户名 -p 密码字典  -t 线程数 -e ns ip ssh crunch # 生成密码字典 crunch  最小长度 最大长度  字符  -o 生成位置 dnsenum #查看">
 
 
 
@@ -378,13 +378,22 @@ nmap -O 192.168.1.1
 <pre><code># 生成密码字典
 crunch  最小长度 最大长度  字符  -o 生成位置
 </code></pre><p>dnsenum</p>
-<pre><code>#二级域名
+<pre><code>#查看二级域名
 dnsenum ww.baidu.com
-# 指定字典
+# 指定字典查看二级域名
 dnsenum -f  wordlist.txt  www.baidu.com
 </code></pre><p>lbd</p>
 <pre><code>#负载均衡
 lbd www.github.com
+</code></pre><p>wafw00f</p>
+<pre><code>#查看防火墙
+wafw00f  -va www.baidu.com
+</code></pre><p>ua-tester</p>
+<pre><code>#查看web环境
+ua-tester  -v  -u  www.baidu.com
+</code></pre><p>sqlmap</p>
+<pre><code># 数据库注入漏洞
+sqlmap -u URL
 </code></pre>
       
     </div>
@@ -524,7 +533,7 @@ lbd www.github.com
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -566,7 +575,9 @@ lbd www.github.com
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
