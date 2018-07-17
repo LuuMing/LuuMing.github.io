@@ -123,28 +123,28 @@ var _hmt = _hmt || [];
 
 
   
-  <meta name="keywords" content="集大成," />
+  <meta name="keywords" content="半吊子," />
 
 
-<meta name="description" content="庄子: &amp;quot;吾生也有涯，而知也无涯。以有涯随无涯，殆已！已而为知者，殆而己也。&amp;quot; 胡适: &amp;quot;怕什么真理无穷，进一寸有进一寸的欢喜。&amp;quot; 孔子: “君子固穷，小人穷斯滥矣！” 管仲: “仓廪实而知礼节，衣食足而知荣辱” 神秀： “身是菩提树，心如明镜台，时时勤拂拭，勿使惹尘埃。” 惠能： “菩提本无树，明镜亦非台，本来无一物，何处惹尘埃。” 霍普斯: “一切人对一">
-<meta name="keywords" content="集大成">
+<meta name="description" content="首先，BIOS有一段自检程序，其作用还不明确。总之，与我们有关的地方是内存中0x07c00CPU到了0x07c00从这里开始进入bootsect.s _start:         mov     ax,#BOOTSEG         mov     ds,ax         mov     ax,#INITSEG         mov     es,ax         mov     c">
+<meta name="keywords" content="半吊子">
 <meta property="og:type" content="article">
-<meta property="og:title" content="思想在碰撞">
-<meta property="og:url" content="http://LuuMing.github.io/2018/06/03/when-they-meet/index.html">
+<meta property="og:title" content="基于linux0.11的从零开始学操作系统-bootsect">
+<meta property="og:url" content="http://LuuMing.github.io/2018/07/14/linux-0-11-bootsect/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="庄子: &amp;quot;吾生也有涯，而知也无涯。以有涯随无涯，殆已！已而为知者，殆而己也。&amp;quot; 胡适: &amp;quot;怕什么真理无穷，进一寸有进一寸的欢喜。&amp;quot; 孔子: “君子固穷，小人穷斯滥矣！” 管仲: “仓廪实而知礼节，衣食足而知荣辱” 神秀： “身是菩提树，心如明镜台，时时勤拂拭，勿使惹尘埃。” 惠能： “菩提本无树，明镜亦非台，本来无一物，何处惹尘埃。” 霍普斯: “一切人对一">
+<meta property="og:description" content="首先，BIOS有一段自检程序，其作用还不明确。总之，与我们有关的地方是内存中0x07c00CPU到了0x07c00从这里开始进入bootsect.s _start:         mov     ax,#BOOTSEG         mov     ds,ax         mov     ax,#INITSEG         mov     es,ax         mov     c">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-06-03T10:24:29.863Z">
+<meta property="og:updated_time" content="2018-07-16T06:20:02.759Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="思想在碰撞">
-<meta name="twitter:description" content="庄子: &amp;quot;吾生也有涯，而知也无涯。以有涯随无涯，殆已！已而为知者，殆而己也。&amp;quot; 胡适: &amp;quot;怕什么真理无穷，进一寸有进一寸的欢喜。&amp;quot; 孔子: “君子固穷，小人穷斯滥矣！” 管仲: “仓廪实而知礼节，衣食足而知荣辱” 神秀： “身是菩提树，心如明镜台，时时勤拂拭，勿使惹尘埃。” 惠能： “菩提本无树，明镜亦非台，本来无一物，何处惹尘埃。” 霍普斯: “一切人对一">
+<meta name="twitter:title" content="基于linux0.11的从零开始学操作系统-bootsect">
+<meta name="twitter:description" content="首先，BIOS有一段自检程序，其作用还不明确。总之，与我们有关的地方是内存中0x07c00CPU到了0x07c00从这里开始进入bootsect.s _start:         mov     ax,#BOOTSEG         mov     ds,ax         mov     ax,#INITSEG         mov     es,ax         mov     c">
 
 
 
 
 
 
-  <link rel="canonical" href="http://LuuMing.github.io/2018/06/03/when-they-meet/"/>
+  <link rel="canonical" href="http://LuuMing.github.io/2018/07/14/linux-0-11-bootsect/"/>
 
 
 
@@ -153,7 +153,7 @@ var _hmt = _hmt || [];
     sidebar: "",
   };
 </script>
-  <title>思想在碰撞 | LuMing's blog</title>
+  <title>基于linux0.11的从零开始学操作系统-bootsect | LuMing's blog</title>
   
 
 
@@ -298,7 +298,7 @@ var _hmt = _hmt || [];
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/06/03/when-they-meet/">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/07/14/linux-0-11-bootsect/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LuMing">
@@ -315,7 +315,7 @@ var _hmt = _hmt || [];
 
         
         
-          <h1 class="post-title" itemprop="name headline">思想在碰撞</h1>
+          <h1 class="post-title" itemprop="name headline">基于linux0.11的从零开始学操作系统-bootsect</h1>
         
 
         <div class="post-meta">
@@ -327,7 +327,7 @@ var _hmt = _hmt || [];
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-03T17:58:30+08:00">2018-06-03</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-14T23:52:07+08:00">2018-07-14</time>
             
 
             
@@ -364,27 +364,138 @@ var _hmt = _hmt || [];
       
 
       
-        <pre><code>庄子:
-&quot;吾生也有涯，而知也无涯。以有涯随无涯，殆已！已而为知者，殆而己也。&quot;
-胡适:
-&quot;怕什么真理无穷，进一寸有进一寸的欢喜。&quot;
-</code></pre><pre><code>孔子:
-“君子固穷，小人穷斯滥矣！”
-管仲:
-“仓廪实而知礼节，衣食足而知荣辱”
-</code></pre><pre><code>神秀：
-“身是菩提树，心如明镜台，时时勤拂拭，勿使惹尘埃。”
-惠能：
-“菩提本无树，明镜亦非台，本来无一物，何处惹尘埃。”
-</code></pre><pre><code>霍普斯:
-“一切人对一切人的战争”
-克鲁泡特金
-&quot;人类发展的主旋律是和平，同情是合群生活的必然产物，同情来源于相似。&quot;
-</code></pre><pre><code>程朱理学:
-&quot;格物致知,存天理灭人欲&quot;
-阳明心学:
-&quot;心即理，致良知、知行合一&quot;
-</code></pre>
+        <p>首先，BIOS有一段自检程序，其作用还不明确。总之，与我们有关的地方是内存中0x07c00<br>CPU到了0x07c00从这里开始进入bootsect.s</p>
+<pre><code>_start:
+        mov     ax,#BOOTSEG
+        mov     ds,ax
+        mov     ax,#INITSEG
+        mov     es,ax
+        mov     cx,#256
+        sub     si,si
+        sub     di,di
+        rep
+        movw
+        jmpi    go,INITSEG
+</code></pre><p>而bootsect.s 一开始先是将自己拷贝到0x90000处<br>bootsect 本身只有512字节，因此才有了上述程序rep那里的内容.<br>256<em>word= 512 </em>byte<br>也就是从内存中0x07c00拷贝512字节到0x90000.<br>0x90000-0x9001ff 这里便是bootsect的新的位置.</p>
+<p>这时候，如果你反汇编一下0x07c00 与 0x90000。你会发现二者相同，并且就是bootsect.S中的内容，因此验证猜想正确。</p>
+<pre><code>go:     mov     ax,cs          ! 此时cs=9000,IP = 0018
+        mov     ds,ax
+        mov     es,ax
+! put stack at 0x9ff00.
+        mov     ss,ax
+        mov     sp,#0xFF00
+</code></pre><p>执行完jmpi go,INITSEG后,CPU 便跳到了0x90018处，设置堆栈大小.并将ds,es设置为9000H.此时,cs=ds=es=ss=9000H.<br>接下来到了ok_load_setup</p>
+<pre><code>load_setup:
+        mov     dx,#0x0000              ! drive 0, head 0
+        mov     cx,#0x0002              ! sector 2, track 0
+        mov     bx,#0x0200              ! address = 512, in INITSEG
+        mov     ax,#0x0200+SETUPLEN     ! service 2, nr of sectors
+        int     0x13                    ! read it
+         jnc     ok_load_setup           ! ok - continue
+</code></pre><p>这里的重点就是<a href="https://blog.csdn.net/farmwang/article/details/50017225" target="_blank" rel="noopener">bios 13号中断</a>.</p>
+<pre><code>功能描述：读扇区 
+入口参数：AH＝02H 
+AL＝扇区数 
+CH＝柱面 
+CL＝扇区 
+DH＝磁头 
+DL＝驱动器，00H~7FH：软盘；80H~0FFH：硬盘 
+ES:BX＝缓冲区的地址 
+出口参数：CF＝0——操作成功，AH＝00H，AL＝传输的扇区数，否则，AH＝状态代码
+</code></pre><p>bios13号中断为基本的<a href="https://blog.csdn.net/ylo523/article/details/39050771" target="_blank" rel="noopener">磁盘操作</a>，根据ah不同选择不同功能。<br>上述ah = 02,al=SETUPLEN=2.<br>因此，其含义为<br><code>“从0柱面第二个扇区第0个磁头读4个扇区(2048B)到内存的0x90200处”</code><br>执行完第一个int 13后，我们查看0x90200内容。<br>会发现0x90200-0x90337共312字节</p>
+<pre><code>&lt;bochs:29&gt; u 0x90200 0x902ff
+00090200: (                    ): mov ah, 0x03              ; b403
+00090202: (                    ): xor bh, bh                ; 30ff
+00090204: (                    ): int 0x10                  ; cd10
+00090206: (                    ): mov cx, 0x0017            ; b91700
+00090209: (                    ): mov bx, 0x0007            ; bb0700
+0009020c: (                    ): mov bp, 0x014c            ; bd4c01
+0009020f: (                    ): mov ax, 0x1301            ; b80113
+00090212: (                    ): int 0x10                  ; cd10
+00090214: (                    ): mov ax, 0x9000            ; b80090
+00090217: (                    ): mov ds, ax                ; 8ed8
+00090219: (                    ): mov ah, 0x03              ; b403
+0009021b: (                    ): xor bh, bh                ; 30ff
+0009021d: (                    ): int 0x10                  ; cd10
+0009021f: (                    ): mov word ptr ds:0x0, dx   ; 89160000
+</code></pre><p>正是后面setup.S中的内容。<br>如果成功，CF=0，跳转至ok_load_setup<br>若不成功得想办法补救，即重新读：</p>
+<pre><code>        mov     dx,#0x0000
+        mov     ax,#0x0000              ! reset the diskette
+        int     0x13
+        j       load_setup
+</code></pre><p>成功后，继续</p>
+<pre><code>ok_load_setup:
+
+! Get disk drive parameters, specifically nr of sectors/track
+
+        mov     dl,#0x00
+        mov     ax,#0x0800              ! AH=8 is get drive parameters
+        int     0x13
+</code></pre><p>又是<a href="https://blog.csdn.net/ylo523/article/details/39050771" target="_blank" rel="noopener">int 13</a>.这次AH=08:</p>
+<pre><code>入口参数：AH＝08H 
+DL＝驱动器，00H~7FH：软盘；80H~0FFH：硬盘 
+出口参数：CF＝1——操作失败，AH＝状态代码，参见功能号01H中的说明，否则， BL＝01H — 360K 
+＝02H — 1.2M 
+＝03H — 720K 
+＝04H — 1.44M 
+CH＝柱面数的低8位 
+CL的位7-6＝柱面数的该2位 
+CL的位5-0＝扇区数 
+DH＝磁头数 
+DL＝驱动器数 
+ES:DI＝磁盘驱动器参数表地址 
+</code></pre><p>执行完int 13后，发现<code>BL= 4</code>代表读取软盘 大小为1.44M，<code>CL =00010010B</code>代表18个扇区 ，将CH置零后，<code>cx = 0012H</code></p>
+<pre><code>      mov     ch,#0x00
+        seg cs
+        mov     sectors,cx
+        mov     ax,#INITSEG
+        mov     es,ax
+</code></pre><p>接下来第2，3句为段超越，意思把cx内容移动到cs:[sectors]，此时sectors相当于一个变量，用于保存一个值，测试时发现sectors=0x13d。意味着将读取到的数据保存在内存cs:sectors处。<br>同时，int 13 改变了ES，将es再设回9000。然后，准备在屏幕上显示一些文字。</p>
+<pre><code>! Print some inane message
+
+        mov     ah,#0x03                ! read cursor pos
+        xor     bh,bh
+        int     0x10
+</code></pre><pre><code>AH = 3
+读光标位置
+输入参数：BH = 页号
+输出参数：
+CH = 光标开始行
+CL = 光标结束行
+DH = 行
+DL = 列
+</code></pre><p>先读0页光标位置，<code>ch=6,cl=7,dh=10,dl=0</code>。</p>
+<pre><code>    mov     cx,#24                     !  cs:ip=0x00090056 
+       mov     bx,#0x0007              ! page 0, attribute 7 (normal)
+        mov     bp,#msg1
+        mov     ax,#0x1301              ! write string, move cursor
+        int     0x10
+
+</code></pre><p>显示24个字符串。<br>接着将系统加载到内存起始0x10000处，代码如下</p>
+<pre><code>! ok, we&#39;ve written the message, now
+! we want to load the system (at 0x10000)
+
+        mov     ax,#SYSSEG
+        mov     es,ax           ! segment of 0x010000
+        call    read_it
+</code></pre><p>将段设置好后调用了读取函数：</p>
+<pre><code>read_it:
+        mov ax,es
+        test ax,#0x0fff
+die:    jne die                 ! es must be at 64kB boundary
+        xor bx,bx               ! bx is starting address within segment
+rp_read:
+        mov ax,es
+        cmp ax,#ENDSEG          ! have we loaded all yet?
+        jb ok1_read
+        ret
+ok1_read:...
+ok2_read:...
+.....
+</code></pre><p>将一些东西准备就绪后，就要进入setup</p>
+<pre><code>    jmpi 0,SETUPSEG
+</code></pre><p>跳转至0x90200。</p>
+
       
     </div>
 
@@ -428,7 +539,7 @@ var _hmt = _hmt || [];
       
         <div class="post-tags">
           
-            <a href="/tags/集大成/" rel="tag"># 集大成</a>
+            <a href="/tags/半吊子/" rel="tag"># 半吊子</a>
           
         </div>
       
@@ -441,8 +552,8 @@ var _hmt = _hmt || [];
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/09/operating-system/" rel="next" title="Udacity operating system 的笔记">
-                <i class="fa fa-chevron-left"></i> Udacity operating system 的笔记
+              <a href="/2018/06/16/embedding-system/" rel="next" title="一图带你看懂嵌入式系统">
+                <i class="fa fa-chevron-left"></i> 一图带你看懂嵌入式系统
               </a>
             
           </div>
@@ -451,8 +562,8 @@ var _hmt = _hmt || [];
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/06/16/embedding-system/" rel="prev" title="一图带你看懂嵌入式系统">
-                一图带你看懂嵌入式系统 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/07/16/linux-0-11-setup/" rel="prev" title="基于linux0.11的从零开始学操作系统-setup">
+                基于linux0.11的从零开始学操作系统-setup <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
