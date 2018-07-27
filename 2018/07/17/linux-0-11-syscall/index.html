@@ -134,7 +134,7 @@ var _hmt = _hmt || [];
 <meta property="og:site_name" content="LuMing&#39;s blog">
 <meta property="og:description" content="关于system call 的调用过程本文不在此赘述，笔者只想在此说明如何在linux0.11内核的基础上添加系统调用。要增加系统调用，分别需要在这7个地方进行改动，分别是内核代码中的： 1. include/unistd.h 中添加系统调用号 2. 在lib中增加用户接口源文件 3. include/linux/sys.h 中添加系统调用函数定义 4. kernel/system_call.s">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-07-27T07:25:12.777Z">
+<meta property="og:updated_time" content="2018-07-27T07:54:04.809Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于linux0.11的从零开始学操作系统-system_call">
 <meta name="twitter:description" content="关于system call 的调用过程本文不在此赘述，笔者只想在此说明如何在linux0.11内核的基础上添加系统调用。要增加系统调用，分别需要在这7个地方进行改动，分别是内核代码中的： 1. include/unistd.h 中添加系统调用号 2. 在lib中增加用户接口源文件 3. include/linux/sys.h 中添加系统调用函数定义 4. kernel/system_call.s">
@@ -372,7 +372,7 @@ var _hmt = _hmt || [];
 5. kernel中增加系统调用的具体实现
 6. 修改Makefile 文件
 </code></pre><p>以及usr/include/下的用户接口文件unistd.h<br>下面以增加一个系统调用hello()为例进行说明：</p>
-<h4 id="1-添加系统调用号"><a href="#1-添加系统调用号" class="headerlink" title="1. 添加系统调用号"></a>1. 添加系统调用号</h4><p>打开源文件include/unistd.h，在132行处添加</p>
+<h4 id="1-添加内核系统调用号"><a href="#1-添加内核系统调用号" class="headerlink" title="1. 添加内核系统调用号"></a>1. 添加内核系统调用号</h4><p>打开源文件include/unistd.h，在132行处添加</p>
 <pre><code>#define __NR_hello      72
 </code></pre><h4 id="2-增加用户接口源文件"><a href="#2-增加用户接口源文件" class="headerlink" title="2. 增加用户接口源文件"></a>2. 增加用户接口源文件</h4><p>进入lib目录，新建源文件hello.c</p>
 <pre><code>#define __LIBRARY__
@@ -383,15 +383,32 @@ _syscall0(int,hello)
 </code></pre><pre><code>sys_hello
 </code></pre><h4 id="4-修改系统调用总数"><a href="#4-修改系统调用总数" class="headerlink" title="4. 修改系统调用总数"></a>4. 修改系统调用总数</h4><p>打开kernel/system_call.s ，将61行改为</p>
 <pre><code>nr_system_calls = 73
-</code></pre><h4 id="5-增加系统调用的具体实现"><a href="#5-增加系统调用的具体实现" class="headerlink" title="5.增加系统调用的具体实现"></a>5.增加系统调用的具体实现</h4><p>进入kernel目录，新建源文件hello.c</p>
+</code></pre><h4 id="5-增加系统调用的具体实现"><a href="#5-增加系统调用的具体实现" class="headerlink" title="5.增加系统调用的具体实现"></a>5.增加系统调用的具体实现</h4><p>进入kernel目录，新建源文件sys_hello.c</p>
 <pre><code>int sys_hello()
 {
         printk(&quot;Hello From kernel\n&quot;);
 }
-</code></pre><h4 id="6-修改Makefile文件"><a href="#6-修改Makefile文件" class="headerlink" title="6.修改Makefile文件"></a>6.修改Makefile文件</h4><p>进入kernel目录，打开Makefile,在最后一行添加</p>
-<pre><code>hello.s hello.o : hello.c ../include/linux/kernel.h ../include/unistd.h
-</code></pre><p>未完待续</p>
-
+</code></pre><h4 id="6-修改Makefile文件"><a href="#6-修改Makefile文件" class="headerlink" title="6.修改Makefile文件"></a>6.修改Makefile文件</h4><p>进入kernel目录，打开Makefile,在OBJS 那一项后面添加</p>
+<pre><code>sys_hello.o
+</code></pre><p>在最后一行添加</p>
+<pre><code>sys_hello.s sys_hello.o : sys_hello.c ../include/linux/kernel.h ../include/unistd.h
+</code></pre><p>然后返回源文件根目录，make 编译内核。</p>
+<h4 id="添加编译器系统调用号"><a href="#添加编译器系统调用号" class="headerlink" title="添加编译器系统调用号"></a>添加编译器系统调用号</h4><p>进入系统后，在<code>/usr/include/unistd.h</code>文件132行添加(与第一步不同)</p>
+<pre><code>#define __NR_hello      72
+</code></pre><p>系统调用即添加完毕，新建hello.c文件进行测试:</p>
+<pre><code>#define __LIBRARY__
+#include &lt;unistd.h&gt;
+#include&lt;stdio.h&gt;
+int errno;
+_syscall0(int,hello)
+int main()
+{
+    hello();
+    return 0;
+}
+</code></pre><p>使用gcc 编译并运行，显示输出:</p>
+<pre><code>Hello From kernel
+</code></pre>
       
     </div>
 
@@ -629,7 +646,7 @@ _syscall0(int,hello)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-添加系统调用号"><span class="nav-number">1.</span> <span class="nav-text">1. 添加系统调用号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-增加用户接口源文件"><span class="nav-number">2.</span> <span class="nav-text">2. 增加用户接口源文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-添加系统调用函数的定义"><span class="nav-number">3.</span> <span class="nav-text">3. 添加系统调用函数的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-修改系统调用总数"><span class="nav-number">4.</span> <span class="nav-text">4. 修改系统调用总数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-增加系统调用的具体实现"><span class="nav-number">5.</span> <span class="nav-text">5.增加系统调用的具体实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-修改Makefile文件"><span class="nav-number">6.</span> <span class="nav-text">6.修改Makefile文件</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-添加内核系统调用号"><span class="nav-number">1.</span> <span class="nav-text">1. 添加内核系统调用号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-增加用户接口源文件"><span class="nav-number">2.</span> <span class="nav-text">2. 增加用户接口源文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-添加系统调用函数的定义"><span class="nav-number">3.</span> <span class="nav-text">3. 添加系统调用函数的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-修改系统调用总数"><span class="nav-number">4.</span> <span class="nav-text">4. 修改系统调用总数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-增加系统调用的具体实现"><span class="nav-number">5.</span> <span class="nav-text">5.增加系统调用的具体实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-修改Makefile文件"><span class="nav-number">6.</span> <span class="nav-text">6.修改Makefile文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#添加编译器系统调用号"><span class="nav-number">7.</span> <span class="nav-text">添加编译器系统调用号</span></a></li></ol></div>
             
 
           </div>
