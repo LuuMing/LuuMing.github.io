@@ -2,37 +2,23 @@
 
 
 
+
+
+
+
+
+
+
+
+
   
 
 
 <html class="theme-next muse use-motion" lang="zh">
 <head>
-<!-- baidu crawl verify start-->
-<meta name="baidu-site-verification" content="Qp7CfDb5w3" />
-<!-- baidu crawl verify end-->
-<!-- google ad start -->
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-9964492323779082",
-    enable_page_level_ads: true
-  });
-</script>
-<!-- google ad end -->
-<!--baidu analytic start-->
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?4becdc28b5402c3ae70e696799455f76";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-<!--baidu analytic end-->
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
 <meta name="theme-color" content="#222">
 
 
@@ -72,19 +58,19 @@ var _hmt = _hmt || [];
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
 
 
-  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
 
 
 
@@ -99,8 +85,8 @@ var _hmt = _hmt || [];
   var CONFIG = {
     root: '/',
     scheme: 'Muse',
-    version: '6.0.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
     fastclick: false,
     lazyload: false,
@@ -122,11 +108,7 @@ var _hmt = _hmt || [];
 
 
 
-  
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-<meta property="og:type" content="website">
+  <meta property="og:type" content="website">
 <meta property="og:title" content="LuMing&#39;s blog">
 <meta property="og:url" content="http://LuuMing.github.io/page/2/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
@@ -148,6 +130,7 @@ var _hmt = _hmt || [];
     sidebar: "",
   };
 </script>
+
   <title>LuMing's blog</title>
   
 
@@ -210,24 +193,22 @@ var _hmt = _hmt || [];
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"> <div class="site-brand-wrapper">
+      <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">LuMing's blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
+    
   </div>
 
   <div class="site-nav-toggle">
-    <button>
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -235,38 +216,49 @@ var _hmt = _hmt || [];
   </div>
 </div>
 
-<nav class="site-nav">
-  
 
+
+<nav class="site-nav">
   
     <ul id="menu" class="menu">
       
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
-        </li>
-      
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
-        </li>
-      
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
 
       
+      
     </ul>
+  
+
+  
+    
+
   
 
   
 </nav>
 
 
+
   
 
 
 
- </div>
+</div>
     </header>
 
     
@@ -275,6 +267,7 @@ var _hmt = _hmt || [];
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
@@ -313,11 +306,21 @@ var _hmt = _hmt || [];
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/08/sort/" itemprop="url">来一次最详尽的Sort大比拼吧</a></h1>
+                <a class="post-title-link" href="/2018/05/08/sort/" itemprop="url">
+                  来一次最详尽的Sort大比拼吧
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -325,12 +328,30 @@ var _hmt = _hmt || [];
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-08T22:48:45+08:00">2018-05-08</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-05-08 22:48:45" itemprop="dateCreated datePublished" datetime="2018-05-08T22:48:45+08:00">2018-05-08</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-05-16 09:21:44" itemprop="dateModified" datetime="2018-05-16T09:21:44+08:00">2018-05-16</time>
+              
             
           </span>
 
@@ -506,11 +527,21 @@ var _hmt = _hmt || [];
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/05/study/" itemprop="url">谈学习</a></h1>
+                <a class="post-title-link" href="/2018/04/05/study/" itemprop="url">
+                  谈学习
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -518,12 +549,30 @@ var _hmt = _hmt || [];
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-05T11:28:13+08:00">2018-04-05</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-04-05 11:28:13" itemprop="dateCreated datePublished" datetime="2018-04-05T11:28:13+08:00">2018-04-05</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-05-14 23:52:50" itemprop="dateModified" datetime="2018-05-14T23:52:50+08:00">2018-05-14</time>
+              
             
           </span>
 
@@ -630,11 +679,21 @@ var _hmt = _hmt || [];
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/31/blog-3/" itemprop="url">使用HEXO+Github打造你的blog(三)</a></h1>
+                <a class="post-title-link" href="/2018/03/31/blog-3/" itemprop="url">
+                  使用HEXO+Github打造你的blog(三)
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -642,12 +701,30 @@ var _hmt = _hmt || [];
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-31T17:19:55+08:00">2018-03-31</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-03-31 17:19:55" itemprop="dateCreated datePublished" datetime="2018-03-31T17:19:55+08:00">2018-03-31</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-05-14 23:55:00" itemprop="dateModified" datetime="2018-05-14T23:55:00+08:00">2018-05-14</time>
+              
             
           </span>
 
@@ -765,11 +842,21 @@ var _hmt = _hmt || [];
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/22/hackerinstruction/" itemprop="url">hackerinstruction</a></h1>
+                <a class="post-title-link" href="/2018/03/22/hackerinstruction/" itemprop="url">
+                  hackerinstruction
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -777,12 +864,30 @@ var _hmt = _hmt || [];
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-22T00:12:45+08:00">2018-03-22</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-03-22 00:12:45" itemprop="dateCreated datePublished" datetime="2018-03-22T00:12:45+08:00">2018-03-22</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-05-27 12:04:54" itemprop="dateModified" datetime="2018-05-27T12:04:54+08:00">2018-05-27</time>
+              
             
           </span>
 
@@ -918,11 +1023,21 @@ sqlmap -u URL
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/04/blog-2/" itemprop="url">使用HEXO+Github打造你的blog(二)</a></h1>
+                <a class="post-title-link" href="/2018/03/04/blog-2/" itemprop="url">
+                  使用HEXO+Github打造你的blog(二)
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -930,12 +1045,30 @@ sqlmap -u URL
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-04T00:22:38+08:00">2018-03-04</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-03-04 00:22:38" itemprop="dateCreated datePublished" datetime="2018-03-04T00:22:38+08:00">2018-03-04</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-03-31 16:05:24" itemprop="dateModified" datetime="2018-03-31T16:05:24+08:00">2018-03-31</time>
+              
             
           </span>
 
@@ -1054,11 +1187,21 @@ sqlmap -u URL
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/01/binary-create/" itemprop="url">建立一颗二叉树</a></h1>
+                <a class="post-title-link" href="/2018/03/01/binary-create/" itemprop="url">
+                  建立一颗二叉树
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1066,12 +1209,30 @@ sqlmap -u URL
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-01T20:22:16+08:00">2018-03-01</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-03-01 20:22:16" itemprop="dateCreated datePublished" datetime="2018-03-01T20:22:16+08:00">2018-03-01</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-03-04 00:20:29" itemprop="dateModified" datetime="2018-03-04T00:20:29+08:00">2018-03-04</time>
+              
             
           </span>
 
@@ -1210,11 +1371,21 @@ node * build()
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/28/plus-of-two-string/" itemprop="url">字符串加法</a></h1>
+                <a class="post-title-link" href="/2018/02/28/plus-of-two-string/" itemprop="url">
+                  字符串加法
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1222,12 +1393,18 @@ node * build()
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-28T12:35:56+08:00">2018-02-28</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-02-28 12:35:56 / Modified: 13:26:55" itemprop="dateCreated datePublished" datetime="2018-02-28T12:35:56+08:00">2018-02-28</time>
             
 
             
-            
+              
 
+              
             
           </span>
 
@@ -1397,11 +1574,21 @@ p result
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/26/blog/" itemprop="url">使用HEXO+Github打造你的blog(一)</a></h1>
+                <a class="post-title-link" href="/2018/02/26/blog/" itemprop="url">
+                  使用HEXO+Github打造你的blog(一)
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1409,12 +1596,30 @@ p result
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-26T21:23:47+08:00">2018-02-26</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-02-26 21:23:47" itemprop="dateCreated datePublished" datetime="2018-02-26T21:23:47+08:00">2018-02-26</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-03-04 00:20:59" itemprop="dateModified" datetime="2018-03-04T00:20:59+08:00">2018-03-04</time>
+              
             
           </span>
 
@@ -1592,11 +1797,21 @@ NPM安装- G hexo CLI美元
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/31/My2017/" itemprop="url">My2017</a></h1>
+                <a class="post-title-link" href="/2017/12/31/My2017/" itemprop="url">
+                  My2017
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1604,12 +1819,30 @@ NPM安装- G hexo CLI美元
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-31T17:59:00+08:00">2017-12-31</time>
+
+              
+                
+              
+
+              <time title="Created: 2017-12-31 17:59:00" itemprop="dateCreated datePublished" datetime="2017-12-31T17:59:00+08:00">2017-12-31</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-02-28 15:14:23" itemprop="dateModified" datetime="2018-02-28T15:14:23+08:00">2018-02-28</time>
+              
             
           </span>
 
@@ -1728,7 +1961,7 @@ NPM安装- G hexo CLI美元
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
 
@@ -1834,7 +2067,7 @@ NPM安装- G hexo CLI美元
                 </span>
               
                 <span class="links-of-author-item">
-                  <a href="https://linkedin.com/in/ming-lu-40a214115" target="_blank" title="linkedin"><i class="fa fa-fw fa-linkedin"></i>linkedin</a>
+                  <a href="mailto:784315443@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
                   
                 </span>
               
@@ -1870,7 +2103,7 @@ NPM安装- G hexo CLI美元
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
-  <span class="with-love">
+  <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">LuMing</span>
@@ -1883,7 +2116,7 @@ NPM安装- G hexo CLI美元
 
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
 
 
 
@@ -1891,7 +2124,7 @@ NPM安装- G hexo CLI美元
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.3.0</div>
 
 
 
@@ -1917,7 +2150,10 @@ NPM安装- G hexo CLI美元
     
 
     
+	
+    
 
+    
   </div>
 
   
@@ -1972,37 +2208,25 @@ NPM安装- G hexo CLI美元
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
-
-
-
-  
-  
-
-  
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
 
 
 
   
+  
 
-
-
-	
-
-
-
-
+  
 
   
 
 
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
 
 
 
@@ -2028,6 +2252,21 @@ NPM安装- G hexo CLI美元
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 
@@ -2042,6 +2281,7 @@ NPM安装- G hexo CLI美元
 
   
 
+  
 
 </body>
 </html>

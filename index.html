@@ -2,37 +2,23 @@
 
 
 
+
+
+
+
+
+
+
+
+
   
 
 
 <html class="theme-next muse use-motion" lang="zh">
 <head>
-<!-- baidu crawl verify start-->
-<meta name="baidu-site-verification" content="Qp7CfDb5w3" />
-<!-- baidu crawl verify end-->
-<!-- google ad start -->
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<script>
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: "ca-pub-9964492323779082",
-    enable_page_level_ads: true
-  });
-</script>
-<!-- google ad end -->
-<!--baidu analytic start-->
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?4becdc28b5402c3ae70e696799455f76";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-<!--baidu analytic end-->
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
 <meta name="theme-color" content="#222">
 
 
@@ -72,19 +58,19 @@ var _hmt = _hmt || [];
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=6.0.4" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.4">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.3.0">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.4">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.3.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.4">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.3.0">
 
 
-  <link rel="mask-icon" href="/images/logo.svg?v=6.0.4" color="#222">
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#222">
 
 
 
@@ -99,8 +85,8 @@ var _hmt = _hmt || [];
   var CONFIG = {
     root: '/',
     scheme: 'Muse',
-    version: '6.0.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: false,
     fastclick: false,
     lazyload: false,
@@ -122,11 +108,7 @@ var _hmt = _hmt || [];
 
 
 
-  
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-<meta property="og:type" content="website">
+  <meta property="og:type" content="website">
 <meta property="og:title" content="LuMing&#39;s blog">
 <meta property="og:url" content="http://LuuMing.github.io/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
@@ -148,6 +130,7 @@ var _hmt = _hmt || [];
     sidebar: "",
   };
 </script>
+
   <title>LuMing's blog</title>
   
 
@@ -210,24 +193,22 @@ var _hmt = _hmt || [];
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"> <div class="site-brand-wrapper">
+      <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">LuMing's blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
+    
   </div>
 
   <div class="site-nav-toggle">
-    <button>
+    <button aria-label="Toggle navigation bar">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -235,38 +216,49 @@ var _hmt = _hmt || [];
   </div>
 </div>
 
-<nav class="site-nav">
-  
 
+
+<nav class="site-nav">
   
     <ul id="menu" class="menu">
       
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
-        </li>
-      
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
-        </li>
-      
+        
+          
+          <li class="menu-item menu-item-home menu-item-active">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+  </li>
 
       
+      
     </ul>
+  
+
+  
+    
+
   
 
   
 </nav>
 
 
+
   
 
 
 
- </div>
+</div>
     </header>
 
     
@@ -275,6 +267,7 @@ var _hmt = _hmt || [];
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
+          
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
@@ -313,11 +306,21 @@ var _hmt = _hmt || [];
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/05/os-as/" itemprop="url">暗杀教室--操作系统篇</a></h1>
+                <a class="post-title-link" href="/2018/08/05/os-as/" itemprop="url">
+                  暗杀教室--操作系统篇
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -325,12 +328,18 @@ var _hmt = _hmt || [];
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-05T09:02:08+08:00">2018-08-05</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-08-05 09:02:08 / Modified: 10:43:50" itemprop="dateCreated datePublished" datetime="2018-08-05T09:02:08+08:00">2018-08-05</time>
             
 
             
-            
+              
 
+              
             
           </span>
 
@@ -449,11 +458,21 @@ var _hmt = _hmt || [];
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/04/man-month/" itemprop="url">读《人月神话》</a></h1>
+                <a class="post-title-link" href="/2018/08/04/man-month/" itemprop="url">
+                  读《人月神话》
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -461,12 +480,18 @@ var _hmt = _hmt || [];
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-04T10:43:34+08:00">2018-08-04</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-08-04 10:43:34 / Modified: 11:33:17" itemprop="dateCreated datePublished" datetime="2018-08-04T10:43:34+08:00">2018-08-04</time>
             
 
             
-            
+              
 
+              
             
           </span>
 
@@ -599,11 +624,21 @@ Adding manpower to a late software project makes it later.
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/03/permutation/" itemprop="url">说排列组合</a></h1>
+                <a class="post-title-link" href="/2018/08/03/permutation/" itemprop="url">
+                  说排列组合
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -611,12 +646,30 @@ Adding manpower to a late software project makes it later.
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-03T10:57:10+08:00">2018-08-03</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-08-03 10:57:10" itemprop="dateCreated datePublished" datetime="2018-08-03T10:57:10+08:00">2018-08-03</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-08-05 10:44:31" itemprop="dateModified" datetime="2018-08-05T10:44:31+08:00">2018-08-05</time>
+              
             
           </span>
 
@@ -724,11 +777,21 @@ Adding manpower to a late software project makes it later.
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/08/02/mooc/" itemprop="url">慕课程表</a></h1>
+                <a class="post-title-link" href="/2018/08/02/mooc/" itemprop="url">
+                  慕课程表
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -736,12 +799,30 @@ Adding manpower to a late software project makes it later.
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T23:23:04+08:00">2018-08-02</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-08-02 23:23:04" itemprop="dateCreated datePublished" datetime="2018-08-02T23:23:04+08:00">2018-08-02</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-08-03 22:35:48" itemprop="dateModified" datetime="2018-08-03T22:35:48+08:00">2018-08-03</time>
+              
             
           </span>
 
@@ -848,11 +929,21 @@ Adding manpower to a late software project makes it later.
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/29/bt-traverse/" itemprop="url">二叉树的遍历</a></h1>
+                <a class="post-title-link" href="/2018/07/29/bt-traverse/" itemprop="url">
+                  二叉树的遍历
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -860,12 +951,18 @@ Adding manpower to a late software project makes it later.
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-29T21:25:18+08:00">2018-07-29</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-07-29 21:25:18 / Modified: 21:35:41" itemprop="dateCreated datePublished" datetime="2018-07-29T21:25:18+08:00">2018-07-29</time>
             
 
             
-            
+              
 
+              
             
           </span>
 
@@ -976,11 +1073,21 @@ Adding manpower to a late software project makes it later.
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/17/linux-0-11-syscall/" itemprop="url">基于linux0.11的从零开始学操作系统-system_call</a></h1>
+                <a class="post-title-link" href="/2018/07/17/linux-0-11-syscall/" itemprop="url">
+                  基于linux0.11的从零开始学操作系统-system_call
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -988,12 +1095,30 @@ Adding manpower to a late software project makes it later.
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-17T14:45:56+08:00">2018-07-17</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-07-17 14:45:56" itemprop="dateCreated datePublished" datetime="2018-07-17T14:45:56+08:00">2018-07-17</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-27 15:54:04" itemprop="dateModified" datetime="2018-07-27T15:54:04+08:00">2018-07-27</time>
+              
             
           </span>
 
@@ -1143,11 +1268,21 @@ int main()
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/16/linux-0-11-setup/" itemprop="url">基于linux0.11的从零开始学操作系统-setup</a></h1>
+                <a class="post-title-link" href="/2018/07/16/linux-0-11-setup/" itemprop="url">
+                  基于linux0.11的从零开始学操作系统-setup
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1155,12 +1290,30 @@ int main()
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T14:01:26+08:00">2018-07-16</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-07-16 14:01:26" itemprop="dateCreated datePublished" datetime="2018-07-16T14:01:26+08:00">2018-07-16</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-17 17:49:49" itemprop="dateModified" datetime="2018-07-17T17:49:49+08:00">2018-07-17</time>
+              
             
           </span>
 
@@ -1285,11 +1438,21 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/14/linux-0-11-bootsect/" itemprop="url">基于linux0.11的从零开始学操作系统-bootsect</a></h1>
+                <a class="post-title-link" href="/2018/07/14/linux-0-11-bootsect/" itemprop="url">
+                  基于linux0.11的从零开始学操作系统-bootsect
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1297,12 +1460,30 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-14T23:52:07+08:00">2018-07-14</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-07-14 23:52:07" itemprop="dateCreated datePublished" datetime="2018-07-14T23:52:07+08:00">2018-07-14</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-16 14:20:02" itemprop="dateModified" datetime="2018-07-16T14:20:02+08:00">2018-07-16</time>
+              
             
           </span>
 
@@ -1539,11 +1720,21 @@ ok2_read:...
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/16/embedding-system/" itemprop="url">一图带你看懂嵌入式系统(你得点开我,而且手机看不到)</a></h1>
+                <a class="post-title-link" href="/2018/06/16/embedding-system/" itemprop="url">
+                  一图带你看懂嵌入式系统(你得点开我,而且手机看不到)
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1551,12 +1742,30 @@ ok2_read:...
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-16T15:28:37+08:00">2018-06-16</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-06-16 15:28:37" itemprop="dateCreated datePublished" datetime="2018-06-16T15:28:37+08:00">2018-06-16</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-17 17:56:41" itemprop="dateModified" datetime="2018-07-17T17:56:41+08:00">2018-07-17</time>
+              
             
           </span>
 
@@ -1663,11 +1872,21 @@ ok2_read:...
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/03/when-they-meet/" itemprop="url">思想在碰撞</a></h1>
+                <a class="post-title-link" href="/2018/06/03/when-they-meet/" itemprop="url">
+                  思想在碰撞
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1675,12 +1894,18 @@ ok2_read:...
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-03T17:58:30+08:00">2018-06-03</time>
+
+              
+                
+              
+
+              <time title="Created: 2018-06-03 17:58:30 / Modified: 18:24:29" itemprop="dateCreated datePublished" datetime="2018-06-03T17:58:30+08:00">2018-06-03</time>
             
 
             
-            
+              
 
+              
             
           </span>
 
@@ -1776,7 +2001,7 @@ ok2_read:...
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1882,7 +2107,7 @@ ok2_read:...
                 </span>
               
                 <span class="links-of-author-item">
-                  <a href="https://linkedin.com/in/ming-lu-40a214115" target="_blank" title="linkedin"><i class="fa fa-fw fa-linkedin"></i>linkedin</a>
+                  <a href="mailto:784315443@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
                   
                 </span>
               
@@ -1918,7 +2143,7 @@ ok2_read:...
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
-  <span class="with-love">
+  <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">LuMing</span>
@@ -1931,7 +2156,7 @@ ok2_read:...
 
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> v3.7.1</div>
 
 
 
@@ -1939,7 +2164,7 @@ ok2_read:...
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Muse</a> v6.0.4</div>
+  <div class="theme-info">Theme – <a class="theme-link" target="_blank" href="https://theme-next.org">NexT.Muse</a> v6.3.0</div>
 
 
 
@@ -1965,7 +2190,10 @@ ok2_read:...
     
 
     
+	
+    
 
+    
   </div>
 
   
@@ -2020,37 +2248,25 @@ ok2_read:...
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=6.0.4"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=6.0.4"></script>
-
-
-
-  
-  
-
-  
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.4"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
 
 
 
   
+  
 
-
-
-	
-
-
-
-
+  
 
   
 
 
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
 
 
 
@@ -2076,6 +2292,21 @@ ok2_read:...
   
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 
@@ -2090,6 +2321,7 @@ ok2_read:...
 
   
 
+  
 
 </body>
 </html>
