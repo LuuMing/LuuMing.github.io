@@ -294,6 +294,669 @@ var _hmt = _hmt || [];
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/05/os-as/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/05/os-as/" itemprop="url">暗杀教室--操作系统篇</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-05T09:02:08+08:00">2018-08-05</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>关于如何理解操作系统，其实完全可以用暗杀教室来举例。</p>
+<pre><code>新的学期开始了，敬业的杀老师为了完成最后的约定，满怀期待地推开了教室的大门，令他吃惊的是，教室里只有小渚一人站在那里。杀老师无奈地叹了口气，开始了新学期的第一堂课。
+</code></pre><p>好的，上述便是一个操作系统模型，请你把整个教室想象成一个操作系统。<br>★杀老师—CPU<br>★学生—用户级线程<br>★上课的这个过程—进程</p>
+<pre><code>不一会，小枫同学也推开了教室的大门。小枫是一个差生，学习的进度完全赶不上小渚。还好这对于移动速度可以达到20马赫的杀老师来说都不是事。一个人只要来回地不停移动，就可以完成犹如分身术一样的操作。这下就可以一对一教学了。
+</code></pre><p>这便是多进程的图像，CPU通过时间片轮转的方式来回切换，实现了多个进程同时运行。</p>
+<pre><code>过了一会，小业同学也来了。他可是个难缠的优等生，完全不把老师放在眼里。并表示，“我只想一个人安静的看看书，有啥不懂的地方再来问老师 ”。老师也很无奈，但谁让人家学习好呢。不过，事还每完，小业又说：”如果没有个座位的你让人怎么看书呢？亲爱的杀老师“。杀老师忍了，给他端了一个板凳过来。
+</code></pre><p>★座位—内核级线程<br>★看书—IO请求<br>用户编写的程序是各式各样的，有一些便包含了对IO的请求(小业同学)。但是，一个用户线程不能达到直接对IO的控制，因为只有操作系统才能与硬件打交道，参与硬件的管理。因此，操作系统会向上层提供内核级线程(座位)的支持。当一个内核级线程服务于用户级线程时，便能够取得对外部设备的控制。</p>
+<pre><code>话说学霸小业果真是学霸，学起来完全不用老师的操心。老师点点头，发出了会心的微笑。
+</code></pre><p>★自习的过程—阻塞态<br>通常，IO请求(例如读写磁盘)用时非常地长。在此期间，完全可以释放对CPU的占用，将自己置为阻塞态。CPU只要定期过来检查其是否完成便可，期间无序等待。</p>
+<pre><code>看到小业那么狂，有些同学不服气也要自习。为了减轻工作量，杀老师给教室里添加了一个铃铛，有人想要自习了，只要敲一下铃铛老师就会拿一个板凳过来。
+</code></pre><p>★铃铛—系统调用<br>有些线程会不定期地进行IO操作，当想要进行IO操作时，线程会通过系统调用来使操作系统为其分配内核级线程，达到对硬件的访问。</p>
+<pre><code>另一边，小冈和小贝上的是同一堂课程，它们坐在一起，对老师讲课的内容津津乐道。
+</code></pre><p>同一个进程中(一堂课)会有多个线程，进程中的线程能够互相进行通信。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/04/man-month/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/04/man-month/" itemprop="url">读《人月神话》</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-04T10:43:34+08:00">2018-08-04</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>标题虽然叫做人月神话，但实际上跟神话传说没有半点关系，这是一本彻彻底底的管理学著作。<br>下面进行对原文的一些引用以及评论：</p>
+<pre><code>系统编程的进度安排背后的第一个错误的假设：“一切都将运作良好，每一项任务仅花费它所应该花费的时间”。
+</code></pre><p>评：在所有的项目计划中，要在项目开始时做好最坏的假设。</p>
+<pre><code>软件任务进度安排：
+1/3 计划
+1/6 编码
+1/4 构件测试和早期系统测试
+</code></pre><p>评：正所谓“磨刀不误砍柴工”，在开始项目之前做好万全的设计，对整个项目建立起一张清晰的地图。在编码的过程中寻着地图的方向走，遇到障碍后拐几个弯也不会迷失方向。</p>
+<pre><code>Brooks法则：
+Adding manpower to a late software project makes it later.
+向进度落后的项目中增加人手，只会使进度更加落后。
+</code></pre><pre><code>项目的时间依赖于独立子任务的数量。需要协作沟通的人员数量影响着开发成本，因为成本的主要组成部分是互相的沟通和交流，以及更正沟通不当所引起的不良结果（系统调试）。
+</code></pre><pre><code>mills概念：“从个人艺术到公共实践”的编程观念转变。
+</code></pre><pre><code>外科手术似的队伍
+1.外科医生。
+2.副手。
+3.管理员
+4.编辑
+5.两个文秘
+6.程序职员
+可选
+7.工具维护人员
+8.测试人员
+9.语言专家
+</code></pre><pre class=" language-mermaidgraph"><code class="language-mermaidgraph">TD client11 ->|read / write|SVN(SVN server)
+</code></pre>
+<p>评：作者提出的一个对10人的编程团队进行专业化的角色分工的方案。要了解为什么这样做好，就得先知道怎样做不好。当你<br>评：利益要分享，决策要独立。好的民主是互相对话，</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/03/permutation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/03/permutation/" itemprop="url">说排列组合</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-03T10:57:10+08:00">2018-08-03</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>先看一道例题，来自某公司招聘试题，如下：</p>
+<pre><code>
+</code></pre>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/02/mooc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/02/mooc/" itemprop="url">慕课程表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-02T23:23:04+08:00">2018-08-02</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Mooc距第一次听说已经过去4年了，在这过程中有不少好的课程（老师）令我受益匪浅，这次就做一个推荐吧。<br>1.<a href="https://www.icourse163.org/course/ZJU-199001" target="_blank" rel="noopener">程序设计入门——C语言</a><br>这门课算是我的启蒙课程，老师的思路非常清晰，完全像是给一个刚刚接触程序设计的小白讲的课程，非常容易上手。<br>2.<a href="https://www.coursera.org/learn/c-chengxu-sheji/home/info" target="_blank" rel="noopener">C程序设计进阶</a><br>这门课程可以作为C语言的一门进阶课程。关于函数调用那一章地方讲的非常棒！到现在还记得老师上课时画的那只手。对指针的讲解也非常细致，完全是书本上接触不到的心法。<br>3.<a href="https://www.coursera.org/learn/cpp-chengxu-sheji/home/info" target="_blank" rel="noopener">C++程序设计</a><br>见没见过一节课一瓶水的老师？就是他了。印象最深的是面向对象的设计方法中“表达A是B，使用派生。表达A有B，使用复合”。以及那句经典的“人中有狗，狗中有人，人狗合一”。哈哈真的是笑死了。<br>4.<a href="https://www.icourse163.org/course/ZJU-93001#/info" target="_blank" rel="noopener">数据结构</a><br>在陈越姥姥的课上总是能给你惊喜，每次都是从一个问题开始，引发你的思考，从而一步又一部地刨析下去。当你以为找到解决办法的时候，姥姥就会告诉你“图样图森破”。<br>操作系统 李志军<br>吴恩达<br>我佩服两种老师，第一种是会“讲人话”的老师，第二种是“爱学习”的老师。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/07/29/bt-traverse/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/29/bt-traverse/" itemprop="url">二叉树的遍历</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-29T21:25:18+08:00">2018-07-29</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>关于二叉树的遍历，往往会出这么几类题目：</p>
+<h3 id="1-根据一种序列重建二叉树"><a href="#1-根据一种序列重建二叉树" class="headerlink" title="1. 根据一种序列重建二叉树"></a>1. 根据一种序列重建二叉树</h3><p>分析：只给出一个输出序列会对应多种二叉树，因此这类题目的给定序列中往往包含有空节点，这时只需要反过来写递归程序便可：<br>例：</p>
+<p>程：</p>
+<h3 id="2-根据两种序列重建二叉树"><a href="#2-根据两种序列重建二叉树" class="headerlink" title="2.根据两种序列重建二叉树"></a>2.根据两种序列重建二叉树</h3><p>分析： 既然给出了两种序列，那么序列中一定不包含空节点的输出，对于这种问题其解题的核心在于<code>找到根节点位置</code>。<br>例：</p>
+<p>程：</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/07/17/linux-0-11-syscall/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1109,734 +1772,6 @@ ok2_read:...
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/05/09/operating-system/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/09/operating-system/" itemprop="url">Udacity operating system 的笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-09T11:43:44+08:00">2018-05-09</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/05/08/sort/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/08/sort/" itemprop="url">来一次最详尽的Sort大比拼吧</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-08T22:48:45+08:00">2018-05-08</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <table>
-<thead>
-<tr>
-<th style="text-align:center">排序方法</th>
-<th style="text-align:center">平均时间复杂度</th>
-<th style="text-align:center">最坏情况时间下时间复杂度</th>
-<th style="text-align:center">额外空间复杂度</th>
-<th style="text-align:center">稳定性 </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">简单选择排序</td>
-<td style="text-align:center">O(N<sup>2</sup>)</td>
-<td style="text-align:center">O(N<sup>2</sup>)</td>
-<td style="text-align:center">O(1)</td>
-<td style="text-align:center">不稳定</td>
-</tr>
-<tr>
-<td style="text-align:center">冒泡排序</td>
-<td style="text-align:center">O(N<sup>2</sup>)</td>
-<td style="text-align:center">O(N<sup>2</sup>)</td>
-<td style="text-align:center">O(1)</td>
-<td style="text-align:center">稳定</td>
-</tr>
-<tr>
-<td style="text-align:center">直接插入排序</td>
-<td style="text-align:center">O(N<sup>2</sup>)</td>
-<td style="text-align:center">O(N<sup>2</sup>)</td>
-<td style="text-align:center">O(1)</td>
-<td style="text-align:center">稳定 </td>
-</tr>
-<tr>
-<td style="text-align:center">希尔排序</td>
-<td style="text-align:center">O(N<sup>d</sup>)</td>
-<td style="text-align:center">O(N<sup>2</sup>)</td>
-<td style="text-align:center">O(1)</td>
-<td style="text-align:center">不稳定</td>
-</tr>
-<tr>
-<td style="text-align:center">堆排序</td>
-<td style="text-align:center">O(NlogN)</td>
-<td style="text-align:center">O(NlogN)</td>
-<td style="text-align:center">O(1)</td>
-<td style="text-align:center">不稳定</td>
-</tr>
-<tr>
-<td style="text-align:center">快速排序</td>
-<td style="text-align:center">O(NlogN)</td>
-<td style="text-align:center">O(N<sup>2</sup>)</td>
-<td style="text-align:center">O(logN)</td>
-<td style="text-align:center">不稳定</td>
-</tr>
-<tr>
-<td style="text-align:center">归并排序</td>
-<td style="text-align:center">O(NlogN)</td>
-<td style="text-align:center">O(NlogN)</td>
-<td style="text-align:center">O(N)</td>
-<td style="text-align:center">稳定</td>
-</tr>
-<tr>
-<td style="text-align:center">基数排序</td>
-<td style="text-align:center">O(P(N+B))</td>
-<td style="text-align:center">O(P(N+B))</td>
-<td style="text-align:center">O(N+B)</td>
-<td style="text-align:center">稳定</td>
-</tr>
-</tbody>
-</table>
-<h6 id="来源-中国大学MOOC数据结构-陈越、何钦铭"><a href="#来源-中国大学MOOC数据结构-陈越、何钦铭" class="headerlink" title="来源: 中国大学MOOC数据结构 陈越、何钦铭"></a>来源: 中国大学MOOC数据结构 陈越、何钦铭</h6><p>注: 希尔排序中d取决于增量的选取，其可能小于2<br>基数排序中，B代表有多少个桶，P为收集的趟数</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/04/05/study/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/05/study/" itemprop="url">谈学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-05T11:28:13+08:00">2018-04-05</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>学习是一个过程。<br>大家通常所理解的学例如上课那样的不是学习，所做的只不过是浏览信息而已，什么是学习？<br>学习是一个动态的过程，是出现问题，寻找方法，解决问题这样一些列的过程。<br>就像通常意义上的“刷题”一样。“刷题“为什么高效？<br>出现不会做的难题，翻阅书本，查阅资料，寻找解决方法，最终解决问题。<br>这个过程不像所谓浏览信息一样的学习，浏览信息的整个过程中所看到的只是一个静态的信息，而上述定义的学习在其过程中，你与信息之间发生了关系，通过使用静态的信息将它与自己的知识网络<strong>缝合</strong>起来，这个过程叫学习。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/03/31/blog-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/31/blog-3/" itemprop="url">使用HEXO+Github打造你的blog(三)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-31T17:19:55+08:00">2018-03-31</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>上次我们已经成功安装了Node.js，接下来我们就要开始安装git了。不过在开始之前，我们先统一一下观点:</p>
-<pre><code>1.你所访问的网页本质上是一个一个有组织的文件
-2.你访问网页的过程本质上是与其他计算机进行的通信
-</code></pre><p>举个例子:</p>
-<pre><code>1.当你访问[百度首页](www.baidu.com)时候，你实质上在与公网IP地址为180.149.132.151的某台计算机进行通信。
-2.你所看到的网页是这台计算机中的某个文件。(不懂的回看第一篇)
-</code></pre><p>顺着这个思路，是不是只要别人能够通过IP地址访问到我们的计算机，他就能够打开我们制作好的博客了呢？<br>是的，但是困难重重。<br>为什么呢？让我们继续往下分析<br>我连上网的电脑有没有IP地址呢？<br>答案是:有<br>那是不是直接把IP地址告诉对方，对方就能与你的计算机进行通信了呢？<br>答案是:不行<br>为什么呢？<br>这还得从IP地址说起：</p>
-<pre><code>一句话，公网IP地址不够用了。因此为了珍惜IP，我们一向使用内网IP。
-因此你的IP不是公网的IP，只是某个运营商公司的某个子公司的某个路由器下的某个通过DHCP分到的IP。
-你电脑的IP地址是&quot;192.168.1.1&quot;，这个IP就好比写着“我住在牛家村”
-我想要和你通信，除非我跟你在同一个区。否则，世界上牛家村千千万，我肯定联络不到你。
-</code></pre><p>那么怎么做呢？直接了当的告诉你，内网穿透，就是某个人把自己的公网IP借给你，让大家从公网能和你进行通信。<br>但是，1.太麻烦，2.得花钱<br>不过，还好有别的办法…</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/03/22/hackerinstruction/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/22/hackerinstruction/" itemprop="url">hackerinstruction</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-22T00:12:45+08:00">2018-03-22</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>nmap</p>
-<pre><code># 扫描主机
-nmap -sP 192.168.43.*
-# 查看端口
-nmap 192.168.1.1
-# 查看系统
-nmap -O 192.168.1.1
-</code></pre><p>hydra</p>
-<pre><code># 破解ssh
- hydra -l 用户名 -p 密码字典  -t 线程数 -e ns ip ssh
-</code></pre><p>crunch</p>
-<pre><code># 生成密码字典
-crunch  最小长度 最大长度  字符  -o 生成位置
-</code></pre><p>dnsenum</p>
-<pre><code>#查看二级域名
-dnsenum ww.baidu.com
-# 指定字典查看二级域名
-dnsenum -f  wordlist.txt  www.baidu.com
-</code></pre><p>lbd</p>
-<pre><code>#负载均衡
-lbd www.github.com
-</code></pre><p>wafw00f</p>
-<pre><code>#查看防火墙
-wafw00f  -va www.baidu.com
-</code></pre><p>ua-tester</p>
-<pre><code>#查看web环境
-ua-tester  -v  -u  www.baidu.com
-</code></pre><p>sqlmap</p>
-<pre><code># 数据库注入漏洞
-sqlmap -u URL
-</code></pre>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1884,7 +1819,7 @@ sqlmap -u URL
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

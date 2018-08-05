@@ -126,28 +126,25 @@ var _hmt = _hmt || [];
   <meta name="keywords" content="半吊子," />
 
 
-<meta name="description" content="1.setup中获取扩展内存大小：! Get memory size (extended mem, kB)          mov     ah,#0x88         int     0x15         mov     [2],ax 返回：ax=从0x100000(1M)处开始的扩展内存大小 2.保护模式setup切换保护模式位于[0x00090348] 9020:0148">
+<meta name="description" content="关于如何理解操作系统，其实完全可以用暗杀教室来举例。 新的学期开始了，敬业的杀老师为了完成最后的约定，满怀期待地推开了教室的大门，令他吃惊的是，教室里只有小渚一人站在那里。杀老师无奈地叹了口气，开始了新学期的第一堂课。 好的，上述便是一个操作系统模型，请你把整个教室想象成一个操作系统。★杀老师—CPU★学生—用户级线程★上课的这个过程—进程 不一会，小枫同学也推开了教室的大门。小枫是一个差生，学习">
 <meta name="keywords" content="半吊子">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于linux0.11的从零开始学操作系统-setup">
-<meta property="og:url" content="http://LuuMing.github.io/2018/07/16/linux-0-11-setup/index.html">
+<meta property="og:title" content="暗杀教室--操作系统篇">
+<meta property="og:url" content="http://LuuMing.github.io/2018/08/05/os-as/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="1.setup中获取扩展内存大小：! Get memory size (extended mem, kB)          mov     ah,#0x88         int     0x15         mov     [2],ax 返回：ax=从0x100000(1M)处开始的扩展内存大小 2.保护模式setup切换保护模式位于[0x00090348] 9020:0148">
+<meta property="og:description" content="关于如何理解操作系统，其实完全可以用暗杀教室来举例。 新的学期开始了，敬业的杀老师为了完成最后的约定，满怀期待地推开了教室的大门，令他吃惊的是，教室里只有小渚一人站在那里。杀老师无奈地叹了口气，开始了新学期的第一堂课。 好的，上述便是一个操作系统模型，请你把整个教室想象成一个操作系统。★杀老师—CPU★学生—用户级线程★上课的这个过程—进程 不一会，小枫同学也推开了教室的大门。小枫是一个差生，学习">
 <meta property="og:locale" content="zh">
-<meta property="og:image" content="http://luuming.github.io/2018/07/16/linux-0-11-setup/ldt.png">
-<meta property="og:image" content="http://luuming.github.io/2018/07/16/linux-0-11-setup/gdt.png">
-<meta property="og:updated_time" content="2018-07-17T09:49:49.668Z">
+<meta property="og:updated_time" content="2018-08-05T02:43:50.378Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基于linux0.11的从零开始学操作系统-setup">
-<meta name="twitter:description" content="1.setup中获取扩展内存大小：! Get memory size (extended mem, kB)          mov     ah,#0x88         int     0x15         mov     [2],ax 返回：ax=从0x100000(1M)处开始的扩展内存大小 2.保护模式setup切换保护模式位于[0x00090348] 9020:0148">
-<meta name="twitter:image" content="http://luuming.github.io/2018/07/16/linux-0-11-setup/ldt.png">
+<meta name="twitter:title" content="暗杀教室--操作系统篇">
+<meta name="twitter:description" content="关于如何理解操作系统，其实完全可以用暗杀教室来举例。 新的学期开始了，敬业的杀老师为了完成最后的约定，满怀期待地推开了教室的大门，令他吃惊的是，教室里只有小渚一人站在那里。杀老师无奈地叹了口气，开始了新学期的第一堂课。 好的，上述便是一个操作系统模型，请你把整个教室想象成一个操作系统。★杀老师—CPU★学生—用户级线程★上课的这个过程—进程 不一会，小枫同学也推开了教室的大门。小枫是一个差生，学习">
 
 
 
 
 
 
-  <link rel="canonical" href="http://LuuMing.github.io/2018/07/16/linux-0-11-setup/"/>
+  <link rel="canonical" href="http://LuuMing.github.io/2018/08/05/os-as/"/>
 
 
 
@@ -156,7 +153,7 @@ var _hmt = _hmt || [];
     sidebar: "",
   };
 </script>
-  <title>基于linux0.11的从零开始学操作系统-setup | LuMing's blog</title>
+  <title>暗杀教室--操作系统篇 | LuMing's blog</title>
   
 
 
@@ -301,7 +298,7 @@ var _hmt = _hmt || [];
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/07/16/linux-0-11-setup/">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/05/os-as/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LuMing">
@@ -318,7 +315,7 @@ var _hmt = _hmt || [];
 
         
         
-          <h1 class="post-title" itemprop="name headline">基于linux0.11的从零开始学操作系统-setup</h1>
+          <h1 class="post-title" itemprop="name headline">暗杀教室--操作系统篇</h1>
         
 
         <div class="post-meta">
@@ -330,7 +327,7 @@ var _hmt = _hmt || [];
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T14:01:26+08:00">2018-07-16</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-05T09:02:08+08:00">2018-08-05</time>
             
 
             
@@ -367,25 +364,19 @@ var _hmt = _hmt || [];
       
 
       
-        <h4 id="1-setup中获取扩展内存大小："><a href="#1-setup中获取扩展内存大小：" class="headerlink" title="1.setup中获取扩展内存大小："></a>1.setup中获取扩展内存大小：</h4><pre><code>! Get memory size (extended mem, kB)
-
-        mov     ah,#0x88
-        int     0x15
-        mov     [2],ax
-</code></pre><p><code>返回：ax=从0x100000(1M)处开始的扩展内存大小</code></p>
-<h4 id="2-保护模式"><a href="#2-保护模式" class="headerlink" title="2.保护模式"></a>2.保护模式</h4><p>setup切换保护模式位于<code>[0x00090348] 9020:0148</code></p>
-<pre><code>        mov     ax,#0x0001      ! protected mode (PE) bit
-        lmsw    ax              ! This is it!
-</code></pre><p>此时CPU已经进入32位保护模式</p>
-<pre><code>jmpi    0,8             ! jmp offset 0 of segment 8 (cs)
-</code></pre><p>这句话在16位实模式下解释如下:</p>
-<pre><code>CPU跳转至cs = 8,IP = 0 即0x80处开始执行
-</code></pre><p>而到了32位,CS称为选择子。此时的寻址方式为：<br>通过选择子配合gdt表查到一个值，把这个值重新组合作为新的地址。<br>此时<code>GDTR = 0x0009035b</code> 意味着当前gdt表起始位置在内存中的0x0009035b处。cs=8代表，以<code>GDTR</code>位起始位置，偏移8个字节。也就是选择‘0x00090363’。存放的东西是什么呢？</p>
-<pre><code>0x00090363 &lt;bogus+       8&gt;:    0xff    0x07    0x00    0x00    0x00    0x9a    0xc0    0x00
-p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是乎:
-0x00090363-0x00090371: 
-00C09A00000007FF
-</code></pre><p>上面的东西代表的是什么意思呢？其是，它是一段LDT(Local Descriptor Table)。一共64个bit，其解释方式如下图所示：<br><img src="/2018/07/16/linux-0-11-setup/./ldt.png" alt="ldt"><br>重点关心黑色字体部分:<br> <strong>00</strong>C09A<strong>000000</strong>07FF<br> 前面的就是32位保护模式下的基址，后面的就是保护模式下的偏移地址。所以，接下来CPU就到了<code>00:000000</code>处。<br> 用一张图概况保护模式下的寻址方式，一定就是这样了:<br> <img src="/2018/07/16/linux-0-11-setup/./gdt.png" alt="gdt"></p>
+        <p>关于如何理解操作系统，其实完全可以用暗杀教室来举例。</p>
+<pre><code>新的学期开始了，敬业的杀老师为了完成最后的约定，满怀期待地推开了教室的大门，令他吃惊的是，教室里只有小渚一人站在那里。杀老师无奈地叹了口气，开始了新学期的第一堂课。
+</code></pre><p>好的，上述便是一个操作系统模型，请你把整个教室想象成一个操作系统。<br>★杀老师—CPU<br>★学生—用户级线程<br>★上课的这个过程—进程</p>
+<pre><code>不一会，小枫同学也推开了教室的大门。小枫是一个差生，学习的进度完全赶不上小渚。还好这对于移动速度可以达到20马赫的杀老师来说都不是事。一个人只要来回地不停移动，就可以完成犹如分身术一样的操作。这下就可以一对一教学了。
+</code></pre><p>这便是多进程的图像，CPU通过时间片轮转的方式来回切换，实现了多个进程同时运行。</p>
+<pre><code>过了一会，小业同学也来了。他可是个难缠的优等生，完全不把老师放在眼里。并表示，“我只想一个人安静的看看书，有啥不懂的地方再来问老师 ”。老师也很无奈，但谁让人家学习好呢。不过，事还每完，小业又说：”如果没有个座位的你让人怎么看书呢？亲爱的杀老师“。杀老师忍了，给他端了一个板凳过来。
+</code></pre><p>★座位—内核级线程<br>★看书—IO请求<br>用户编写的程序是各式各样的，有一些便包含了对IO的请求(小业同学)。但是，一个用户线程不能达到直接对IO的控制，因为只有操作系统才能与硬件打交道，参与硬件的管理。因此，操作系统会向上层提供内核级线程(座位)的支持。当一个内核级线程服务于用户级线程时，便能够取得对外部设备的控制。</p>
+<pre><code>话说学霸小业果真是学霸，学起来完全不用老师的操心。老师点点头，发出了会心的微笑。
+</code></pre><p>★自习的过程—阻塞态<br>通常，IO请求(例如读写磁盘)用时非常地长。在此期间，完全可以释放对CPU的占用，将自己置为阻塞态。CPU只要定期过来检查其是否完成便可，期间无序等待。</p>
+<pre><code>看到小业那么狂，有些同学不服气也要自习。为了减轻工作量，杀老师给教室里添加了一个铃铛，有人想要自习了，只要敲一下铃铛老师就会拿一个板凳过来。
+</code></pre><p>★铃铛—系统调用<br>有些线程会不定期地进行IO操作，当想要进行IO操作时，线程会通过系统调用来使操作系统为其分配内核级线程，达到对硬件的访问。</p>
+<pre><code>另一边，小冈和小贝上的是同一堂课程，它们坐在一起，对老师讲课的内容津津乐道。
+</code></pre><p>同一个进程中(一堂课)会有多个线程，进程中的线程能够互相进行通信。</p>
 
       
     </div>
@@ -443,8 +434,8 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/14/linux-0-11-bootsect/" rel="next" title="基于linux0.11的从零开始学操作系统-bootsect">
-                <i class="fa fa-chevron-left"></i> 基于linux0.11的从零开始学操作系统-bootsect
+              <a href="/2018/08/04/man-month/" rel="next" title="读《人月神话》">
+                <i class="fa fa-chevron-left"></i> 读《人月神话》
               </a>
             
           </div>
@@ -452,10 +443,6 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/17/linux-0-11-syscall/" rel="prev" title="基于linux0.11的从零开始学操作系统-system_call">
-                基于linux0.11的从零开始学操作系统-system_call <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -509,17 +496,8 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -618,22 +596,6 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-setup中获取扩展内存大小："><span class="nav-number">1.</span> <span class="nav-text">1.setup中获取扩展内存大小：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-保护模式"><span class="nav-number">2.</span> <span class="nav-text">2.保护模式</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

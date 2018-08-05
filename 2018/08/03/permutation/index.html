@@ -123,31 +123,27 @@ var _hmt = _hmt || [];
 
 
   
-  <meta name="keywords" content="半吊子," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
-<meta name="description" content="1.setup中获取扩展内存大小：! Get memory size (extended mem, kB)          mov     ah,#0x88         int     0x15         mov     [2],ax 返回：ax=从0x100000(1M)处开始的扩展内存大小 2.保护模式setup切换保护模式位于[0x00090348] 9020:0148">
-<meta name="keywords" content="半吊子">
+<meta name="description" content="先看一道例题，来自某公司招聘试题，如下：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="基于linux0.11的从零开始学操作系统-setup">
-<meta property="og:url" content="http://LuuMing.github.io/2018/07/16/linux-0-11-setup/index.html">
+<meta property="og:title" content="说排列组合">
+<meta property="og:url" content="http://LuuMing.github.io/2018/08/03/permutation/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="1.setup中获取扩展内存大小：! Get memory size (extended mem, kB)          mov     ah,#0x88         int     0x15         mov     [2],ax 返回：ax=从0x100000(1M)处开始的扩展内存大小 2.保护模式setup切换保护模式位于[0x00090348] 9020:0148">
+<meta property="og:description" content="先看一道例题，来自某公司招聘试题，如下：">
 <meta property="og:locale" content="zh">
-<meta property="og:image" content="http://luuming.github.io/2018/07/16/linux-0-11-setup/ldt.png">
-<meta property="og:image" content="http://luuming.github.io/2018/07/16/linux-0-11-setup/gdt.png">
-<meta property="og:updated_time" content="2018-07-17T09:49:49.668Z">
+<meta property="og:updated_time" content="2018-08-05T02:44:31.538Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="基于linux0.11的从零开始学操作系统-setup">
-<meta name="twitter:description" content="1.setup中获取扩展内存大小：! Get memory size (extended mem, kB)          mov     ah,#0x88         int     0x15         mov     [2],ax 返回：ax=从0x100000(1M)处开始的扩展内存大小 2.保护模式setup切换保护模式位于[0x00090348] 9020:0148">
-<meta name="twitter:image" content="http://luuming.github.io/2018/07/16/linux-0-11-setup/ldt.png">
+<meta name="twitter:title" content="说排列组合">
+<meta name="twitter:description" content="先看一道例题，来自某公司招聘试题，如下：">
 
 
 
 
 
 
-  <link rel="canonical" href="http://LuuMing.github.io/2018/07/16/linux-0-11-setup/"/>
+  <link rel="canonical" href="http://LuuMing.github.io/2018/08/03/permutation/"/>
 
 
 
@@ -156,7 +152,7 @@ var _hmt = _hmt || [];
     sidebar: "",
   };
 </script>
-  <title>基于linux0.11的从零开始学操作系统-setup | LuMing's blog</title>
+  <title>说排列组合 | LuMing's blog</title>
   
 
 
@@ -301,7 +297,7 @@ var _hmt = _hmt || [];
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/07/16/linux-0-11-setup/">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/03/permutation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LuMing">
@@ -318,7 +314,7 @@ var _hmt = _hmt || [];
 
         
         
-          <h1 class="post-title" itemprop="name headline">基于linux0.11的从零开始学操作系统-setup</h1>
+          <h1 class="post-title" itemprop="name headline">说排列组合</h1>
         
 
         <div class="post-meta">
@@ -330,7 +326,7 @@ var _hmt = _hmt || [];
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T14:01:26+08:00">2018-07-16</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-03T10:57:10+08:00">2018-08-03</time>
             
 
             
@@ -367,26 +363,9 @@ var _hmt = _hmt || [];
       
 
       
-        <h4 id="1-setup中获取扩展内存大小："><a href="#1-setup中获取扩展内存大小：" class="headerlink" title="1.setup中获取扩展内存大小："></a>1.setup中获取扩展内存大小：</h4><pre><code>! Get memory size (extended mem, kB)
-
-        mov     ah,#0x88
-        int     0x15
-        mov     [2],ax
-</code></pre><p><code>返回：ax=从0x100000(1M)处开始的扩展内存大小</code></p>
-<h4 id="2-保护模式"><a href="#2-保护模式" class="headerlink" title="2.保护模式"></a>2.保护模式</h4><p>setup切换保护模式位于<code>[0x00090348] 9020:0148</code></p>
-<pre><code>        mov     ax,#0x0001      ! protected mode (PE) bit
-        lmsw    ax              ! This is it!
-</code></pre><p>此时CPU已经进入32位保护模式</p>
-<pre><code>jmpi    0,8             ! jmp offset 0 of segment 8 (cs)
-</code></pre><p>这句话在16位实模式下解释如下:</p>
-<pre><code>CPU跳转至cs = 8,IP = 0 即0x80处开始执行
-</code></pre><p>而到了32位,CS称为选择子。此时的寻址方式为：<br>通过选择子配合gdt表查到一个值，把这个值重新组合作为新的地址。<br>此时<code>GDTR = 0x0009035b</code> 意味着当前gdt表起始位置在内存中的0x0009035b处。cs=8代表，以<code>GDTR</code>位起始位置，偏移8个字节。也就是选择‘0x00090363’。存放的东西是什么呢？</p>
-<pre><code>0x00090363 &lt;bogus+       8&gt;:    0xff    0x07    0x00    0x00    0x00    0x9a    0xc0    0x00
-p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是乎:
-0x00090363-0x00090371: 
-00C09A00000007FF
-</code></pre><p>上面的东西代表的是什么意思呢？其是，它是一段LDT(Local Descriptor Table)。一共64个bit，其解释方式如下图所示：<br><img src="/2018/07/16/linux-0-11-setup/./ldt.png" alt="ldt"><br>重点关心黑色字体部分:<br> <strong>00</strong>C09A<strong>000000</strong>07FF<br> 前面的就是32位保护模式下的基址，后面的就是保护模式下的偏移地址。所以，接下来CPU就到了<code>00:000000</code>处。<br> 用一张图概况保护模式下的寻址方式，一定就是这样了:<br> <img src="/2018/07/16/linux-0-11-setup/./gdt.png" alt="gdt"></p>
-
+        <p>先看一道例题，来自某公司招聘试题，如下：</p>
+<pre><code>
+</code></pre>
       
     </div>
 
@@ -428,12 +407,6 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/半吊子/" rel="tag"># 半吊子</a>
-          
-        </div>
-      
 
       
       
@@ -443,8 +416,8 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/14/linux-0-11-bootsect/" rel="next" title="基于linux0.11的从零开始学操作系统-bootsect">
-                <i class="fa fa-chevron-left"></i> 基于linux0.11的从零开始学操作系统-bootsect
+              <a href="/2018/08/02/mooc/" rel="next" title="慕课程表">
+                <i class="fa fa-chevron-left"></i> 慕课程表
               </a>
             
           </div>
@@ -453,8 +426,8 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/07/17/linux-0-11-syscall/" rel="prev" title="基于linux0.11的从零开始学操作系统-system_call">
-                基于linux0.11的从零开始学操作系统-system_call <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/04/man-month/" rel="prev" title="读《人月神话》">
+                读《人月神话》 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -509,17 +482,8 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -618,22 +582,6 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-setup中获取扩展内存大小："><span class="nav-number">1.</span> <span class="nav-text">1.setup中获取扩展内存大小：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-保护模式"><span class="nav-number">2.</span> <span class="nav-text">2.保护模式</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
