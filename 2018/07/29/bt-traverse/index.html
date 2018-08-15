@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="LuMing&#39;s blog">
 <meta property="og:description" content="关于二叉树的遍历，往往会出这么几类题目： 1. 根据一种序列重建二叉树分析：只给出一个输出序列会对应多种二叉树，因此这类题目的给定序列中往往包含有空节点，这时只需要反过来写递归程序便可：例：1086 Tree Traversals Again (25)（25 分）程： int times = 0;                //计数变量 node * build() {     node *">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-08-13T08:33:59.873Z">
+<meta property="og:updated_time" content="2018-08-15T04:03:04.444Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二叉树的遍历">
 <meta name="twitter:description" content="关于二叉树的遍历，往往会出这么几类题目： 1. 根据一种序列重建二叉树分析：只给出一个输出序列会对应多种二叉树，因此这类题目的给定序列中往往包含有空节点，这时只需要反过来写递归程序便可：例：1086 Tree Traversals Again (25)（25 分）程： int times = 0;                //计数变量 node * build() {     node *">
@@ -350,7 +350,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-08-13 16:33:59" itemprop="dateModified" datetime="2018-08-13T16:33:59+08:00">2018-08-13</time>
+                <time title="Modified: 2018-08-15 12:03:04" itemprop="dateModified" datetime="2018-08-15T12:03:04+08:00">2018-08-15</time>
               
             
           </span>
@@ -409,7 +409,7 @@ node * build()
     }
     return r;                //返回建立好的二叉树(pre-order)
 }
-</code></pre><h3 id="2-根据两种序列遍历树"><a href="#2-根据两种序列遍历树" class="headerlink" title="2.根据两种序列遍历树"></a>2.根据两种序列遍历树</h3><p>分析： 既然给出了两种序列，那么序列中一定不包含空节点的输出，对于这种问题其解题的核心在于<code>找到根节点位置</code>。<br>那么，如何找到根节点的位置呢？这就得利用中序遍历序列了。<br>例：<a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805345078067200" target="_blank" rel="noopener">1138 Postorder Traversal（25 分）</a><br>程：</p>
+</code></pre><h3 id="2-根据先序中序遍历"><a href="#2-根据先序中序遍历" class="headerlink" title="2.根据先序中序遍历"></a>2.根据先序中序遍历</h3><p>分析： 既然给出了两种序列，那么序列中一定不包含空节点的输出，对于这种问题其解题的核心在于<code>找到根节点位置</code>。<br>那么，如何找到根节点的位置呢？这就得利用中序遍历序列了。<br>例：<a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805345078067200" target="_blank" rel="noopener">1138 Postorder Traversal（25 分）</a><br>程：</p>
 <pre class=" language-c++"><code class="language-c++">void build(int root, int start, int end)
 {
     if(start > end)
@@ -433,6 +433,28 @@ node * build()
 <pre><code>根 |   左   |      右 
  1  | 2   3  | 4   5   6   7
 </code></pre><p>递归程序的接口设计为根节点的位置(先序)，树的范围(中序)。<br>根据中序序列确定子树的范围和子树的根节点位置。</p>
+<h3 id="3-根据先序后序遍历"><a href="#3-根据先序后序遍历" class="headerlink" title="3.根据先序后序遍历"></a>3.根据先序后序遍历</h3><p>例:<a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805353470869504" target="_blank" rel="noopener">1119 Pre-and Post-order Traversals（30 分）</a><br>程:</p>
+<pre class=" language-c++"><code class="language-c++">void build(int preStart, int preEnd, int postStart, int postEnd)
+{       
+        if(preStart == preEnd)
+        {
+                v.push_back(preorder[preStart]);        
+                return ;
+        }
+        if(preorder[preStart] == postorder[postEnd])
+        {
+                int i = preStart + 1;
+                for(; i < preEnd && preorder[i] != postorder[postEnd-1]; i++); // find the root of right child in preorder sequence
+                if(i - preStart > 1)
+                        build(preStart + 1,i-1,postStart,postStart+(i - preStart-1) - 1);
+                else
+                        unique = false;
+                v.push_back(preorder[preStart]);
+                build(i,preEnd,postStart + (i - preStart-1),postEnd - 1);
+        }
+}
+</code></pre>
+<p>析：首先需要说明的是，根据先序与后序而确定的二叉树并不唯一。<br>解决这个问题的核心在于<code>树的划分</code>。</p>
 
       
     </div>
@@ -671,7 +693,7 @@ node * build()
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-根据一种序列重建二叉树"><span class="nav-number">1.</span> <span class="nav-text">1. 根据一种序列重建二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-根据两种序列遍历树"><span class="nav-number">2.</span> <span class="nav-text">2.根据两种序列遍历树</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-根据一种序列重建二叉树"><span class="nav-number">1.</span> <span class="nav-text">1. 根据一种序列重建二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-根据先序中序遍历"><span class="nav-number">2.</span> <span class="nav-text">2.根据先序中序遍历</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-根据先序后序遍历"><span class="nav-number">3.</span> <span class="nav-text">3.根据先序后序遍历</span></a></li></ol></div>
             
 
           </div>
