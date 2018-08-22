@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="什么是XY problem，抛开定义举个例子先： 狗强：有没有个函数能返回两个分隔符之间的字符串？小明：我不知道你说啥，但我觉得有。小荣：截取和分割呗。狗强：我试了一下Partition 转载自:https://meta.stackexchange.com/questions/66377/what-is-the-xy-problem/">
+  <meta name="description" content="什么是XY problem，抛开定义举个例子先： 1.举个例子Q：有没有个函数能返回两个分隔符之间的字符串？B：我不知道你说啥，但我觉得有。C：split和splice呗。D：Partition也行Q：我试着用builtins得到字符串”attribute1: 50.223, attribute2: 442.1”中的数字。D:为啥不直接解析字符串呢？Q:我觉得(python) 有内建的解析函数。D">
 <meta name="keywords" content="集大成">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XY Problem">
+<meta property="og:title" content="\[翻译\]XY Problem">
 <meta property="og:url" content="http://LuuMing.github.io/2018/08/10/X-Y-Problem/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="什么是XY problem，抛开定义举个例子先： 狗强：有没有个函数能返回两个分隔符之间的字符串？小明：我不知道你说啥，但我觉得有。小荣：截取和分割呗。狗强：我试了一下Partition 转载自:https://meta.stackexchange.com/questions/66377/what-is-the-xy-problem/">
+<meta property="og:description" content="什么是XY problem，抛开定义举个例子先： 1.举个例子Q：有没有个函数能返回两个分隔符之间的字符串？B：我不知道你说啥，但我觉得有。C：split和splice呗。D：Partition也行Q：我试着用builtins得到字符串”attribute1: 50.223, attribute2: 442.1”中的数字。D:为啥不直接解析字符串呢？Q:我觉得(python) 有内建的解析函数。D">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-08-10T07:43:35.856Z">
+<meta property="og:updated_time" content="2018-08-22T04:19:21.092Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="XY Problem">
-<meta name="twitter:description" content="什么是XY problem，抛开定义举个例子先： 狗强：有没有个函数能返回两个分隔符之间的字符串？小明：我不知道你说啥，但我觉得有。小荣：截取和分割呗。狗强：我试了一下Partition 转载自:https://meta.stackexchange.com/questions/66377/what-is-the-xy-problem/">
+<meta name="twitter:title" content="\[翻译\]XY Problem">
+<meta name="twitter:description" content="什么是XY problem，抛开定义举个例子先： 1.举个例子Q：有没有个函数能返回两个分隔符之间的字符串？B：我不知道你说啥，但我觉得有。C：split和splice呗。D：Partition也行Q：我试着用builtins得到字符串”attribute1: 50.223, attribute2: 442.1”中的数字。D:为啥不直接解析字符串呢？Q:我觉得(python) 有内建的解析函数。D">
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>XY Problem | LuMing's blog</title>
+  <title>\[翻译\]XY Problem | LuMing's blog</title>
   
 
 
@@ -308,7 +308,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">XY Problem
+          <h1 class="post-title" itemprop="name headline">\[翻译\]XY Problem
               
             
           </h1>
@@ -333,12 +333,24 @@
                 
               
 
-              <time title="Created: 2018-08-10 15:32:27 / Modified: 15:43:35" itemprop="dateCreated datePublished" datetime="2018-08-10T15:32:27+08:00">2018-08-10</time>
+              <time title="Created: 2018-08-10 15:32:27" itemprop="dateCreated datePublished" datetime="2018-08-10T15:32:27+08:00">2018-08-10</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-08-22 12:19:21" itemprop="dateModified" datetime="2018-08-22T12:19:21+08:00">2018-08-22</time>
               
             
           </span>
@@ -372,8 +384,23 @@
 
       
         <p>什么是XY problem，抛开定义举个例子先：</p>
-<p>狗强：有没有个函数能返回两个分隔符之间的字符串？<br>小明：我不知道你说啥，但我觉得有。<br>小荣：<a href="https://www.cnblogs.com/webjoker/p/5218114.html" target="_blank" rel="noopener">截取和分割</a>呗。<br>狗强：我试了一下<a href="http://www.runoob.com/python/att-string-partition.html" target="_blank" rel="noopener">Partition</a></p>
-<p>转载自:<br><a href="https://meta.stackexchange.com/questions/66377/what-is-the-xy-problem/" target="_blank" rel="noopener">https://meta.stackexchange.com/questions/66377/what-is-the-xy-problem/</a></p>
+<h3 id="1-举个例子"><a href="#1-举个例子" class="headerlink" title="1.举个例子"></a>1.举个例子</h3><p>Q：有没有个函数能返回两个分隔符之间的字符串？<br>B：我不知道你说啥，但我觉得有。<br>C：<a href="http://www.runoob.com/python/att-string-split.html" target="_blank" rel="noopener">split</a>和<a href="http://www.runoob.com/python/python-func-slice.html" target="_blank" rel="noopener">splice</a>呗。<br>D：<a href="http://www.runoob.com/python/att-string-partition.html" target="_blank" rel="noopener">Partition</a>也行<br>Q：我试着用<a href="https://docs.python.org/3/library/builtins.html" target="_blank" rel="noopener">builtins</a>得到字符串”attribute1: 50.223, attribute2: 442.1”中的数字。<br>D:为啥不直接解析字符串呢？<br>Q:我觉得(python) 有内建的解析函数。<br>D: 这样</p>
+<pre class=" language-python"><code class="language-python">pairs <span class="token operator">=</span> <span class="token punctuation">[</span>x<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> s<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">","</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+attribs <span class="token operator">=</span> <span class="token punctuation">{</span>k<span class="token punctuation">:</span> v <span class="token keyword">for</span> x <span class="token keyword">in</span> pairs <span class="token keyword">for</span> k<span class="token punctuation">,</span> v <span class="token keyword">in</span> <span class="token punctuation">[</span>x<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">": "</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">}</span>
+</code></pre>
+<p>D:虽然有一些库，但我觉得这样已经足够简单了(如果你不关心错误处理的话)<br>D:如果可以的话用一些比较好的原始数据，比如json或yaml就简单多了。<br>Q:代码实际上来自于HTML<br>Q:我不知道怎样用HTML解析器或者别的来解析JavaScript<br>D:是不是仅仅嵌入在HTML里或者是拼版的HTML？<br>Q: 对，是嵌在HTML里的。<br>D: 如果是JavaScript，json就可以解析它。<br>Q: 谢谢<br>D:我没有说明白:json只是解析了数据结构，不是js代码<br>Q:我要解析的就是数据结构.<br>来源:<a href="https://meta.stackexchange.com/questions/66377/what-is-the-xy-problem/" target="_blank" rel="noopener">what-is-the-xy-problem</a></p>
+<h3 id="2-定义"><a href="#2-定义" class="headerlink" title="2.定义"></a>2.定义</h3><p>回过头来看X-Y problem</p>
+<pre><code>1）有人想解决问题X
+2）他觉得Y可能是解决X问题的方法
+3）但是他不知道Y应该怎么做
+4）于是他去问别人Y应该怎么做？
+</code></pre><p>来源:<a href="http://www.piaoyi.org/other/x-y-problem-1.html" target="_blank" rel="noopener">提问的智慧：X-Y PROBLEM
+</a></p>
+<p>###3.分析<br>也就是说，在上述例子中，</p>
+<pre><code>Q原本的目的是想解析HTML中嵌入的JavaScript中的数据 (X problem)
+</code></pre><p>而他不知道如何解析JS，因此他自己想了个办法</p>
+<pre><code>有没有个函数能返回两个分隔符之间的字符串？ (Y problem)
+</code></pre><p>因此他花费了大量的时间来解决Y，岂不知单单改变数据格式json就可以解决问题。</p>
 
       
     </div>
@@ -489,8 +516,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -589,6 +625,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-举个例子"><span class="nav-number">1.</span> <span class="nav-text">1.举个例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-定义"><span class="nav-number">2.</span> <span class="nav-text">2.定义</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
