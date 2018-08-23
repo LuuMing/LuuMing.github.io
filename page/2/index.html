@@ -287,6 +287,440 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/07/14/linux-0-11-bootsect/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/14/linux-0-11-bootsect/" itemprop="url">
+                  基于linux0.11的从零开始学操作系统-bootsect
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-14 23:52:07" itemprop="dateCreated datePublished" datetime="2018-07-14T23:52:07+08:00">2018-07-14</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-16 14:20:02" itemprop="dateModified" datetime="2018-07-16T14:20:02+08:00">2018-07-16</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先，BIOS有一段自检程序，其作用还不明确。总之，与我们有关的地方是内存中0x07c00<br>CPU到了0x07c00从这里开始进入bootsect.s</p>
+<pre><code>_start:
+        mov     ax,#BOOTSEG
+        mov     ds,ax
+        mov     ax,#INITSEG
+        mov     es,ax
+        mov     cx,#256
+        sub     si,si
+        sub     di,di
+        rep
+        movw
+        jmpi    go,INITSEG
+</code></pre><p>而bootsect.s 一开始先是将自己拷贝到0x90000处<br>bootsect 本身只有512字节，因此才有了上述程序rep那里的内容.<br>256<em>word= 512 </em>byte<br>也就是从内存中0x07c00拷贝512字节到0x90000.<br>0x90000-0x9001ff 这里便是bootsect的新的位置.</p>
+<p>这时候，如果你反汇编一下0x07c00 与 0x90000。你会发现二者相同，并且就是bootsect.S中的内容，因此验证猜想正确。</p>
+<pre><code>go:     mov     ax,cs          ! 此时cs=9000,IP = 0018
+        mov     ds,ax
+        mov     es,ax
+! put stack at 0x9ff00.
+        mov     ss,ax
+        mov     sp,#0xFF00
+</code></pre><p>执行完jmpi go,INITSEG后,CPU 便跳到了0x90018处，设置堆栈大小.并将ds,es设置为9000H.此时,cs=ds=es=ss=9000H.<br>接下来到了ok_load_setup</p>
+<pre><code>load_setup:
+        mov     dx,#0x0000              ! drive 0, head 0
+        mov     cx,#0x0002              ! sector 2, track 0
+        mov     bx,#0x0200              ! address = 512, in INITSEG
+        mov     ax,#0x0200+SETUPLEN     ! service 2, nr of sectors
+        int     0x13                    ! read it
+         jnc     ok_load_setup           ! ok - continue
+</code></pre><p>这里的重点就是<a href="https://blog.csdn.net/farmwang/article/details/50017225" target="_blank" rel="noopener">bios 13号中断</a>.</p>
+<pre><code>功能描述：读扇区 
+入口参数：AH＝02H 
+AL＝扇区数 
+CH＝柱面 
+CL＝扇区 
+DH＝磁头 
+DL＝驱动器，00H~7FH：软盘；80H~0FFH：硬盘 
+ES:BX＝缓冲区的地址 
+出口参数：CF＝0——操作成功，AH＝00H，AL＝传输的扇区数，否则，AH＝状态代码
+</code></pre><p>bios13号中断为基本的<a href="https://blog.csdn.net/ylo523/article/details/39050771" target="_blank" rel="noopener">磁盘操作</a>，根据ah不同选择不同功能。<br>上述ah = 02,al=SETUPLEN=2.<br>因此，其含义为<br><code>“从0柱面第二个扇区第0个磁头读4个扇区(2048B)到内存的0x90200处”</code><br>执行完第一个int 13后，我们查看0x90200内容。<br>会发现0x90200-0x90337共312字节</p>
+<pre><code>&lt;bochs:29&gt; u 0x90200 0x902ff
+00090200: (                    ): mov ah, 0x03              ; b403
+00090202: (                    ): xor bh, bh                ; 30ff
+00090204: (                    ): int 0x10                  ; cd10
+00090206: (                    ): mov cx, 0x0017            ; b91700
+00090209: (                    ): mov bx, 0x0007            ; bb0700
+0009020c: (                    ): mov bp, 0x014c            ; bd4c01
+0009020f: (                    ): mov ax, 0x1301            ; b80113
+00090212: (                    ): int 0x10                  ; cd10
+00090214: (                    ): mov ax, 0x9000            ; b80090
+00090217: (                    ): mov ds, ax                ; 8ed8
+00090219: (                    ): mov ah, 0x03              ; b403
+0009021b: (                    ): xor bh, bh                ; 30ff
+0009021d: (                    ): int 0x10                  ; cd10
+0009021f: (                    ): mov word ptr ds:0x0, dx   ; 89160000
+</code></pre><p>正是后面setup.S中的内容。<br>如果成功，CF=0，跳转至ok_load_setup<br>若不成功得想办法补救，即重新读：</p>
+<pre><code>        mov     dx,#0x0000
+        mov     ax,#0x0000              ! reset the diskette
+        int     0x13
+        j       load_setup
+</code></pre><p>成功后，继续</p>
+<pre><code>ok_load_setup:
+
+! Get disk drive parameters, specifically nr of sectors/track
+
+        mov     dl,#0x00
+        mov     ax,#0x0800              ! AH=8 is get drive parameters
+        int     0x13
+</code></pre><p>又是<a href="https://blog.csdn.net/ylo523/article/details/39050771" target="_blank" rel="noopener">int 13</a>.这次AH=08:</p>
+<pre><code>入口参数：AH＝08H 
+DL＝驱动器，00H~7FH：软盘；80H~0FFH：硬盘 
+出口参数：CF＝1——操作失败，AH＝状态代码，参见功能号01H中的说明，否则， BL＝01H — 360K 
+＝02H — 1.2M 
+＝03H — 720K 
+＝04H — 1.44M 
+CH＝柱面数的低8位 
+CL的位7-6＝柱面数的该2位 
+CL的位5-0＝扇区数 
+DH＝磁头数 
+DL＝驱动器数 
+ES:DI＝磁盘驱动器参数表地址 
+</code></pre><p>执行完int 13后，发现<code>BL= 4</code>代表读取软盘 大小为1.44M，<code>CL =00010010B</code>代表18个扇区 ，将CH置零后，<code>cx = 0012H</code></p>
+<pre><code>      mov     ch,#0x00
+        seg cs
+        mov     sectors,cx
+        mov     ax,#INITSEG
+        mov     es,ax
+</code></pre><p>接下来第2，3句为段超越，意思把cx内容移动到cs:[sectors]，此时sectors相当于一个变量，用于保存一个值，测试时发现sectors=0x13d。意味着将读取到的数据保存在内存cs:sectors处。<br>同时，int 13 改变了ES，将es再设回9000。然后，准备在屏幕上显示一些文字。</p>
+<pre><code>! Print some inane message
+
+        mov     ah,#0x03                ! read cursor pos
+        xor     bh,bh
+        int     0x10
+</code></pre><pre><code>AH = 3
+读光标位置
+输入参数：BH = 页号
+输出参数：
+CH = 光标开始行
+CL = 光标结束行
+DH = 行
+DL = 列
+</code></pre><p>先读0页光标位置，<code>ch=6,cl=7,dh=10,dl=0</code>。</p>
+<pre><code>    mov     cx,#24                     !  cs:ip=0x00090056 
+       mov     bx,#0x0007              ! page 0, attribute 7 (normal)
+        mov     bp,#msg1
+        mov     ax,#0x1301              ! write string, move cursor
+        int     0x10
+
+</code></pre><p>显示24个字符串。<br>接着将系统加载到内存起始0x10000处，代码如下</p>
+<pre><code>! ok, we&#39;ve written the message, now
+! we want to load the system (at 0x10000)
+
+        mov     ax,#SYSSEG
+        mov     es,ax           ! segment of 0x010000
+        call    read_it
+</code></pre><p>将段设置好后调用了读取函数：</p>
+<pre><code>read_it:
+        mov ax,es
+        test ax,#0x0fff
+die:    jne die                 ! es must be at 64kB boundary
+        xor bx,bx               ! bx is starting address within segment
+rp_read:
+        mov ax,es
+        cmp ax,#ENDSEG          ! have we loaded all yet?
+        jb ok1_read
+        ret
+ok1_read:...
+ok2_read:...
+.....
+</code></pre><p>将一些东西准备就绪后，就要进入setup</p>
+<pre><code>    jmpi 0,SETUPSEG
+</code></pre><p>跳转至0x90200。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/06/16/embedding-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/16/embedding-system/" itemprop="url">
+                  一图带你看懂嵌入式系统(你得点开我,而且手机看不到)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-06-16 15:28:37" itemprop="dateCreated datePublished" datetime="2018-06-16T15:28:37+08:00">2018-06-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-17 17:56:41" itemprop="dateModified" datetime="2018-07-17T17:56:41+08:00">2018-07-17</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0" width="468" height="60"><br><param name="movie" value="*.swf"><br><param name="quality" value="High"><br><param name="_cx" value="0"><br><param name="_cy" value="0"><br><param name="FlashVars" value=""><br><param name="Src" ref="" value="*.swf"><br><param name="WMode" value="Window"><br><param name="Play" value="-1"><br><param name="Loop" value="-1"><br><param name="SAlign" value=""><br><param name="Menu" value="-1"><br><param name="Base" value=""><br><param name="AllowScriptAccess" value="always"><br><param name="Scale" value="ShowAll"><br><param name="DeviceFont" value="0"><br><param name="EmbedMovie" value="0"><br><param name="BGColor" value=""><br><param name="SWRemote" value=""><br><param name="MovieData" value=""><br><embed src="embed.swf" quality="high" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="800" height="600"><br></object>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/06/03/when-they-meet/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1751,357 +2185,11 @@ NPM安装- G hexo CLI美元
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2017/12/31/My2017/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/31/My2017/" itemprop="url">
-                  My2017
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2017-12-31 17:59:00" itemprop="dateCreated datePublished" datetime="2017-12-31T17:59:00+08:00">2017-12-31</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-02-28 15:14:23" itemprop="dateModified" datetime="2018-02-28T15:14:23+08:00">2018-02-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/随想/" itemprop="url" rel="index"><span itemprop="name">随想</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-这是最好的时代，也是最坏的时代。"><a href="#1-这是最好的时代，也是最坏的时代。" class="headerlink" title="1.这是最好的时代，也是最坏的时代。"></a>1.这是最好的时代，也是最坏的时代。</h3><p>为了统一观点，我们不妨做以下假设:<strong>全局最优只存在于我们能够感知的范围内。</strong></p>
-<p><em>凡事豫则立，不豫则废</em>，于是乎一个看似很符合逻辑的结论便是:要想做好一件事情，你必须要像古人种地那样：春耕，夏芸，秋收，冬藏。未来在古人的眼里仿佛是一个确定性的状态。打从种地那一刻起就能预料到什么时候改浇水，什么时候该施肥，什么时候该收获。换句话说，耕种这件事情很容易找到一个全局最优解。</p>
-<p> 但是，这样的方法在今天依然高效吗？今天的我们还能够找到全局最优吗？</p>
-<p>经历了2017，我们可能或多或少会感到些不安。身边的变化似乎有些超出了我们的预料。</p>
-<p><em>从前的日子变得很慢，车、马 、邮件都很慢。</em></p>
-<p>以前的我们因为缺乏信息，身边的事物充满着很强的确定性。“邻国相望，鸡犬之声相闻，民至老死，不相往来”<br>小国寡民的生我让我们仿佛生活在一个天然的大屏障中。但放眼今天，信息量大了，越是喜欢什么，越容易越是容易陷入其中，越过得安逸，内心中就越发迷茫。我们有没有被某种无形的手所支配？<br><img src="/2017/12/31/My2017/0.jpeg" alt="人工智能技术"></p>
-<center>人工智能技术</center><br>靠预测永远不是制胜的法宝，”蝴蝶效应”说的就是这个道理，这个世界毕竟太复杂了。但是，从另外一个例子中仿佛又能从复杂的不确定性中找到确定的状态，那便是生命的过程。从基因开始，经过数百万道工序转录成RNA，经过数千万道工序翻译成蛋白质，再由蛋白质经过数亿万道工序折叠….你没变成猪，你还是你。<br><img src="/2017/12/31/My2017/1.jpeg" alt="Life"><br><center>复杂的生命过程</center>
-
-<p>转过来看看人工智能，它应对复杂问题的办法很简单，一言以蔽之，即:”<strong>多维度下的局部最优近似于全局最优。</strong></p>
-<p>人工智能的成功与复杂的生命过程之间有没有联系呢？</p>
-<h3 id="2-确定目标，不断迭代。"><a href="#2-确定目标，不断迭代。" class="headerlink" title="2.确定目标，不断迭代。"></a>2.确定目标，不断迭代。</h3><p>这是一个真实的故事:</p>
-<pre><code>    某L君逃了一学期的课程，临近考试一筹莫展。无可奈何的他左手抱着试题，右手抱着答案，双手开工，刷了整整1两天后竟然出乎意料的过了。
-</code></pre><p>这种方法看似笨拙，实质则是机器智能成功的关键。在上述例子中，每刷一道题我们不妨称之为<strong>迭代</strong>。每次犯错从当下的状态中找到与目标的距离，我们不妨称之为<strong>梯度</strong>。每一次犯错后，从梯度中改善原来的方法，我们不妨称之为<strong>优化</strong>。因此，我们是不是可以重新定义一下学习，即:<br> <strong> 犯错 优化 迭代 </strong><br>通过简简单单的三个步骤，AlphaGo在围棋上战胜了人类。</p>
-<p><div align:="" center=""><br><img src="/2017/12/31/My2017/2.jpeg" alt=""><br> </div></p>
-<center>强化学习</center><br>我们教会机器如何战胜人类。现在，我们是不是可以反过来再从机器身上学到些东西呢？我们常常口中说”10000小时定律”，现在是不是应该换成<strong>“有效10000小时定律”</strong>了?<br>### 3.Be yourself###<br>尼尔·波兹曼在《娱乐至死》这本书中提出了一个观点，在未来随着机器智能的发展，人类从任何繁重的事务中解脱，8成的人只有每天娱乐至死，每天只要戴上VR眼镜，现实世界只不过是一个小小的补充。<br><div align:="" center=""><br><img src="/2017/12/31/My2017/3.jpeg" alt=""><br> </div><center><br> 尼尔·波兹曼《娱乐至死》</center>
-
-<p>哈哈，哪里有那么悲观，发展自己的兴趣就行了。既然人类在某些领域比不过机器，那么为什么要去和他们比呢？当机器取代手工劳动后，大量的时间留给了人们。人们便可以利好这一剩余产能。</p>
-<p>原本的你想成为一名导演，迫于生计只能改行当程序员。现在，你完全不用考虑吃喝，用人工智能技术加上你的创意，也许分分钟就能将你脑中好莱坞大片式的景象展现在人们面前。</p>
-<p>人生来是具有创造性的。小时候你总是在床上画下一张大大的地图；长大后你老是抱怨为什么没有一个机器帮你完成老师布置的作业；老了以后，你又感叹没有个时光机能够带你回到年少看看这美丽的世界。</p>
-<p><div align:="" center=""><br><img src="/2017/12/31/My2017/4.jpeg" alt=""><br> </div></p>
-<center>“世界如此美丽，我却没有发现”</center>
-
-<p>不必担心，机器智能会帮助你完成一切。人们将会在繁杂工作以外的领域大放异彩。艺术创作，社会服务，文化工作等等。<br>于是乎结论就是:你喜欢诗歌就尽情的喜欢，你热爱文学就尽情的热爱。机器智能抢走了大部分人的机会，同时又给大部分人带来了机会。因此，just be yourself。</p>
-<p>总结一下：<br><strong>“犯错，迭代，优化” 是机器智能成功的关键，我们可以类比总结出“有效10000小时定律。”</strong><br><strong>“不必跟机器硬怼，人机协作才是主流。”</strong><br><strong>“拒绝‘精耕细作’，做一个知识的‘拿来主义’者。”</strong><br><strong>“发展自己兴趣，不必有所顾虑。”</strong></p>
-<p>这篇文章，一是年终复盘，不能总是让知识“只进不出”，不总结一下也就忘记了。<br>二是告别”人工智能应用年”，让我至少在时代的风口浪尖上留下一点气息。<br>感谢乐乐、小强在文风上进行的指导。新的一年里，与君共勉</p>
-<h4 id="总之，预测未来的最好方法就是创造未来。"><a href="#总之，预测未来的最好方法就是创造未来。" class="headerlink" title="总之，预测未来的最好方法就是创造未来。"></a>总之，预测未来的最好方法就是创造未来。</h4><h4 id="2018，keep-fighting！"><a href="#2018，keep-fighting！" class="headerlink" title="2018，keep fighting！"></a>2018，keep fighting！</h4>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2017/07/20/interest/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/07/20/interest/" itemprop="url">
-                  论有趣
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2017-07-20 21:59:18" itemprop="dateCreated datePublished" datetime="2017-07-20T21:59:18+08:00">2017-07-20</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-08-12 22:02:59" itemprop="dateModified" datetime="2018-08-12T22:02:59+08:00">2018-08-12</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>求学问道，图学以致用。做事，当持之以恒，做人，至行所当行。心胸宽阔，通古晓今，纳新弃旧，读经典，作诗词，赏艺术，此谓“有趣”矣！</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2144,7 +2232,7 @@ NPM安装- G hexo CLI美元
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2188,7 +2276,9 @@ NPM安装- G hexo CLI美元
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
