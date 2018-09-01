@@ -287,6 +287,405 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/01/translating-20180819-How-to-define-and-use-functions-in-Linux-Shell-Script/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/01/translating-20180819-How-to-define-and-use-functions-in-Linux-Shell-Script/" itemprop="url">
+                  <翻译> 如何在 Linux Shell 编程中定义和使用函数
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-01 10:58:16 / Modified: 11:00:58" itemprop="dateCreated datePublished" datetime="2018-09-01T10:58:16+08:00">2018-09-01</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="如何在-Linux-Shell-编程中定义和使用函数"><a href="#如何在-Linux-Shell-编程中定义和使用函数" class="headerlink" title="如何在 Linux Shell 编程中定义和使用函数"></a>如何在 Linux Shell 编程中定义和使用函数</h1><p>函数是一段可复用的代码。我们通常把重复的代码放进函数中并且在不同的地方去调用它。库是函数的集合。我们可以在库中定义经常使用的函数，这样其它脚本便可以不再重复代码而使用这些函数。</p>
+<p><img src="https://www.linuxtechi.com/wp-content/uploads/2018/08/Functions-Linux-Shell-Script.jpg" alt="Functions-Linux-Shell-Script"></p>
+<p>本文我们将讨论诸多关于函数的内容和一些使用技巧。为了方便演示，我将在 Ubuntu 系统上使用 <strong>Bourne Again SHell (Bash)</strong>。</p>
+<h3 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h3><p>在 Shell 中调用函数和调用其它命令是一模一样的。例如，如果你的函数名称为 <code>my_func</code>，你可以在命令行中像下面这样执行它：</p>
+<pre><code>$ my_func
+</code></pre><p>如果你的函数接收多个参数，那么可以像下面这样写（类似命令行参数的使用）：</p>
+<pre><code>$ my_func arg1 arg2 arg3
+</code></pre><h3 id="定义函数"><a href="#定义函数" class="headerlink" title="定义函数"></a>定义函数</h3><p>我们可以用下面的语法去定义一个函数：</p>
+<pre><code>function function_name {
+    Body of function
+}
+</code></pre><p>函数的主体可以包含任何有效的命令、循环语句和其它函数或脚本。现在让我们创建一个简单的函数，它向屏幕上显示一些消息（注：直接在命令行里写）。</p>
+<pre><code>function print_msg {
+    echo &quot;Hello, World&quot;
+}
+</code></pre><p>现在，让我们执行这个函数：</p>
+<pre><code>$ print_msg
+Hello, World
+</code></pre><p>不出所料，这个函数在屏幕上显示了一些消息。</p>
+<p>在上面的例子中，我们直接在终端里创建了一个函数。这个函数也可以保存到文件中。如下面的例子所示。</p>
+<pre><code>#!/bin/bash
+function print_msg {
+    echo &quot;Hello, World&quot;
+}
+print_msg
+</code></pre><p>我们已经在 <code>function.sh</code> 文件中定义了这个函数。现在让我们执行这个脚本：</p>
+<pre><code>$ chmod +x function.sh
+$ ./function.sh
+Hello, World
+</code></pre><p>你可以看到，上面的输出和之前的是一模一样的。</p>
+<h3 id="更多函数用法"><a href="#更多函数用法" class="headerlink" title="更多函数用法"></a>更多函数用法</h3><p>在上一小节中我们定义了一个非常简单的函数。然而在软件开发的过程中，我们需要更多高级的函数，它可以接收多个参数并且带有返回值。在这一小节中，我们将讨论这种函数。</p>
+<h4 id="向函数传递参数"><a href="#向函数传递参数" class="headerlink" title="向函数传递参数"></a>向函数传递参数</h4><p>我们可以像调用其它命令那样给函数提供参数。我们可以在函数里使用美元 <code>$</code> 符号访问到这些参数。例如，<code>$1</code> 表示第一个参数，<code>$2</code> 代表第二个参数，以此类推。</p>
+<p>让我们修改下之前的函数，让它以参数的形式接收信息。修改后的函数就像这样：</p>
+<pre><code>function print_msg {
+    echo &quot;Hello $1&quot;
+}
+</code></pre><p>在上面的函数中我们使用 <code>$1</code> 符号访问第一个参数。让我们执行这个函数：</p>
+<pre><code>$ print_msg &quot;LinuxTechi&quot;
+</code></pre><p>执行完后，生成如下信息：</p>
+<pre><code>Hello LinuxTechi
+</code></pre><h4 id="从函数中返回数值"><a href="#从函数中返回数值" class="headerlink" title="从函数中返回数值"></a>从函数中返回数值</h4><p>跟其它编程语言一样，Bash 提供了返回语句让我们可以向调用者返回一些数值。让我们举例说明：</p>
+<pre><code>function func_return_value {
+    return 10
+}
+</code></pre><p>上面的函数向调用者返回 <code>10</code>。让我们执行这个函数：</p>
+<pre><code>$ func_return_value
+$ echo &quot;Value returned by function is: $?&quot;
+</code></pre><p>当你执行完，将会产生如下的输出结果：</p>
+<pre><code>Value returned by function is: 10
+</code></pre><p><strong>提示</strong>：在 Bash 中使用 <code>$?</code> 去获取函数的返回值。</p>
+<h3 id="函数技巧"><a href="#函数技巧" class="headerlink" title="函数技巧"></a>函数技巧</h3><p>目前我们已经对 Bash 中的函数有了一些了解。现在让我们创建一些非常有用的 Bash 函数，它们可以让我们的生活变得更加轻松。</p>
+<h4 id="Logger"><a href="#Logger" class="headerlink" title="Logger"></a>Logger</h4><p>让我们创建一个 <code>logger</code> 函数，它可以输出带有日期和时间的 log 信息。</p>
+<pre><code>function log_msg {
+    echo &quot;[`date &#39;+ %F %T&#39;` ]: $@&quot;
+}
+</code></pre><p>执行这个函数：</p>
+<pre><code>$ log_msg &quot;This is sample log message&quot;
+</code></pre><p>执行完，就会生成如下信息：</p>
+<pre><code>[ 2018-08-16 19:56:34 ]: This is sample log message
+</code></pre><h4 id="显示系统信息"><a href="#显示系统信息" class="headerlink" title="显示系统信息"></a>显示系统信息</h4><p>让我们创建一个显示 GNU/Linux 信息的函数</p>
+<pre><code>function system_info {
+    echo &quot;### OS information ###&quot;
+    lsb_release -a
+
+    echo
+    echo &quot;### Processor information ###&quot;
+    processor=`grep -wc &quot;processor&quot; /proc/cpuinfo`
+    model=`grep -w &quot;model name&quot; /proc/cpuinfo  | awk -F: &#39;{print $2}&#39;`
+    echo &quot;Processor = $processor&quot;
+    echo &quot;Model     = $model&quot;
+
+    echo
+    echo &quot;### Memory information ###&quot;
+    total=`grep -w &quot;MemTotal&quot; /proc/meminfo | awk &#39;{print $2}&#39;`
+    free=`grep -w &quot;MemFree&quot; /proc/meminfo | awk &#39;{print $2}&#39;`
+    echo &quot;Total memory: $total kB&quot;
+    echo &quot;Free memory : $free kB&quot;
+}
+</code></pre><p>执行完后会生成以下信息：</p>
+<pre><code>### OS information ###
+No LSB modules are available.
+Distributor ID:           Ubuntu
+Description:   Ubuntu 18.04.1 LTS
+Release:         18.04
+Codename:    bionic
+
+### Processor information ###
+Processor = 1
+Model     =  Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz
+
+### Memory information ###
+Total memory: 4015648 kB
+Free memory : 2915428 kB
+</code></pre><h4 id="在当前目录下查找文件或者目录"><a href="#在当前目录下查找文件或者目录" class="headerlink" title="在当前目录下查找文件或者目录"></a>在当前目录下查找文件或者目录</h4><p>下面的函数从当前目录下查找文件或者目录：</p>
+<pre><code>function search {
+    find . -name $1
+}
+</code></pre><p>让我们使用下面的命令查找 <code>dir4</code> 这个目录：</p>
+<pre><code>$ search dir4
+</code></pre><p>当你执行完命令后，将会产生如下输出：</p>
+<pre><code>./dir1/dir2/dir3/dir4
+</code></pre><h4 id="数字时钟"><a href="#数字时钟" class="headerlink" title="数字时钟"></a>数字时钟</h4><p>下面的函数在终端里创建了一个简单的数字时钟：</p>
+<pre><code>function digital_clock {
+    clear
+    while [ 1 ]
+    do
+        date +&#39;%T&#39;
+        sleep 1
+        clear
+    done
+}
+</code></pre><h3 id="函数库"><a href="#函数库" class="headerlink" title="函数库"></a>函数库</h3><p>库是函数的集合。将函数定义在文件里并在当前环境中导入那个文件，这样可以创建函数库。</p>
+<p>假设我们已经在 <code>utils.sh</code> 中定义好了所有函数，接着在当前的环境下使用下面的命令导入函数：</p>
+<pre><code>$ source utils.sh
+</code></pre><p>之后你就可以像调用其它 Bash 命令那样执行库中任何的函数了。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本文我们讨论了诸多可以提升效率的实用技巧。我希望这篇文章能够启发你去创造自己的技巧。</p>
+<hr>
+<p>via: <a href="https://www.linuxtechi.com/define-use-functions-linux-shell-script/" target="_blank" rel="noopener">https://www.linuxtechi.com/define-use-functions-linux-shell-script/</a></p>
+<p>作者：<a href="http://www.linuxtechi.com/author/pradeep/" target="_blank" rel="noopener">Pradeep Kumar</a><br>选题：<a href="https://github.com/lujun9972" target="_blank" rel="noopener">lujun9972</a><br>译者：<a href="https://github.com/LuuMing" target="_blank" rel="noopener">LuuMing</a><br>校对：<a href="https://github.com/pityonline" target="_blank" rel="noopener">pityonline</a></p>
+<p>本文由 <a href="https://github.com/LCTT/TranslateProject" target="_blank" rel="noopener">LCTT</a> 原创编译，<a href="https://linux.cn/" target="_blank" rel="noopener">Linux中国</a> 荣誉推出</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/24/PAT-1103-Integer-Factorization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/24/PAT-1103-Integer-Factorization/" itemprop="url">
+                  神一样的减枝操作
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-08-24 21:05:04 / Modified: 21:06:57" itemprop="dateCreated datePublished" datetime="2018-08-24T21:05:04+08:00">2018-08-24</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天在刷<a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805364711604224" target="_blank" rel="noopener">【PAT】1103 Integer Factorization（30 分）</a>，题目大意是这样的：</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/23/translating-20180730-Open-Source-Networking-Jobs-A-Hotbed-of-Innovation-and-Opportunities/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -333,12 +732,24 @@
                 
               
 
-              <time title="Created: 2018-08-23 15:42:34 / Modified: 15:59:59" itemprop="dateCreated datePublished" datetime="2018-08-23T15:42:34+08:00">2018-08-23</time>
+              <time title="Created: 2018-08-23 15:42:34" itemprop="dateCreated datePublished" datetime="2018-08-23T15:42:34+08:00">2018-08-23</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-08-30 18:21:33" itemprop="dateModified" datetime="2018-08-30T18:21:33+08:00">2018-08-30</time>
               
             
           </span>
@@ -395,141 +806,6 @@ Focus areas like containers and edge computing are red hot and the demand for de
 </code></pre><p>还有一些:</p>
 <p><code>native cloud---云本地</code><br><code>vendors---供应商</code><br><code>DevOps---专用名词，指过程、方法与系统的统称</code><br><code>sysadmins---系统管理员</code><br><code>tackle the most pressing industry challenges---应对最紧迫的行业挑战</code><br><code>most sought---抢手</code></p>
 
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/23/Opportunities/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/23/Opportunities/" itemprop="url">
-                  Opportunities
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-08-23 15:41:18" itemprop="dateCreated datePublished" datetime="2018-08-23T15:41:18+08:00">2018-08-23</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
           
         
       
@@ -645,7 +921,7 @@ Focus areas like containers and edge computing are red hot and the demand for de
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-08-22 12:23:14" itemprop="dateModified" datetime="2018-08-22T12:23:14+08:00">2018-08-22</time>
+                <time title="Modified: 2018-09-01 10:46:36" itemprop="dateModified" datetime="2018-09-01T10:46:36+08:00">2018-09-01</time>
               
             
           </span>
@@ -693,7 +969,7 @@ attribs <span class="token operator">=</span> <span class="token punctuation">{<
 4）于是他去问别人Y应该怎么做？
 </code></pre><p>来源:<a href="http://www.piaoyi.org/other/x-y-problem-1.html" target="_blank" rel="noopener">提问的智慧：X-Y PROBLEM
 </a></p>
-<p>###3.分析<br>也就是说，在上述例子中，</p>
+<h3 id="3-分析"><a href="#3-分析" class="headerlink" title="3.分析"></a>3.分析</h3><p>也就是说，在上述例子中，</p>
 <pre><code>Q原本的目的是想解析HTML中嵌入的JavaScript中的数据 (X problem)
 </code></pre><p>而他不知道如何解析JS，因此他自己想了个办法</p>
 <pre><code>有没有个函数能返回两个分隔符之间的字符串？ (Y problem)
@@ -971,12 +1247,24 @@ attribs <span class="token operator">=</span> <span class="token punctuation">{<
                 
               
 
-              <time title="Created: 2018-08-04 10:43:34 / Modified: 11:33:17" itemprop="dateCreated datePublished" datetime="2018-08-04T10:43:34+08:00">2018-08-04</time>
+              <time title="Created: 2018-08-04 10:43:34" itemprop="dateCreated datePublished" datetime="2018-08-04T10:43:34+08:00">2018-08-04</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-01 10:53:48" itemprop="dateModified" datetime="2018-09-01T10:53:48+08:00">2018-09-01</time>
               
             
           </span>
@@ -1035,9 +1323,7 @@ Adding manpower to a late software project makes it later.
 7.工具维护人员
 8.测试人员
 9.语言专家
-</code></pre><pre class=" language-mermaidgraph"><code class="language-mermaidgraph">TD client11 ->|read / write|SVN(SVN server)
-</code></pre>
-<p>评：作者提出的一个对10人的编程团队进行专业化的角色分工的方案。要了解为什么这样做好，就得先知道怎样做不好。当你<br>评：利益要分享，决策要独立。好的民主是互相对话，</p>
+</code></pre><p>评：作者提出的一个对10人的编程团队进行专业化的角色分工的方案。要了解为什么这样做好，就得先知道怎样做不好。（待补充）<br>评：利益要分享，决策要独立。好的民主是互相对话。</p>
 
           
         
@@ -1154,7 +1440,7 @@ Adding manpower to a late software project makes it later.
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-08-10 17:59:09" itemprop="dateModified" datetime="2018-08-10T17:59:09+08:00">2018-08-10</time>
+                <time title="Modified: 2018-09-01 10:48:42" itemprop="dateModified" datetime="2018-09-01T10:48:42+08:00">2018-09-01</time>
               
             
           </span>
@@ -1189,14 +1475,8 @@ Adding manpower to a late software project makes it later.
       
         
           
-            <p>先看一道例题，来自某公司招聘试题，如下：</p>
-<pre><code>在一场运动会中，共有n个国家的运动员参加比赛。
-每个国家派出了5个运动员，所以一共有5n个运动员参加。
-现在要求将他们排成一列纵队，但是要求每位运动员都能够挨着一个他的同胞而站。
-你需要计算满足这样条件的排列方案数是多少。
-</code></pre><pre><code>1
-120
-</code></pre>
+            <p>先看一道例题，来自某公司招聘试题，如下：<br><code>`</code><br>在一场运动会中，共有n个国家的运动员参加比赛。<br>每个国家派出了5个运动员，所以一共有5n个运动员参加。<br>现在要求将他们排成一列纵队，但是要求每位运动员都能够挨着一个他的同胞而站。<br>你需要计算满足这样条件的排列方案数是多少。</p>
+
           
         
       
@@ -1804,176 +2084,6 @@ int main()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/07/16/linux-0-11-setup/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/16/linux-0-11-setup/" itemprop="url">
-                  基于linux0.11的从零开始学操作系统-setup
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-07-16 14:01:26" itemprop="dateCreated datePublished" datetime="2018-07-16T14:01:26+08:00">2018-07-16</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-07-17 17:49:49" itemprop="dateModified" datetime="2018-07-17T17:49:49+08:00">2018-07-17</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="1-setup中获取扩展内存大小："><a href="#1-setup中获取扩展内存大小：" class="headerlink" title="1.setup中获取扩展内存大小："></a>1.setup中获取扩展内存大小：</h4><pre><code>! Get memory size (extended mem, kB)
-
-        mov     ah,#0x88
-        int     0x15
-        mov     [2],ax
-</code></pre><p><code>返回：ax=从0x100000(1M)处开始的扩展内存大小</code></p>
-<h4 id="2-保护模式"><a href="#2-保护模式" class="headerlink" title="2.保护模式"></a>2.保护模式</h4><p>setup切换保护模式位于<code>[0x00090348] 9020:0148</code></p>
-<pre><code>        mov     ax,#0x0001      ! protected mode (PE) bit
-        lmsw    ax              ! This is it!
-</code></pre><p>此时CPU已经进入32位保护模式</p>
-<pre><code>jmpi    0,8             ! jmp offset 0 of segment 8 (cs)
-</code></pre><p>这句话在16位实模式下解释如下:</p>
-<pre><code>CPU跳转至cs = 8,IP = 0 即0x80处开始执行
-</code></pre><p>而到了32位,CS称为选择子。此时的寻址方式为：<br>通过选择子配合gdt表查到一个值，把这个值重新组合作为新的地址。<br>此时<code>GDTR = 0x0009035b</code> 意味着当前gdt表起始位置在内存中的0x0009035b处。cs=8代表，以<code>GDTR</code>位起始位置，偏移8个字节。也就是选择‘0x00090363’。存放的东西是什么呢？</p>
-<pre><code>0x00090363 &lt;bogus+       8&gt;:    0xff    0x07    0x00    0x00    0x00    0x9a    0xc0    0x00
-p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是乎:
-0x00090363-0x00090371: 
-00C09A00000007FF
-</code></pre><p>上面的东西代表的是什么意思呢？其是，它是一段LDT(Local Descriptor Table)。一共64个bit，其解释方式如下图所示：<br><img src="/2018/07/16/linux-0-11-setup/./ldt.png" alt="ldt"><br>重点关心黑色字体部分:<br> <strong>00</strong>C09A<strong>000000</strong>07FF<br> 前面的就是32位保护模式下的基址，后面的就是保护模式下的偏移地址。所以，接下来CPU就到了<code>00:000000</code>处。<br> 用一张图概况保护模式下的寻址方式，一定就是这样了:<br> <img src="/2018/07/16/linux-0-11-setup/./gdt.png" alt="gdt"></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2021,7 +2131,7 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
