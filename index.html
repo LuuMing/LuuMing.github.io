@@ -287,6 +287,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/20/polygon-inside/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/20/polygon-inside/" itemprop="url">
+                  如何判断点在多边形内部？
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-20 11:45:29 / Modified: 15:16:24" itemprop="dateCreated datePublished" datetime="2018-09-20T11:45:29+08:00">2018-09-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="引射线法"><a href="#引射线法" class="headerlink" title="引射线法"></a>引射线法</h3><p>从目标点出发，看这条射线与多边形所有边的交点数目，如果是奇数个。说明在多边形内部，偶数个，在多边形外部。</p>
+<pre><code>bool inside(vector&lt;point&gt; polygon, point target)
+{
+        int crossing = 0;
+        for(int i = 1; i &lt; polygon.size(); i++)
+        {
+                double slope = (polygon[i].y - polygon[i-1].y) / (polygon[i].x - polygon[ i-1 ].x);  // 两点之间的斜率
+                bool cond1 = ( target.x &gt;= polygon[i-1].x &amp;&amp; target.x &lt;= polygon[i].x);              // target 在某边两端点之间
+                bool cond2 = ( target.x &gt;= polygon[i].x &amp;&amp; target.x &lt;= polygon[i-1].x);              // target 在某边两端点之间
+                bool above = (target.y &lt; slope * ( target.x - polygon[i-1].x) + polygon[i-1].y);        // y0 &lt; ax0+b (a = slope)即在两线的下方，因此必有一点相交
+                if( (cond1 || cond2) &amp;&amp; above) crossing++;
+        }
+        return (crossing % 2 != 0);                                                                     //若有奇数个点交点，在内部
+
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/16/process-space/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -489,6 +643,22 @@
             
 
             
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-19 00:10:59" itemprop="dateModified" datetime="2018-09-19T00:10:59+08:00">2018-09-19</time>
+              
+            
           </span>
 
           
@@ -521,7 +691,8 @@
       
         
           
-            
+            <p>1 . GET<br>2 . POST</p>
+
           
         
       
@@ -637,7 +808,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-09-18 22:25:04" itemprop="dateModified" datetime="2018-09-18T22:25:04+08:00">2018-09-18</time>
+                <time title="Modified: 2018-09-18 22:28:43" itemprop="dateModified" datetime="2018-09-18T22:28:43+08:00">2018-09-18</time>
               
             
           </span>
@@ -673,11 +844,13 @@
         
           
             <p>实现一个动态站点，所需要的工具语言有 </p>
-<ol>
-<li>Spring 框架 </li>
-<li>vue</li>
-<li>Mysql<br>Spring 框架用于接收 Http 请求，并做出响应。<br>Vue 是前端框架，本身基于 JavaScript，用作渲染页面，传递数据。<br>MySql 存储数据。<br>在前后端分离的设计中，数据以 Json 的形式传递在前后端之间传递。具体表现形式为，在前端 Vue 框架中定义的变量(null/{}/[]) 以 Json 的形式传递给后端，后端代码中，用一个类封装好 Json 的属性并生成标准的get，set方法。这样，传递过去后 Spring 框架就能自动根据属性调用类的构造函数，形成后端的一个对象。<br>通过 Mydao 与 Mysql 进行交互。简单的一个动态站点就是这样做起来的。</li>
-</ol>
+<pre><code>1. Spring 框架 
+2. vue
+3. Mysql
+</code></pre><p>Spring 框架用于接收 Http 请求，并做出响应。</p>
+<p>Vue 是前端框架，本身基于 JavaScript，用作渲染页面，传递数据。<br>MySql 存储数据。</p>
+<p>在前后端分离的设计中，数据以 Json 的形式传递在前后端之间传递。具体表现形式为，在前端 Vue 框架中定义的变量(null/{}/[]) 以 Json 的形式传递给后端，后端代码中，用一个类封装好 Json 的属性并生成标准的get，set方法。这样，传递过去后 Spring 框架就能自动根据属性调用类的构造函数，形成后端的一个对象。</p>
+<p>通过 Mydao 与 Mysql 进行交互。简单的一个动态站点就是这样做起来的。</p>
 
           
         
@@ -1773,183 +1946,11 @@ Free memory : 2915428 kB
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/23/translating-20180730-Open-Source-Networking-Jobs-A-Hotbed-of-Innovation-and-Opportunities/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/23/translating-20180730-Open-Source-Networking-Jobs-A-Hotbed-of-Innovation-and-Opportunities/" itemprop="url">
-                  <翻译>开源网络工作：创新与机遇的温床
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-08-23 15:42:34" itemprop="dateCreated datePublished" datetime="2018-08-23T15:42:34+08:00">2018-08-23</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-08-30 18:21:33" itemprop="dateModified" datetime="2018-08-30T18:21:33+08:00">2018-08-30</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>======</p>
-<p><img src="https://www.linux.com/sites/lcom/files/styles/rendered_file/public/os-jobs-networking.jpg?itok=PgUzydn-" alt=""></p>
-<p>随着全球经济更加靠近数字化未来，每个垂直行业的公司和组织都在紧抓如何进一步在业务与运营上整合与部署技术。虽然 IT 企业在很大程度上遥遥领先，但是他们的经验与教训已经应用在了各行各业。尽管全国失业率为 4.1%，但整个科技专业人员的整体的失业率在 4 月份为 1.9%，开源工作的未来看起来尤其光明。我在开源网络领域工作，并且目睹着创新和机遇正在改变世界交流的方式。</p>
-<p>曾经是个发展缓慢的行业，现在由网络运营商、供应商、系统集成商和开发者所组成的网络生态系统正在采用开源软件，并且正在向商用硬件上运行的虚拟化和软件定义网络上转移。事实上，接近 70% 的全球移动用户由<a href="https://www.lfnetworking.org/" target="_blank" rel="noopener">低频网络</a>运营商成员所代表。该网络运营商成员致力于协调构成开放网络栈和相邻技术的项目。</p>
-<h3 id="技能需求"><a href="#技能需求" class="headerlink" title="技能需求"></a>技能需求</h3><p>这一领域的开发者和系统管理员采用云原生和 DevOps 的方法开发新的使用案例，应对最紧迫的行业挑战。诸如容器、边缘计算等焦点领域大红大紫，并且在这一领域能够整合、协作、创新的开发者和系统管理员们的需求在日益增进。</p>
-<p>开源软件与 Linux 使这一切成为可能，根据最近出版的<a href="https://www.linuxfoundation.org/publications/2018/06/open-source-jobs-report-2018/" target="_blank" rel="noopener"> 2018开源软件工作报告</a>，高达 80% 的招聘经理寻找会 Linux 技能的应聘者，<strong>而 46% 希望在网络领域招聘人才，可以说“网络技术”在他们的招聘决策中起到了至关重要的作用。</strong></p>
-<p>开发人员相当抢手，72% 的招聘经理都在找他们，其次是 DevOps 开发者（59%），工程师（57%）和系统管理员（49%）。报告同时指出，对容器技能需求的惊人的增长符合了我们在网络领域所见到的，即创建云本地虚拟功能（CNFs）和在<a href="https://docs.opnfv.org/en/latest/submodules/releng-xci/docs/xci-overview.html" target="_blank" rel="noopener"> XCI倡议 </a>的 OPNFV 中持续集成／持续部署方法的增长。</p>
-<h3 id="开始吧"><a href="#开始吧" class="headerlink" title="开始吧"></a>开始吧</h3><p>对于求职者来说，好消息是有着大量的关于开源软件的内容，包括免费的<a href="https://www.edx.org/course/introduction-linux-linuxfoundationx-lfs101x-1" target="_blank" rel="noopener">Linux 入门课程</a>。好的工作需要有多项证书，因此我鼓励你探索更多领域，去寻求培训的机会。计算机网络方面，在<a href="https://training.linuxfoundation.org/training/opnfv-fundamentals/" target="_blank" rel="noopener">OPNFV</a>上查看最新的培训课程或者是<a href="https://training.linuxfoundation.org/training/onap-fundamentals/" target="_blank" rel="noopener">ONAP</a>项目，也可以选择这门<a href="https://www.edx.org/course/introduction-to-software-defined-networking-technologies" target="_blank" rel="noopener">开源网络技术简介</a>课程。</p>
-<p>如果你还没有做好这些，下载 <a href="https://www.linuxfoundation.org/publications/2018/06/open-source-jobs-report-2018/" target="_blank" rel="noopener">2018开源软件工作报告</a> 以获得更多见解，在广阔的开放源码技术世界中规划你的课程，去寻找另一边等待你的令人兴奋的职业！</p>
-<p>点击这里<a href="https://www.linuxfoundation.org/publications/open-source-jobs-report-2018/" target="_blank" rel="noopener">下载完整的开源软件工作报告</a>并且<a href="https://training.linuxfoundation.org/certification" target="_blank" rel="noopener">了解更多关于 Linux 的认证</a>。</p>
-<hr>
-<p>via: <a href="https://www.linux.com/blog/os-jobs-report/2018/7/open-source-networking-jobs-hotbed-innovation-and-opportunities" target="_blank" rel="noopener">https://www.linux.com/blog/os-jobs-report/2018/7/open-source-networking-jobs-hotbed-innovation-and-opportunities</a></p>
-<p>作者：<a href="https://www.linux.com/users/brandon-wick" target="_blank" rel="noopener">Brandon Wick</a><br>选题：<a href="https://github.com/lujun9972" target="_blank" rel="noopener">lujun9972</a><br>译者：<a href="https://github.com/LuuMing" target="_blank" rel="noopener">LuuMing</a><br>校对：<a href="https://github.com/校对者ID" target="_blank" rel="noopener">校对者ID</a></p>
-<p>本文由 <a href="https://github.com/LCTT/TranslateProject" target="_blank" rel="noopener">LCTT</a> 原创编译，<a href="https://linux.cn/" target="_blank" rel="noopener">Linux中国</a> 荣誉推出</p>
-<hr>
-<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>第一次翻译文章，水平很一般，用了好几次百度翻译和谷歌翻译。尤其是碰到长句子后就会发懵，其实用逗号隔开会容易理解很多。</p>
-<pre><code>Once a slower moving industry, the networking ecosystem of today -- made up of network operators, vendors, systems integrators, and developers -- is now embracing open source software and is shifting significantly towards virtualization and software defined networks running on commodity hardware.
-
-Focus areas like containers and edge computing are red hot and the demand for developers and sysadmins who can integrate, collaborate, and innovate in this space is exploding.
-</code></pre><p>还有一些:</p>
-<p><code>native cloud---云本地</code><br><code>vendors---供应商</code><br><code>DevOps---专用名词，指过程、方法与系统的统称</code><br><code>sysadmins---系统管理员</code><br><code>tackle the most pressing industry challenges---应对最紧迫的行业挑战</code><br><code>most sought---抢手</code></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1992,7 +1993,7 @@ Focus areas like containers and edge computing are red hot and the demand for de
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
