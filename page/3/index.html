@@ -287,6 +287,653 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/07/17/linux-0-11-syscall/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/17/linux-0-11-syscall/" itemprop="url">
+                  基于linux0.11的从零开始学操作系统-system_call
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-17 14:45:56" itemprop="dateCreated datePublished" datetime="2018-07-17T14:45:56+08:00">2018-07-17</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-08-15 12:19:06" itemprop="dateModified" datetime="2018-08-15T12:19:06+08:00">2018-08-15</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>关于system call 的调用过程本文不在此赘述，笔者只想在此说明如何在linux0.11内核的基础上添加系统调用。<br>要增加系统调用，分别需要在这7个地方进行改动，分别是内核代码中的：</p>
+<pre><code>1. include/unistd.h 中添加系统调用号
+2. 在lib中增加用户接口源文件
+3. include/linux/sys.h 中添加系统调用函数定义
+4. kernel/system_call.s 修改系统调用总数
+5. kernel中增加系统调用的具体实现
+6. 修改Makefile 文件
+</code></pre><p>以及usr/include/下的用户接口文件unistd.h<br>下面以增加一个系统调用hello()为例进行说明：</p>
+<h4 id="1-添加内核系统调用号"><a href="#1-添加内核系统调用号" class="headerlink" title="1. 添加内核系统调用号"></a>1. 添加内核系统调用号</h4><p>打开源文件include/unistd.h，在132行处添加</p>
+<pre><code>#define __NR_hello      72
+</code></pre><h4 id="2-增加用户接口源文件"><a href="#2-增加用户接口源文件" class="headerlink" title="2. 增加用户接口源文件"></a>2. 增加用户接口源文件</h4><p>进入lib目录，新建源文件hello.c</p>
+<pre><code>#define __LIBRARY__
+#include&lt;unistd.h&gt;
+_syscall0(int,hello)
+</code></pre><h4 id="3-添加系统调用函数的定义"><a href="#3-添加系统调用函数的定义" class="headerlink" title="3. 添加系统调用函数的定义"></a>3. 添加系统调用函数的定义</h4><p>打开include/linux/sys.h，分别在73行和sys_call_table[]数组中添加</p>
+<pre><code>extern int sys_hello();
+</code></pre><pre><code>sys_hello
+</code></pre><h4 id="4-修改系统调用总数"><a href="#4-修改系统调用总数" class="headerlink" title="4. 修改系统调用总数"></a>4. 修改系统调用总数</h4><p>打开kernel/system_call.s ，将61行改为</p>
+<pre><code>nr_system_calls = 73
+</code></pre><h4 id="5-增加系统调用的具体实现"><a href="#5-增加系统调用的具体实现" class="headerlink" title="5.增加系统调用的具体实现"></a>5.增加系统调用的具体实现</h4><p>进入kernel目录，新建源文件sys_hello.c</p>
+<pre><code>int sys_hello()
+{
+        printk(&quot;Hello From kernel\n&quot;);
+}
+</code></pre><h4 id="6-修改Makefile文件"><a href="#6-修改Makefile文件" class="headerlink" title="6.修改Makefile文件"></a>6.修改Makefile文件</h4><p>进入kernel目录，打开Makefile,在OBJS 那一项后面添加</p>
+<pre><code>sys_hello.o
+</code></pre><p>在最后一行添加</p>
+<pre><code>sys_hello.s sys_hello.o : sys_hello.c ../include/linux/kernel.h ../include/unistd.h
+</code></pre><p>然后返回源文件根目录，make 编译内核。</p>
+<h4 id="7-添加编译器系统调用号"><a href="#7-添加编译器系统调用号" class="headerlink" title="7.添加编译器系统调用号"></a>7.添加编译器系统调用号</h4><p>进入系统后，在<code>/usr/include/unistd.h</code>文件132行添加(与第一步不同)</p>
+<pre><code>#define __NR_hello      72
+</code></pre><p>系统调用即添加完毕，新建hello.c文件进行测试:</p>
+<pre><code>#define __LIBRARY__
+#include &lt;unistd.h&gt;
+#include&lt;stdio.h&gt;
+int errno;
+_syscall0(int,hello)
+int main()
+{
+    hello();
+    return 0;
+}
+</code></pre><p>使用gcc 编译并运行，显示输出:</p>
+<pre><code>Hello From kernel
+</code></pre>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/07/16/linux-0-11-setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/16/linux-0-11-setup/" itemprop="url">
+                  基于linux0.11的从零开始学操作系统-setup
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-16 14:01:26" itemprop="dateCreated datePublished" datetime="2018-07-16T14:01:26+08:00">2018-07-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-17 17:49:49" itemprop="dateModified" datetime="2018-07-17T17:49:49+08:00">2018-07-17</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="1-setup中获取扩展内存大小："><a href="#1-setup中获取扩展内存大小：" class="headerlink" title="1.setup中获取扩展内存大小："></a>1.setup中获取扩展内存大小：</h4><pre><code>! Get memory size (extended mem, kB)
+
+        mov     ah,#0x88
+        int     0x15
+        mov     [2],ax
+</code></pre><p><code>返回：ax=从0x100000(1M)处开始的扩展内存大小</code></p>
+<h4 id="2-保护模式"><a href="#2-保护模式" class="headerlink" title="2.保护模式"></a>2.保护模式</h4><p>setup切换保护模式位于<code>[0x00090348] 9020:0148</code></p>
+<pre><code>        mov     ax,#0x0001      ! protected mode (PE) bit
+        lmsw    ax              ! This is it!
+</code></pre><p>此时CPU已经进入32位保护模式</p>
+<pre><code>jmpi    0,8             ! jmp offset 0 of segment 8 (cs)
+</code></pre><p>这句话在16位实模式下解释如下:</p>
+<pre><code>CPU跳转至cs = 8,IP = 0 即0x80处开始执行
+</code></pre><p>而到了32位,CS称为选择子。此时的寻址方式为：<br>通过选择子配合gdt表查到一个值，把这个值重新组合作为新的地址。<br>此时<code>GDTR = 0x0009035b</code> 意味着当前gdt表起始位置在内存中的0x0009035b处。cs=8代表，以<code>GDTR</code>位起始位置，偏移8个字节。也就是选择‘0x00090363’。存放的东西是什么呢？</p>
+<pre><code>0x00090363 &lt;bogus+       8&gt;:    0xff    0x07    0x00    0x00    0x00    0x9a    0xc0    0x00
+p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是乎:
+0x00090363-0x00090371: 
+00C09A00000007FF
+</code></pre><p>上面的东西代表的是什么意思呢？其是，它是一段LDT(Local Descriptor Table)。一共64个bit，其解释方式如下图所示：<br><img src="/2018/07/16/linux-0-11-setup/./ldt.png" alt="ldt"><br>重点关心黑色字体部分:<br> <strong>00</strong>C09A<strong>000000</strong>07FF<br> 前面的就是32位保护模式下的基址，后面的就是保护模式下的偏移地址。所以，接下来CPU就到了<code>00:000000</code>处。<br> 用一张图概况保护模式下的寻址方式，一定就是这样了:<br> <img src="/2018/07/16/linux-0-11-setup/./gdt.png" alt="gdt"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/07/14/linux-0-11-bootsect/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/14/linux-0-11-bootsect/" itemprop="url">
+                  基于linux0.11的从零开始学操作系统-bootsect
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-14 23:52:07" itemprop="dateCreated datePublished" datetime="2018-07-14T23:52:07+08:00">2018-07-14</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-16 14:20:02" itemprop="dateModified" datetime="2018-07-16T14:20:02+08:00">2018-07-16</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>首先，BIOS有一段自检程序，其作用还不明确。总之，与我们有关的地方是内存中0x07c00<br>CPU到了0x07c00从这里开始进入bootsect.s</p>
+<pre><code>_start:
+        mov     ax,#BOOTSEG
+        mov     ds,ax
+        mov     ax,#INITSEG
+        mov     es,ax
+        mov     cx,#256
+        sub     si,si
+        sub     di,di
+        rep
+        movw
+        jmpi    go,INITSEG
+</code></pre><p>而bootsect.s 一开始先是将自己拷贝到0x90000处<br>bootsect 本身只有512字节，因此才有了上述程序rep那里的内容.<br>256<em>word= 512 </em>byte<br>也就是从内存中0x07c00拷贝512字节到0x90000.<br>0x90000-0x9001ff 这里便是bootsect的新的位置.</p>
+<p>这时候，如果你反汇编一下0x07c00 与 0x90000。你会发现二者相同，并且就是bootsect.S中的内容，因此验证猜想正确。</p>
+<pre><code>go:     mov     ax,cs          ! 此时cs=9000,IP = 0018
+        mov     ds,ax
+        mov     es,ax
+! put stack at 0x9ff00.
+        mov     ss,ax
+        mov     sp,#0xFF00
+</code></pre><p>执行完jmpi go,INITSEG后,CPU 便跳到了0x90018处，设置堆栈大小.并将ds,es设置为9000H.此时,cs=ds=es=ss=9000H.<br>接下来到了ok_load_setup</p>
+<pre><code>load_setup:
+        mov     dx,#0x0000              ! drive 0, head 0
+        mov     cx,#0x0002              ! sector 2, track 0
+        mov     bx,#0x0200              ! address = 512, in INITSEG
+        mov     ax,#0x0200+SETUPLEN     ! service 2, nr of sectors
+        int     0x13                    ! read it
+         jnc     ok_load_setup           ! ok - continue
+</code></pre><p>这里的重点就是<a href="https://blog.csdn.net/farmwang/article/details/50017225" target="_blank" rel="noopener">bios 13号中断</a>.</p>
+<pre><code>功能描述：读扇区 
+入口参数：AH＝02H 
+AL＝扇区数 
+CH＝柱面 
+CL＝扇区 
+DH＝磁头 
+DL＝驱动器，00H~7FH：软盘；80H~0FFH：硬盘 
+ES:BX＝缓冲区的地址 
+出口参数：CF＝0——操作成功，AH＝00H，AL＝传输的扇区数，否则，AH＝状态代码
+</code></pre><p>bios13号中断为基本的<a href="https://blog.csdn.net/ylo523/article/details/39050771" target="_blank" rel="noopener">磁盘操作</a>，根据ah不同选择不同功能。<br>上述ah = 02,al=SETUPLEN=2.<br>因此，其含义为<br><code>“从0柱面第二个扇区第0个磁头读4个扇区(2048B)到内存的0x90200处”</code><br>执行完第一个int 13后，我们查看0x90200内容。<br>会发现0x90200-0x90337共312字节</p>
+<pre><code>&lt;bochs:29&gt; u 0x90200 0x902ff
+00090200: (                    ): mov ah, 0x03              ; b403
+00090202: (                    ): xor bh, bh                ; 30ff
+00090204: (                    ): int 0x10                  ; cd10
+00090206: (                    ): mov cx, 0x0017            ; b91700
+00090209: (                    ): mov bx, 0x0007            ; bb0700
+0009020c: (                    ): mov bp, 0x014c            ; bd4c01
+0009020f: (                    ): mov ax, 0x1301            ; b80113
+00090212: (                    ): int 0x10                  ; cd10
+00090214: (                    ): mov ax, 0x9000            ; b80090
+00090217: (                    ): mov ds, ax                ; 8ed8
+00090219: (                    ): mov ah, 0x03              ; b403
+0009021b: (                    ): xor bh, bh                ; 30ff
+0009021d: (                    ): int 0x10                  ; cd10
+0009021f: (                    ): mov word ptr ds:0x0, dx   ; 89160000
+</code></pre><p>正是后面setup.S中的内容。<br>如果成功，CF=0，跳转至ok_load_setup<br>若不成功得想办法补救，即重新读：</p>
+<pre><code>        mov     dx,#0x0000
+        mov     ax,#0x0000              ! reset the diskette
+        int     0x13
+        j       load_setup
+</code></pre><p>成功后，继续</p>
+<pre><code>ok_load_setup:
+
+! Get disk drive parameters, specifically nr of sectors/track
+
+        mov     dl,#0x00
+        mov     ax,#0x0800              ! AH=8 is get drive parameters
+        int     0x13
+</code></pre><p>又是<a href="https://blog.csdn.net/ylo523/article/details/39050771" target="_blank" rel="noopener">int 13</a>.这次AH=08:</p>
+<pre><code>入口参数：AH＝08H 
+DL＝驱动器，00H~7FH：软盘；80H~0FFH：硬盘 
+出口参数：CF＝1——操作失败，AH＝状态代码，参见功能号01H中的说明，否则， BL＝01H — 360K 
+＝02H — 1.2M 
+＝03H — 720K 
+＝04H — 1.44M 
+CH＝柱面数的低8位 
+CL的位7-6＝柱面数的该2位 
+CL的位5-0＝扇区数 
+DH＝磁头数 
+DL＝驱动器数 
+ES:DI＝磁盘驱动器参数表地址 
+</code></pre><p>执行完int 13后，发现<code>BL= 4</code>代表读取软盘 大小为1.44M，<code>CL =00010010B</code>代表18个扇区 ，将CH置零后，<code>cx = 0012H</code></p>
+<pre><code>      mov     ch,#0x00
+        seg cs
+        mov     sectors,cx
+        mov     ax,#INITSEG
+        mov     es,ax
+</code></pre><p>接下来第2，3句为段超越，意思把cx内容移动到cs:[sectors]，此时sectors相当于一个变量，用于保存一个值，测试时发现sectors=0x13d。意味着将读取到的数据保存在内存cs:sectors处。<br>同时，int 13 改变了ES，将es再设回9000。然后，准备在屏幕上显示一些文字。</p>
+<pre><code>! Print some inane message
+
+        mov     ah,#0x03                ! read cursor pos
+        xor     bh,bh
+        int     0x10
+</code></pre><pre><code>AH = 3
+读光标位置
+输入参数：BH = 页号
+输出参数：
+CH = 光标开始行
+CL = 光标结束行
+DH = 行
+DL = 列
+</code></pre><p>先读0页光标位置，<code>ch=6,cl=7,dh=10,dl=0</code>。</p>
+<pre><code>    mov     cx,#24                     !  cs:ip=0x00090056 
+       mov     bx,#0x0007              ! page 0, attribute 7 (normal)
+        mov     bp,#msg1
+        mov     ax,#0x1301              ! write string, move cursor
+        int     0x10
+
+</code></pre><p>显示24个字符串。<br>接着将系统加载到内存起始0x10000处，代码如下</p>
+<pre><code>! ok, we&#39;ve written the message, now
+! we want to load the system (at 0x10000)
+
+        mov     ax,#SYSSEG
+        mov     es,ax           ! segment of 0x010000
+        call    read_it
+</code></pre><p>将段设置好后调用了读取函数：</p>
+<pre><code>read_it:
+        mov ax,es
+        test ax,#0x0fff
+die:    jne die                 ! es must be at 64kB boundary
+        xor bx,bx               ! bx is starting address within segment
+rp_read:
+        mov ax,es
+        cmp ax,#ENDSEG          ! have we loaded all yet?
+        jb ok1_read
+        ret
+ok1_read:...
+ok2_read:...
+.....
+</code></pre><p>将一些东西准备就绪后，就要进入setup</p>
+<pre><code>    jmpi 0,SETUPSEG
+</code></pre><p>跳转至0x90200。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/06/16/embedding-system/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1477,626 +2124,6 @@ sqlmap -u URL
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/02/28/plus-of-two-string/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/28/plus-of-two-string/" itemprop="url">
-                  字符串加法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-02-28 12:35:56 / Modified: 13:26:55" itemprop="dateCreated datePublished" datetime="2018-02-28T12:35:56+08:00">2018-02-28</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近在刷PAT(Programming Ability Test). 发现许多题目都用到了字符串相加，今天就来总结一下。</p>
-<h2 id="1-stoi等"><a href="#1-stoi等" class="headerlink" title="1.stoi等"></a>1.stoi等</h2><p>在c++ 11 中可以直接调用<code>stoi</code>,<code>stol</code>, <code>stoll</code>,<code>stoull</code>全局函数.分别将字符串转换为<code>int</code>,<code>long int</code>, <code>long long int</code>, <code>unsigned long long int</code></p>
-<pre><code> string  a  = &quot;123&quot;;
- string b = &quot;456&quot;;
- cout &lt;&lt; stoi(a) + stoi(b)&lt;&lt;endl;
-</code></pre><p>输出</p>
-<pre><code>579
-</code></pre><p>其他函数的用法同上</p>
-<h2 id="2-自定义函数"><a href="#2-自定义函数" class="headerlink" title="2.自定义函数"></a>2.自定义函数</h2><p>先贴上核心代码</p>
-<pre><code>string string_add(string a,string b)
-{
-    string result;            //结果存放
-    int sum = 0;                //每位相加和
-    int remain = 0;            //余
-    int carry = 0;            //进位
-    for(int i = a.size()-1,j = b.size()-1; i &gt;=0 || j&gt;= 0; i--,j--)  
-    {                                            //终止条件：同时扫描完a,b
-         sum = ((i&gt;=0?a[i]:&#39;0&#39;) - &#39;0&#39;) + ((j&gt;=0?b[j]:&#39;0&#39;)-&#39;0&#39;) + carry;   //求和，如果已扫描完其中一个字符串，用0代替。
-         remain = sum%10;                                    //计算余数
-         carry = sum /10;                                    //计算进位
-        result += to_string(remain);                            //附加结果
-    }
-    if(carry !=0)
-        result += to_string(carry);                 
-    reverse(result.begin(),result.end());                        //因为结果是逆序的，因此翻转
-    return result;
-}
-</code></pre><h4 id="实例测试-a-“19”-b-”1”"><a href="#实例测试-a-“19”-b-”1”" class="headerlink" title="实例测试: a = “19”,b=”1”"></a>实例测试: a = “19”,b=”1”</h4><pre><code>times i = 1,j = 0:
-//    sum = &#39;9&#39; - &#39;0&#39; + &#39;1&#39; - &#39;0&#39; + 0;                     sum = 10
-//    remain = 10 % 10;                                     remain = 0;
-//    carry = 10/10;                         carry = 1;
-//    result += to_string(0);
-p result
-    &quot;0&quot;
-times 2 i = 0,j = -1:
-//    sum = &#39;1&#39; - &#39;0&#39; + &#39;0&#39; - &#39;0&#39; + 1;                     sum = 2
-//    remain = 2 % 10;                                     remain = 2;
-//    carry = 2/10;                         carry = 0;
-//    result += to_string(0);
-p result
-    &quot;02&quot;
-if(carry == 0)                                       //false
-reverse(result.begin(),result.end());
-p result
-&quot;20&quot;
-</code></pre><p>很多题目都用到了字符串相加，例如：<br><a href="https://www.patest.cn/contests/pat-a-practise/1024" target="_blank" rel="noopener">1024. Palindromic Number (25)</a><br><a href="https://www.patest.cn/contests/pat-a-practise/1136" target="_blank" rel="noopener">1136. A Delayed Palindrome (20)</a><br>感兴趣的同学也可以刷刷看</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/02/26/blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/26/blog/" itemprop="url">
-                  使用HEXO+Github打造你的blog(一)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-02-26 21:23:47" itemprop="dateCreated datePublished" datetime="2018-02-26T21:23:47+08:00">2018-02-26</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-03-04 00:20:59" itemprop="dateModified" datetime="2018-03-04T00:20:59+08:00">2018-03-04</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/集大成/" itemprop="url" rel="index"><span itemprop="name">集大成</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>说到博客，大家可能会想到QQ空间呀，微博等等的第三方博客。这些第三方的博客虽然方便好用，但是却做不到像你现在看到的这种效果。今天,我就教大家如何使用工具，打造自己的个人博客。</p>
-<p>但是在开始之前，我想要先让你区分<strong>动态网页</strong>与<strong>静态网页</strong>。<br><strong>静态网页</strong>顾名思义，你所看到的东西与别人所看到的是一模一样的。</p>
-<p>区分于静态网页的是<strong>动态网页</strong>，它与静态网页最根本的区别是在它的背后有一个叫做“web服务器”的东西。这个东西有什么用呢？设想以下情景：当你第一次登录github, 你被要求输入帐号和密码。当你登录后，再打开github就会直接显示你的个人profile。 这个就是“web服务器”的magic。</p>
-<p>再举个形象的例子:</p>
-<pre><code>    静态网页就像银行的自动门，无论是谁走过去，门都会自动打开。
-    而动态网页就像银行柜员，男的过去她就会说“您好，先生...”，女的过去就会叫你“您好，女士”。
-</code></pre><p>本教程所实现的blog本质上就是静态网页。<br><strong>系统: Linux/ windows</strong><br><strong>工具: Nodejs + HEXO + Github</strong></p>
-<h2 id="1-安装HEXO"><a href="#1-安装HEXO" class="headerlink" title="1.安装HEXO"></a>1.安装HEXO</h2><p>我们所看到的网页是用一种叫做HTML的语言所写的。当你浏览网页时，HTML语言把你想要呈现在网页上的图片/文字/视频等等东西合理的布置起来，形成一个让人能看懂的页面。你可以在你的浏览器里按<code>F12</code>查看到一个网页的HTML代码，以下就是我的主页的部分HTML代码 (可以看到我加了广告哈哈哈):</p>
-<pre><code>&lt;html class=&quot;theme-next muse use-motion&quot; lang=&quot;zh&quot;&gt;
-&lt;head&gt;
-&lt;!-- ad start --&gt;
-&lt;script async src=&quot;//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: &quot;ca-pub-9964492323779082&quot;,
-    enable_page_level_ads: true
-  });
-&lt;/script&gt;
-&lt;!-- ad end --&gt;
-  &lt;meta charset=&quot;UTF-8&quot;/&gt;
-&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot; /&gt;
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, maximum-scale=1&quot;/&gt;
-&lt;meta name=&quot;theme-color&quot; content=&quot;#222&quot;&gt;
-
-</code></pre><p>看到这里你可能就晕了，能不能不学习HTML就搭建一个博客呢？<br>答案是：能。 好在博客这种形式的网站有固定的套路，前人已经给你设计好了一个框架，你不必从头学起，只需要把重点放在内容本身就行了，我们所使用的工具就是HEXO<strong><em>(点击图片进入官网)</em></strong><br><a href="https://hexo.io" target="_blank" rel="noopener"><img src="/2018/02/26/blog/hexo.png" alt="hexo"></a><br>我们找到<a href="https://hexo.io/docs/" target="_blank" rel="noopener">Installation</a>这一项，其原文如下:</p>
-<pre><code>It only takes a few minutes to set up Hexo. If you encounter a problem and can’t find the solution here, please submit a GitHub issue and I’ll try to solve it.
-Requirements
-
-Installing Hexo is quite easy. However, you do need to have a couple of other things installed first:
-
-    Node.js
-    Git
-
-If your computer already has these, congratulations! Just install Hexo with npm:
-
-$ npm install -g hexo-cli
-
-If not, please follow the following instructions to install all the requirements.
-</code></pre><p>啥，你说你看不懂，没关系，我会百度翻译</p>
-<pre><code>只需要几分钟的时间来设置Hexo。如果你遇到了一个问题，不能在这里找到解决方案，请提交一个GitHub的问题我会尽力解决它。
-
-要求
-
-安装hexo是很容易的。然而，您确实需要先安装一些其他的东西：
-Node.js
-Git
-如果你的电脑已经有了这些，祝贺你！只要安装Hexo与新公共管理：
-
-NPM安装- G hexo CLI美元
-
-如果没有，请按照以下说明安装所有的要求。
-</code></pre><p>看来百度翻译也不过如此，把倒数第二行的安装命令给翻译了，我国人工智能行业有需提高呀～</p>
-<p>言归正传，看来安装个HEXO还不是那么容易的…</p>
-<p>(未完待续)</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2017/12/31/My2017/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/31/My2017/" itemprop="url">
-                  My2017
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2017-12-31 17:59:00" itemprop="dateCreated datePublished" datetime="2017-12-31T17:59:00+08:00">2017-12-31</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-02-28 15:14:23" itemprop="dateModified" datetime="2018-02-28T15:14:23+08:00">2018-02-28</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/随想/" itemprop="url" rel="index"><span itemprop="name">随想</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-这是最好的时代，也是最坏的时代。"><a href="#1-这是最好的时代，也是最坏的时代。" class="headerlink" title="1.这是最好的时代，也是最坏的时代。"></a>1.这是最好的时代，也是最坏的时代。</h3><p>为了统一观点，我们不妨做以下假设:<strong>全局最优只存在于我们能够感知的范围内。</strong></p>
-<p><em>凡事豫则立，不豫则废</em>，于是乎一个看似很符合逻辑的结论便是:要想做好一件事情，你必须要像古人种地那样：春耕，夏芸，秋收，冬藏。未来在古人的眼里仿佛是一个确定性的状态。打从种地那一刻起就能预料到什么时候改浇水，什么时候该施肥，什么时候该收获。换句话说，耕种这件事情很容易找到一个全局最优解。</p>
-<p> 但是，这样的方法在今天依然高效吗？今天的我们还能够找到全局最优吗？</p>
-<p>经历了2017，我们可能或多或少会感到些不安。身边的变化似乎有些超出了我们的预料。</p>
-<p><em>从前的日子变得很慢，车、马 、邮件都很慢。</em></p>
-<p>以前的我们因为缺乏信息，身边的事物充满着很强的确定性。“邻国相望，鸡犬之声相闻，民至老死，不相往来”<br>小国寡民的生我让我们仿佛生活在一个天然的大屏障中。但放眼今天，信息量大了，越是喜欢什么，越容易越是容易陷入其中，越过得安逸，内心中就越发迷茫。我们有没有被某种无形的手所支配？<br><img src="/2017/12/31/My2017/0.jpeg" alt="人工智能技术"></p>
-<center>人工智能技术</center><br>靠预测永远不是制胜的法宝，”蝴蝶效应”说的就是这个道理，这个世界毕竟太复杂了。但是，从另外一个例子中仿佛又能从复杂的不确定性中找到确定的状态，那便是生命的过程。从基因开始，经过数百万道工序转录成RNA，经过数千万道工序翻译成蛋白质，再由蛋白质经过数亿万道工序折叠….你没变成猪，你还是你。<br><img src="/2017/12/31/My2017/1.jpeg" alt="Life"><br><center>复杂的生命过程</center>
-
-<p>转过来看看人工智能，它应对复杂问题的办法很简单，一言以蔽之，即:”<strong>多维度下的局部最优近似于全局最优。</strong></p>
-<p>人工智能的成功与复杂的生命过程之间有没有联系呢？</p>
-<h3 id="2-确定目标，不断迭代。"><a href="#2-确定目标，不断迭代。" class="headerlink" title="2.确定目标，不断迭代。"></a>2.确定目标，不断迭代。</h3><p>这是一个真实的故事:</p>
-<pre><code>    某L君逃了一学期的课程，临近考试一筹莫展。无可奈何的他左手抱着试题，右手抱着答案，双手开工，刷了整整1两天后竟然出乎意料的过了。
-</code></pre><p>这种方法看似笨拙，实质则是机器智能成功的关键。在上述例子中，每刷一道题我们不妨称之为<strong>迭代</strong>。每次犯错从当下的状态中找到与目标的距离，我们不妨称之为<strong>梯度</strong>。每一次犯错后，从梯度中改善原来的方法，我们不妨称之为<strong>优化</strong>。因此，我们是不是可以重新定义一下学习，即:<br> <strong> 犯错 优化 迭代 </strong><br>通过简简单单的三个步骤，AlphaGo在围棋上战胜了人类。</p>
-<p><div align:="" center=""><br><img src="/2017/12/31/My2017/2.jpeg" alt=""><br> </div></p>
-<center>强化学习</center><br>我们教会机器如何战胜人类。现在，我们是不是可以反过来再从机器身上学到些东西呢？我们常常口中说”10000小时定律”，现在是不是应该换成<strong>“有效10000小时定律”</strong>了?<br>### 3.Be yourself###<br>尼尔·波兹曼在《娱乐至死》这本书中提出了一个观点，在未来随着机器智能的发展，人类从任何繁重的事务中解脱，8成的人只有每天娱乐至死，每天只要戴上VR眼镜，现实世界只不过是一个小小的补充。<br><div align:="" center=""><br><img src="/2017/12/31/My2017/3.jpeg" alt=""><br> </div><center><br> 尼尔·波兹曼《娱乐至死》</center>
-
-<p>哈哈，哪里有那么悲观，发展自己的兴趣就行了。既然人类在某些领域比不过机器，那么为什么要去和他们比呢？当机器取代手工劳动后，大量的时间留给了人们。人们便可以利好这一剩余产能。</p>
-<p>原本的你想成为一名导演，迫于生计只能改行当程序员。现在，你完全不用考虑吃喝，用人工智能技术加上你的创意，也许分分钟就能将你脑中好莱坞大片式的景象展现在人们面前。</p>
-<p>人生来是具有创造性的。小时候你总是在床上画下一张大大的地图；长大后你老是抱怨为什么没有一个机器帮你完成老师布置的作业；老了以后，你又感叹没有个时光机能够带你回到年少看看这美丽的世界。</p>
-<p><div align:="" center=""><br><img src="/2017/12/31/My2017/4.jpeg" alt=""><br> </div></p>
-<center>“世界如此美丽，我却没有发现”</center>
-
-<p>不必担心，机器智能会帮助你完成一切。人们将会在繁杂工作以外的领域大放异彩。艺术创作，社会服务，文化工作等等。<br>于是乎结论就是:你喜欢诗歌就尽情的喜欢，你热爱文学就尽情的热爱。机器智能抢走了大部分人的机会，同时又给大部分人带来了机会。因此，just be yourself。</p>
-<p>总结一下：<br><strong>“犯错，迭代，优化” 是机器智能成功的关键，我们可以类比总结出“有效10000小时定律。”</strong><br><strong>“不必跟机器硬怼，人机协作才是主流。”</strong><br><strong>“拒绝‘精耕细作’，做一个知识的‘拿来主义’者。”</strong><br><strong>“发展自己兴趣，不必有所顾虑。”</strong></p>
-<p>这篇文章，一是年终复盘，不能总是让知识“只进不出”，不总结一下也就忘记了。<br>二是告别”人工智能应用年”，让我至少在时代的风口浪尖上留下一点气息。<br>感谢乐乐、小强在文风上进行的指导。新的一年里，与君共勉</p>
-<h4 id="总之，预测未来的最好方法就是创造未来。"><a href="#总之，预测未来的最好方法就是创造未来。" class="headerlink" title="总之，预测未来的最好方法就是创造未来。"></a>总之，预测未来的最好方法就是创造未来。</h4><h4 id="2018，keep-fighting！"><a href="#2018，keep-fighting！" class="headerlink" title="2018，keep fighting！"></a>2018，keep fighting！</h4>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2144,7 +2171,7 @@ NPM安装- G hexo CLI美元
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

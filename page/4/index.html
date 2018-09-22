@@ -287,6 +287,626 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/02/28/plus-of-two-string/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/28/plus-of-two-string/" itemprop="url">
+                  字符串加法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-02-28 12:35:56 / Modified: 13:26:55" itemprop="dateCreated datePublished" datetime="2018-02-28T12:35:56+08:00">2018-02-28</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近在刷PAT(Programming Ability Test). 发现许多题目都用到了字符串相加，今天就来总结一下。</p>
+<h2 id="1-stoi等"><a href="#1-stoi等" class="headerlink" title="1.stoi等"></a>1.stoi等</h2><p>在c++ 11 中可以直接调用<code>stoi</code>,<code>stol</code>, <code>stoll</code>,<code>stoull</code>全局函数.分别将字符串转换为<code>int</code>,<code>long int</code>, <code>long long int</code>, <code>unsigned long long int</code></p>
+<pre><code> string  a  = &quot;123&quot;;
+ string b = &quot;456&quot;;
+ cout &lt;&lt; stoi(a) + stoi(b)&lt;&lt;endl;
+</code></pre><p>输出</p>
+<pre><code>579
+</code></pre><p>其他函数的用法同上</p>
+<h2 id="2-自定义函数"><a href="#2-自定义函数" class="headerlink" title="2.自定义函数"></a>2.自定义函数</h2><p>先贴上核心代码</p>
+<pre><code>string string_add(string a,string b)
+{
+    string result;            //结果存放
+    int sum = 0;                //每位相加和
+    int remain = 0;            //余
+    int carry = 0;            //进位
+    for(int i = a.size()-1,j = b.size()-1; i &gt;=0 || j&gt;= 0; i--,j--)  
+    {                                            //终止条件：同时扫描完a,b
+         sum = ((i&gt;=0?a[i]:&#39;0&#39;) - &#39;0&#39;) + ((j&gt;=0?b[j]:&#39;0&#39;)-&#39;0&#39;) + carry;   //求和，如果已扫描完其中一个字符串，用0代替。
+         remain = sum%10;                                    //计算余数
+         carry = sum /10;                                    //计算进位
+        result += to_string(remain);                            //附加结果
+    }
+    if(carry !=0)
+        result += to_string(carry);                 
+    reverse(result.begin(),result.end());                        //因为结果是逆序的，因此翻转
+    return result;
+}
+</code></pre><h4 id="实例测试-a-“19”-b-”1”"><a href="#实例测试-a-“19”-b-”1”" class="headerlink" title="实例测试: a = “19”,b=”1”"></a>实例测试: a = “19”,b=”1”</h4><pre><code>times i = 1,j = 0:
+//    sum = &#39;9&#39; - &#39;0&#39; + &#39;1&#39; - &#39;0&#39; + 0;                     sum = 10
+//    remain = 10 % 10;                                     remain = 0;
+//    carry = 10/10;                         carry = 1;
+//    result += to_string(0);
+p result
+    &quot;0&quot;
+times 2 i = 0,j = -1:
+//    sum = &#39;1&#39; - &#39;0&#39; + &#39;0&#39; - &#39;0&#39; + 1;                     sum = 2
+//    remain = 2 % 10;                                     remain = 2;
+//    carry = 2/10;                         carry = 0;
+//    result += to_string(0);
+p result
+    &quot;02&quot;
+if(carry == 0)                                       //false
+reverse(result.begin(),result.end());
+p result
+&quot;20&quot;
+</code></pre><p>很多题目都用到了字符串相加，例如：<br><a href="https://www.patest.cn/contests/pat-a-practise/1024" target="_blank" rel="noopener">1024. Palindromic Number (25)</a><br><a href="https://www.patest.cn/contests/pat-a-practise/1136" target="_blank" rel="noopener">1136. A Delayed Palindrome (20)</a><br>感兴趣的同学也可以刷刷看</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/02/26/blog/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/26/blog/" itemprop="url">
+                  使用HEXO+Github打造你的blog(一)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-02-26 21:23:47" itemprop="dateCreated datePublished" datetime="2018-02-26T21:23:47+08:00">2018-02-26</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-03-04 00:20:59" itemprop="dateModified" datetime="2018-03-04T00:20:59+08:00">2018-03-04</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/集大成/" itemprop="url" rel="index"><span itemprop="name">集大成</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>说到博客，大家可能会想到QQ空间呀，微博等等的第三方博客。这些第三方的博客虽然方便好用，但是却做不到像你现在看到的这种效果。今天,我就教大家如何使用工具，打造自己的个人博客。</p>
+<p>但是在开始之前，我想要先让你区分<strong>动态网页</strong>与<strong>静态网页</strong>。<br><strong>静态网页</strong>顾名思义，你所看到的东西与别人所看到的是一模一样的。</p>
+<p>区分于静态网页的是<strong>动态网页</strong>，它与静态网页最根本的区别是在它的背后有一个叫做“web服务器”的东西。这个东西有什么用呢？设想以下情景：当你第一次登录github, 你被要求输入帐号和密码。当你登录后，再打开github就会直接显示你的个人profile。 这个就是“web服务器”的magic。</p>
+<p>再举个形象的例子:</p>
+<pre><code>    静态网页就像银行的自动门，无论是谁走过去，门都会自动打开。
+    而动态网页就像银行柜员，男的过去她就会说“您好，先生...”，女的过去就会叫你“您好，女士”。
+</code></pre><p>本教程所实现的blog本质上就是静态网页。<br><strong>系统: Linux/ windows</strong><br><strong>工具: Nodejs + HEXO + Github</strong></p>
+<h2 id="1-安装HEXO"><a href="#1-安装HEXO" class="headerlink" title="1.安装HEXO"></a>1.安装HEXO</h2><p>我们所看到的网页是用一种叫做HTML的语言所写的。当你浏览网页时，HTML语言把你想要呈现在网页上的图片/文字/视频等等东西合理的布置起来，形成一个让人能看懂的页面。你可以在你的浏览器里按<code>F12</code>查看到一个网页的HTML代码，以下就是我的主页的部分HTML代码 (可以看到我加了广告哈哈哈):</p>
+<pre><code>&lt;html class=&quot;theme-next muse use-motion&quot; lang=&quot;zh&quot;&gt;
+&lt;head&gt;
+&lt;!-- ad start --&gt;
+&lt;script async src=&quot;//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: &quot;ca-pub-9964492323779082&quot;,
+    enable_page_level_ads: true
+  });
+&lt;/script&gt;
+&lt;!-- ad end --&gt;
+  &lt;meta charset=&quot;UTF-8&quot;/&gt;
+&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot; /&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, maximum-scale=1&quot;/&gt;
+&lt;meta name=&quot;theme-color&quot; content=&quot;#222&quot;&gt;
+
+</code></pre><p>看到这里你可能就晕了，能不能不学习HTML就搭建一个博客呢？<br>答案是：能。 好在博客这种形式的网站有固定的套路，前人已经给你设计好了一个框架，你不必从头学起，只需要把重点放在内容本身就行了，我们所使用的工具就是HEXO<strong><em>(点击图片进入官网)</em></strong><br><a href="https://hexo.io" target="_blank" rel="noopener"><img src="/2018/02/26/blog/hexo.png" alt="hexo"></a><br>我们找到<a href="https://hexo.io/docs/" target="_blank" rel="noopener">Installation</a>这一项，其原文如下:</p>
+<pre><code>It only takes a few minutes to set up Hexo. If you encounter a problem and can’t find the solution here, please submit a GitHub issue and I’ll try to solve it.
+Requirements
+
+Installing Hexo is quite easy. However, you do need to have a couple of other things installed first:
+
+    Node.js
+    Git
+
+If your computer already has these, congratulations! Just install Hexo with npm:
+
+$ npm install -g hexo-cli
+
+If not, please follow the following instructions to install all the requirements.
+</code></pre><p>啥，你说你看不懂，没关系，我会百度翻译</p>
+<pre><code>只需要几分钟的时间来设置Hexo。如果你遇到了一个问题，不能在这里找到解决方案，请提交一个GitHub的问题我会尽力解决它。
+
+要求
+
+安装hexo是很容易的。然而，您确实需要先安装一些其他的东西：
+Node.js
+Git
+如果你的电脑已经有了这些，祝贺你！只要安装Hexo与新公共管理：
+
+NPM安装- G hexo CLI美元
+
+如果没有，请按照以下说明安装所有的要求。
+</code></pre><p>看来百度翻译也不过如此，把倒数第二行的安装命令给翻译了，我国人工智能行业有需提高呀～</p>
+<p>言归正传，看来安装个HEXO还不是那么容易的…</p>
+<p>(未完待续)</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2017/12/31/My2017/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/31/My2017/" itemprop="url">
+                  My2017
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-12-31 17:59:00" itemprop="dateCreated datePublished" datetime="2017-12-31T17:59:00+08:00">2017-12-31</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-02-28 15:14:23" itemprop="dateModified" datetime="2018-02-28T15:14:23+08:00">2018-02-28</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/随想/" itemprop="url" rel="index"><span itemprop="name">随想</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-这是最好的时代，也是最坏的时代。"><a href="#1-这是最好的时代，也是最坏的时代。" class="headerlink" title="1.这是最好的时代，也是最坏的时代。"></a>1.这是最好的时代，也是最坏的时代。</h3><p>为了统一观点，我们不妨做以下假设:<strong>全局最优只存在于我们能够感知的范围内。</strong></p>
+<p><em>凡事豫则立，不豫则废</em>，于是乎一个看似很符合逻辑的结论便是:要想做好一件事情，你必须要像古人种地那样：春耕，夏芸，秋收，冬藏。未来在古人的眼里仿佛是一个确定性的状态。打从种地那一刻起就能预料到什么时候改浇水，什么时候该施肥，什么时候该收获。换句话说，耕种这件事情很容易找到一个全局最优解。</p>
+<p> 但是，这样的方法在今天依然高效吗？今天的我们还能够找到全局最优吗？</p>
+<p>经历了2017，我们可能或多或少会感到些不安。身边的变化似乎有些超出了我们的预料。</p>
+<p><em>从前的日子变得很慢，车、马 、邮件都很慢。</em></p>
+<p>以前的我们因为缺乏信息，身边的事物充满着很强的确定性。“邻国相望，鸡犬之声相闻，民至老死，不相往来”<br>小国寡民的生我让我们仿佛生活在一个天然的大屏障中。但放眼今天，信息量大了，越是喜欢什么，越容易越是容易陷入其中，越过得安逸，内心中就越发迷茫。我们有没有被某种无形的手所支配？<br><img src="/2017/12/31/My2017/0.jpeg" alt="人工智能技术"></p>
+<center>人工智能技术</center><br>靠预测永远不是制胜的法宝，”蝴蝶效应”说的就是这个道理，这个世界毕竟太复杂了。但是，从另外一个例子中仿佛又能从复杂的不确定性中找到确定的状态，那便是生命的过程。从基因开始，经过数百万道工序转录成RNA，经过数千万道工序翻译成蛋白质，再由蛋白质经过数亿万道工序折叠….你没变成猪，你还是你。<br><img src="/2017/12/31/My2017/1.jpeg" alt="Life"><br><center>复杂的生命过程</center>
+
+<p>转过来看看人工智能，它应对复杂问题的办法很简单，一言以蔽之，即:”<strong>多维度下的局部最优近似于全局最优。</strong></p>
+<p>人工智能的成功与复杂的生命过程之间有没有联系呢？</p>
+<h3 id="2-确定目标，不断迭代。"><a href="#2-确定目标，不断迭代。" class="headerlink" title="2.确定目标，不断迭代。"></a>2.确定目标，不断迭代。</h3><p>这是一个真实的故事:</p>
+<pre><code>    某L君逃了一学期的课程，临近考试一筹莫展。无可奈何的他左手抱着试题，右手抱着答案，双手开工，刷了整整1两天后竟然出乎意料的过了。
+</code></pre><p>这种方法看似笨拙，实质则是机器智能成功的关键。在上述例子中，每刷一道题我们不妨称之为<strong>迭代</strong>。每次犯错从当下的状态中找到与目标的距离，我们不妨称之为<strong>梯度</strong>。每一次犯错后，从梯度中改善原来的方法，我们不妨称之为<strong>优化</strong>。因此，我们是不是可以重新定义一下学习，即:<br> <strong> 犯错 优化 迭代 </strong><br>通过简简单单的三个步骤，AlphaGo在围棋上战胜了人类。</p>
+<p><div align:="" center=""><br><img src="/2017/12/31/My2017/2.jpeg" alt=""><br> </div></p>
+<center>强化学习</center><br>我们教会机器如何战胜人类。现在，我们是不是可以反过来再从机器身上学到些东西呢？我们常常口中说”10000小时定律”，现在是不是应该换成<strong>“有效10000小时定律”</strong>了?<br>### 3.Be yourself###<br>尼尔·波兹曼在《娱乐至死》这本书中提出了一个观点，在未来随着机器智能的发展，人类从任何繁重的事务中解脱，8成的人只有每天娱乐至死，每天只要戴上VR眼镜，现实世界只不过是一个小小的补充。<br><div align:="" center=""><br><img src="/2017/12/31/My2017/3.jpeg" alt=""><br> </div><center><br> 尼尔·波兹曼《娱乐至死》</center>
+
+<p>哈哈，哪里有那么悲观，发展自己的兴趣就行了。既然人类在某些领域比不过机器，那么为什么要去和他们比呢？当机器取代手工劳动后，大量的时间留给了人们。人们便可以利好这一剩余产能。</p>
+<p>原本的你想成为一名导演，迫于生计只能改行当程序员。现在，你完全不用考虑吃喝，用人工智能技术加上你的创意，也许分分钟就能将你脑中好莱坞大片式的景象展现在人们面前。</p>
+<p>人生来是具有创造性的。小时候你总是在床上画下一张大大的地图；长大后你老是抱怨为什么没有一个机器帮你完成老师布置的作业；老了以后，你又感叹没有个时光机能够带你回到年少看看这美丽的世界。</p>
+<p><div align:="" center=""><br><img src="/2017/12/31/My2017/4.jpeg" alt=""><br> </div></p>
+<center>“世界如此美丽，我却没有发现”</center>
+
+<p>不必担心，机器智能会帮助你完成一切。人们将会在繁杂工作以外的领域大放异彩。艺术创作，社会服务，文化工作等等。<br>于是乎结论就是:你喜欢诗歌就尽情的喜欢，你热爱文学就尽情的热爱。机器智能抢走了大部分人的机会，同时又给大部分人带来了机会。因此，just be yourself。</p>
+<p>总结一下：<br><strong>“犯错，迭代，优化” 是机器智能成功的关键，我们可以类比总结出“有效10000小时定律。”</strong><br><strong>“不必跟机器硬怼，人机协作才是主流。”</strong><br><strong>“拒绝‘精耕细作’，做一个知识的‘拿来主义’者。”</strong><br><strong>“发展自己兴趣，不必有所顾虑。”</strong></p>
+<p>这篇文章，一是年终复盘，不能总是让知识“只进不出”，不总结一下也就忘记了。<br>二是告别”人工智能应用年”，让我至少在时代的风口浪尖上留下一点气息。<br>感谢乐乐、小强在文风上进行的指导。新的一年里，与君共勉</p>
+<h4 id="总之，预测未来的最好方法就是创造未来。"><a href="#总之，预测未来的最好方法就是创造未来。" class="headerlink" title="总之，预测未来的最好方法就是创造未来。"></a>总之，预测未来的最好方法就是创造未来。</h4><h4 id="2018，keep-fighting！"><a href="#2018，keep-fighting！" class="headerlink" title="2018，keep fighting！"></a>2018，keep fighting！</h4>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2017/07/20/interest/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -471,7 +1091,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

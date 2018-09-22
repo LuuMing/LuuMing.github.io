@@ -287,6 +287,588 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/22/i-plus-plus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/22/i-plus-plus/" itemprop="url">
+                  i++
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-22 10:36:53 / Modified: 14:50:37" itemprop="dateCreated datePublished" datetime="2018-09-22T10:36:53+08:00">2018-09-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>关于 <code>i++</code> 操作总会在一些意想不到的地方给程序员带来各种各样的麻烦。例如：多次执行<code>count = count ++</code> 后，为什么 <code>count</code> 的值不变？ 要深入理解这个操作，就需要从更深层次的汇编来解释它了。</p>
+<h3 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h3><p>在 Linux 64 位机器下编写 <code>c++</code> 代码：</p>
+<pre><code>int main()
+{
+        int i = 0;
+        i++;
+        cout &lt;&lt; i;
+}
+</code></pre><p>使用 <code>g++ -g 1.cpp</code> 对其进行编译并加入调试信息。</p>
+<h3 id="2-分析汇编指令"><a href="#2-分析汇编指令" class="headerlink" title="2. 分析汇编指令"></a>2. 分析汇编指令</h3><p>使用 <code>objdum -S a.out</code> 可以将汇编代码与调试信息打开。找到 <code>main</code> 函数开始的地方：</p>
+<pre><code>int main()
+{
+  400756:    55                       push   %rbp
+  400757:    48 89 e5                 mov    %rsp,%rbp 
+  40075a:    48 83 ec 10              sub    $0x10,%rsp 
+    int i = 0;
+  40075e:    c7 45 fc 00 00 00 00     movl   $0x0,-0x4(%rbp)
+    i++;
+  400765:    83 45 fc 01              addl   $0x1,-0x4(%rbp)
+    cout &lt;&lt; i;
+  400769:    8b 45 fc                 mov    -0x4(%rbp),%eax
+  40076c:    89 c6                    mov    %eax,%esi
+  40076e:    bf 60 10 60 00           mov    $0x601060,%edi
+  400773:    e8 88 fe ff ff           callq  400600 &lt;_ZNSolsEi@plt&gt;
+}
+</code></pre><p>这些都是 <a href="">AT&amp;T</a> 汇编，想要深入了解就得参考 GUN AS 手册。在此不赘述。可见，<code>i++</code> 操作被翻译为：</p>
+<pre><code>addl   $0x1,-0x4(%rbp)
+</code></pre><p>也就是，<strong>将 rpb-4 内存地址中的值加1</strong>。很简单，没啥问题。</p>
+<h3 id="3-复杂情况"><a href="#3-复杂情况" class="headerlink" title="3.复杂情况"></a>3.复杂情况</h3><p>当然了，单步执行 <code>i++</code> 操作翻译成汇编指令看起来很简单，但是当组合<code>i++</code> 操作在一些语句中，例如：</p>
+<pre><code>int main()
+{
+        int i = 1;
+        int count = 0;
+        for(i = 0; i &lt; 10; i++)
+        {
+                count = count++;
+        }
+        cout &lt;&lt; count;
+}
+</code></pre><p>这时候的汇编指令又会是怎么样的？如法泡制，看一看汇编指令：</p>
+<pre><code>using namespace std;
+int main()
+{
+  400756:    55                       push   %rbp
+  400757:    48 89 e5                 mov    %rsp,%rbp
+  40075a:    48 83 ec 10              sub    $0x10,%rsp
+    int i = 1;
+  40075e:    c7 45 f8 01 00 00 00     movl   $0x1,-0x8(%rbp)
+    int count = 0;
+  400765:    c7 45 fc 00 00 00 00     movl   $0x0,-0x4(%rbp)
+    for(i = 0; i &lt; 10; i++)
+  40076c:    c7 45 f8 00 00 00 00     movl   $0x0,-0x8(%rbp)
+  400773:    eb 10                    jmp    400785 &lt;main+0x2f&gt;
+    {
+        count = count++;
+  400775:    8b 45 fc                 mov    -0x4(%rbp),%eax
+  400778:    8d 50 01                 lea    0x1(%rax),%edx
+  40077b:    89 55 fc                 mov    %edx,-0x4(%rbp)
+  40077e:    89 45 fc                 mov    %eax,-0x4(%rbp)
+using namespace std;
+int main()
+{
+    int i = 1;
+    int count = 0;
+    for(i = 0; i &lt; 10; i++)
+  400781:    83 45 f8 01              addl   $0x1,-0x8(%rbp)
+  400785:    83 7d f8 09              cmpl   $0x9,-0x8(%rbp)
+  400789:    7e ea                    jle    400775 &lt;main+0x1f&gt;
+    {
+        count = count++;
+    }
+    cout &lt;&lt; count;
+  40078b:    8b 45 fc                 mov    -0x4(%rbp),%eax
+  40078e:    89 c6                    mov    %eax,%esi
+  400790:    bf 60 10 60 00           mov    $0x601060,%edi
+  400795:    e8 66 fe ff ff           callq  400600 &lt;_ZNSolsEi@plt&gt;
+}
+</code></pre><p>可以看到，仅仅增加了一个循环，汇编代码就变得非常有意思了。一步步分析。</p>
+<h5 id="1-定义变量"><a href="#1-定义变量" class="headerlink" title="1. 定义变量"></a>1. 定义变量</h5><pre><code>movl   $0x1,-0x8(%rbp)     //分配变量 i 的空间
+movl   $0x0,-0x4(%rbp)     //分配变量 count 的空间
+</code></pre><p>可以看到，先定义的变量被分到了低地值区域。</p>
+<h5 id="2-开始循环"><a href="#2-开始循环" class="headerlink" title="2. 开始循环"></a>2. 开始循环</h5><pre><code>movl   $0x0,-0x8(%rbp)
+jmp    400785 &lt;main+0x2f&gt;
+</code></pre><p>接着是 for 循环中的第一条语句，即 <code>i = 0</code>，然后跳至循环主体<strong> &lt;main+0x2f&gt;</strong>。</p>
+<h5 id="3-循环体"><a href="#3-循环体" class="headerlink" title="3. 循环体"></a>3. 循环体</h5><pre><code>cmpl   $0x9,-0x8(%rbp)
+jle    400775 &lt;main+0x1f&gt;
+</code></pre><p>上面两句用于判断循环是否结束，若未结束，继续执行：</p>
+<pre><code>mov    -0x4(%rbp),%eax    // 将 count 的地址放在 eax 中
+lea    0x1(%rax),%edx       // 从 eax 存放的地址取值加 1，放在 edx 中
+mov    %edx,-0x4(%rbp)   // 将 edx 值赋给 count
+mov    %eax,-0x4(%rbp)   // 将 eax 值赋给 count
+</code></pre><p>这几句汇编就是 <code>count = count++</code> 了。可以看到，在最后一步中将 +1 的结果覆盖掉了。也就是说，<strong>i++ 操作需要将原内容拷贝一份</strong>。<br>因此，实际上<code>count = count + 1</code>等价于：</p>
+<pre><code>int tmp1 = count;
+int tmp2 = tmp + 1;
+count = tmp2;
+count = tmp1;
+</code></pre><h3 id="3-从运算符角度看"><a href="#3-从运算符角度看" class="headerlink" title="3. 从运算符角度看"></a>3. 从运算符角度看</h3><p>感谢<a href="https://www.cnblogs.com/AndyJee/p/4550391.html" target="_blank" rel="noopener">这篇文章</a> 。其实，产生上面汇编代码的根本原因在于 c++ 对<code>++</code>操作的定义。</p>
+<pre><code>Operator Operator::operator++()
+{
+++value; //内部成员变量
+return *this;
+}
+
+Operator Operator::operator++(int)
+{
+Operator temp;
+temp.value=value;
+value++;
+return temp;
+}
+</code></pre><p>可以看到，<code>++</code> 操作返回的是原值。所以，<code>count = count ++</code> 可以看作：</p>
+<pre><code>int ori_count = count;
+count = count + 1;
+count = ori_count;
+</code></pre><p>这样，就解开了 <code>count</code> 值不变之迷。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/21/squid/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/21/squid/" itemprop="url">
+                  使用 squid 代理上网
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-21 19:13:00" itemprop="dateCreated datePublished" datetime="2018-09-21T19:13:00+08:00">2018-09-21</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-22 10:34:43" itemprop="dateModified" datetime="2018-09-22T10:34:43+08:00">2018-09-22</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>局域网内有多台电脑，其中只有一台能够上网，怎样通过 squid 软件搭建代理服务器让多台电脑上网呢？</p>
+<h3 id="1-安装-squid"><a href="#1-安装-squid" class="headerlink" title="1. 安装 squid"></a>1. 安装 squid</h3><p><code>sudo apt-get install squid</code></p>
+<h3 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2.修改配置文件"></a>2.修改配置文件</h3><p>打开/etc/squid/squid.conf，更改</p>
+<pre><code># And finally deny all other access to this proxy
+http_access deny all
+</code></pre><p>为</p>
+<pre><code># And finally deny all other access to this proxy
+http_access allow all
+</code></pre><h3 id="3-连接代理服务器"><a href="#3-连接代理服务器" class="headerlink" title="3. 连接代理服务器"></a>3. 连接代理服务器</h3><p>Ubuntu 14.04 下，打开【系统设置】-【网络】-【网络代理】。设置【方法】为【手动】。在【HTTP代理】那里填上代理服务器的 IP 地址。端口设置为【3128（默认）】。最后，点击应用到整个系统。</p>
+<h3 id="4-测试"><a href="#4-测试" class="headerlink" title="4. 测试"></a>4. 测试</h3><p>经过测试，百度、淘宝、京东等国内网站均遭到拒绝访问。而像，leetcode、stackoverflow、dappradar 等均正常访问。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/20/java-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/20/java-install/" itemprop="url">
+                  安装 JAVA
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-20 16:43:51" itemprop="dateCreated datePublished" datetime="2018-09-20T16:43:51+08:00">2018-09-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-22 14:53:04" itemprop="dateModified" datetime="2018-09-22T14:53:04+08:00">2018-09-22</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-下载-JDK"><a href="#1-下载-JDK" class="headerlink" title="1.下载 JDK"></a>1.下载 JDK</h3><p>访问<a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html" target="_blank" rel="noopener">jdk 10 下载页面</a>。根据机器的位数与系统选择响应的安装包。</p>
+<h3 id="2-解压"><a href="#2-解压" class="headerlink" title="2.解压"></a>2.解压</h3><pre><code>tar -xvf [下载的.tar.gz]
+</code></pre><h3 id="3-移动到合适的位置"><a href="#3-移动到合适的位置" class="headerlink" title="3.移动到合适的位置"></a>3.移动到合适的位置</h3><p>个人推荐将解压后的文件放在如下目录里，注意要用<code>sudo</code>:</p>
+<pre><code>sudo mkdir /usr/lib/jvm
+sudo mv jdk-10.0.2/ /usr/lib/jvm/
+</code></pre><h3 id="4-配置环境变量"><a href="#4-配置环境变量" class="headerlink" title="4.配置环境变量"></a>4.配置环境变量</h3><p>打开 home 下的 <code>.profile</code> 文件，添加如下内容:</p>
+<pre><code>#set jdk env
+export JAVA_HOME=/usr/lib/jvm/jdk-10.0.1
+export PATH=$JAVA_HOME/bin:$PATH
+</code></pre><h3 id="5-检查是否安装成功"><a href="#5-检查是否安装成功" class="headerlink" title="5. 检查是否安装成功"></a>5. 检查是否安装成功</h3><p>执行：</p>
+<pre><code>java --version
+</code></pre><p>显示：</p>
+<pre><code>java 10.0.2 2018-04-17
+Java(TM) SE Runtime Environment 18.3 (build 10.0.1+10)
+Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.1+10, mixed mode)
+</code></pre><p>即成功安装。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/20/polygon-inside/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1407,545 +1989,6 @@ blacklist 恢复到原始状态
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/01/thread-safe/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/01/thread-safe/" itemprop="url">
-                  什么是线程安全
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-09-01 22:11:44 / Modified: 22:19:54" itemprop="dateCreated datePublished" datetime="2018-09-01T22:11:44+08:00">2018-09-01</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-什么是线程安全？"><a href="#1-什么是线程安全？" class="headerlink" title="1. 什么是线程安全？"></a>1. 什么是线程安全？</h3><p>因为多线程编程的特点</p>
-<h3 id="2-不安全因素"><a href="#2-不安全因素" class="headerlink" title="2. 不安全因素"></a>2. 不安全因素</h3><p>因为一个进程中具有多个线程，这些线程具有共享数据的特点。因而在并发过程中，会对全局变量或静态变量产生<a href="">诸多不安全的操作</a>。</p>
-<h3 id="3-如何解决"><a href="#3-如何解决" class="headerlink" title="3. 如何解决"></a>3. 如何解决</h3>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/01/translating-20180819-How-to-define-and-use-functions-in-Linux-Shell-Script/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/01/translating-20180819-How-to-define-and-use-functions-in-Linux-Shell-Script/" itemprop="url">
-                  <翻译> 如何在 Linux Shell 编程中定义和使用函数
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-09-01 10:58:16 / Modified: 11:10:40" itemprop="dateCreated datePublished" datetime="2018-09-01T10:58:16+08:00">2018-09-01</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="如何在-Linux-Shell-编程中定义和使用函数"><a href="#如何在-Linux-Shell-编程中定义和使用函数" class="headerlink" title="如何在 Linux Shell 编程中定义和使用函数"></a>如何在 Linux Shell 编程中定义和使用函数</h1><p>函数是一段可复用的代码。我们通常把重复的代码放进函数中并且在不同的地方去调用它。库是函数的集合。我们可以在库中定义经常使用的函数，这样其它脚本便可以不再重复代码而使用这些函数。</p>
-<p>本文我们将讨论诸多关于函数的内容和一些使用技巧。为了方便演示，我将在 Ubuntu 系统上使用 <strong>Bourne Again SHell (Bash)</strong>。</p>
-<h3 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h3><p>在 Shell 中调用函数和调用其它命令是一模一样的。例如，如果你的函数名称为 <code>my_func</code>，你可以在命令行中像下面这样执行它：</p>
-<pre><code>$ my_func
-</code></pre><p>如果你的函数接收多个参数，那么可以像下面这样写（类似命令行参数的使用）：</p>
-<pre><code>$ my_func arg1 arg2 arg3
-</code></pre><h3 id="定义函数"><a href="#定义函数" class="headerlink" title="定义函数"></a>定义函数</h3><p>我们可以用下面的语法去定义一个函数：</p>
-<pre><code>function function_name {
-    Body of function
-}
-</code></pre><p>函数的主体可以包含任何有效的命令、循环语句和其它函数或脚本。现在让我们创建一个简单的函数，它向屏幕上显示一些消息（注：直接在命令行里写）。</p>
-<pre><code>function print_msg {
-    echo &quot;Hello, World&quot;
-}
-</code></pre><p>现在，让我们执行这个函数：</p>
-<pre><code>$ print_msg
-Hello, World
-</code></pre><p>不出所料，这个函数在屏幕上显示了一些消息。</p>
-<p>在上面的例子中，我们直接在终端里创建了一个函数。这个函数也可以保存到文件中。如下面的例子所示。</p>
-<pre><code>#!/bin/bash
-function print_msg {
-    echo &quot;Hello, World&quot;
-}
-print_msg
-</code></pre><p>我们已经在 <code>function.sh</code> 文件中定义了这个函数。现在让我们执行这个脚本：</p>
-<pre><code>$ chmod +x function.sh
-$ ./function.sh
-Hello, World
-</code></pre><p>你可以看到，上面的输出和之前的是一模一样的。</p>
-<h3 id="更多函数用法"><a href="#更多函数用法" class="headerlink" title="更多函数用法"></a>更多函数用法</h3><p>在上一小节中我们定义了一个非常简单的函数。然而在软件开发的过程中，我们需要更多高级的函数，它可以接收多个参数并且带有返回值。在这一小节中，我们将讨论这种函数。</p>
-<h4 id="向函数传递参数"><a href="#向函数传递参数" class="headerlink" title="向函数传递参数"></a>向函数传递参数</h4><p>我们可以像调用其它命令那样给函数提供参数。我们可以在函数里使用美元 <code>$</code> 符号访问到这些参数。例如，<code>$1</code> 表示第一个参数，<code>$2</code> 代表第二个参数，以此类推。</p>
-<p>让我们修改下之前的函数，让它以参数的形式接收信息。修改后的函数就像这样：</p>
-<pre><code>function print_msg {
-    echo &quot;Hello $1&quot;
-}
-</code></pre><p>在上面的函数中我们使用 <code>$1</code> 符号访问第一个参数。让我们执行这个函数：</p>
-<pre><code>$ print_msg &quot;LinuxTechi&quot;
-</code></pre><p>执行完后，生成如下信息：</p>
-<pre><code>Hello LinuxTechi
-</code></pre><h4 id="从函数中返回数值"><a href="#从函数中返回数值" class="headerlink" title="从函数中返回数值"></a>从函数中返回数值</h4><p>跟其它编程语言一样，Bash 提供了返回语句让我们可以向调用者返回一些数值。让我们举例说明：</p>
-<pre><code>function func_return_value {
-    return 10
-}
-</code></pre><p>上面的函数向调用者返回 <code>10</code>。让我们执行这个函数：</p>
-<pre><code>$ func_return_value
-$ echo &quot;Value returned by function is: $?&quot;
-</code></pre><p>当你执行完，将会产生如下的输出结果：</p>
-<pre><code>Value returned by function is: 10
-</code></pre><p><strong>提示</strong>：在 Bash 中使用 <code>$?</code> 去获取函数的返回值。</p>
-<h3 id="函数技巧"><a href="#函数技巧" class="headerlink" title="函数技巧"></a>函数技巧</h3><p>目前我们已经对 Bash 中的函数有了一些了解。现在让我们创建一些非常有用的 Bash 函数，它们可以让我们的生活变得更加轻松。</p>
-<h4 id="Logger"><a href="#Logger" class="headerlink" title="Logger"></a>Logger</h4><p>让我们创建一个 <code>logger</code> 函数，它可以输出带有日期和时间的 log 信息。</p>
-<pre><code>function log_msg {
-    echo &quot;[`date &#39;+ %F %T&#39;` ]: $@&quot;
-}
-</code></pre><p>执行这个函数：</p>
-<pre><code>$ log_msg &quot;This is sample log message&quot;
-</code></pre><p>执行完，就会生成如下信息：</p>
-<pre><code>[ 2018-08-16 19:56:34 ]: This is sample log message
-</code></pre><h4 id="显示系统信息"><a href="#显示系统信息" class="headerlink" title="显示系统信息"></a>显示系统信息</h4><p>让我们创建一个显示 GNU/Linux 信息的函数</p>
-<pre><code>function system_info {
-    echo &quot;### OS information ###&quot;
-    lsb_release -a
-
-    echo
-    echo &quot;### Processor information ###&quot;
-    processor=`grep -wc &quot;processor&quot; /proc/cpuinfo`
-    model=`grep -w &quot;model name&quot; /proc/cpuinfo  | awk -F: &#39;{print $2}&#39;`
-    echo &quot;Processor = $processor&quot;
-    echo &quot;Model     = $model&quot;
-
-    echo
-    echo &quot;### Memory information ###&quot;
-    total=`grep -w &quot;MemTotal&quot; /proc/meminfo | awk &#39;{print $2}&#39;`
-    free=`grep -w &quot;MemFree&quot; /proc/meminfo | awk &#39;{print $2}&#39;`
-    echo &quot;Total memory: $total kB&quot;
-    echo &quot;Free memory : $free kB&quot;
-}
-</code></pre><p>执行完后会生成以下信息：</p>
-<pre><code>### OS information ###
-No LSB modules are available.
-Distributor ID:           Ubuntu
-Description:   Ubuntu 18.04.1 LTS
-Release:         18.04
-Codename:    bionic
-
-### Processor information ###
-Processor = 1
-Model     =  Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz
-
-### Memory information ###
-Total memory: 4015648 kB
-Free memory : 2915428 kB
-</code></pre><h4 id="在当前目录下查找文件或者目录"><a href="#在当前目录下查找文件或者目录" class="headerlink" title="在当前目录下查找文件或者目录"></a>在当前目录下查找文件或者目录</h4><p>下面的函数从当前目录下查找文件或者目录：</p>
-<pre><code>function search {
-    find . -name $1
-}
-</code></pre><p>让我们使用下面的命令查找 <code>dir4</code> 这个目录：</p>
-<pre><code>$ search dir4
-</code></pre><p>当你执行完命令后，将会产生如下输出：</p>
-<pre><code>./dir1/dir2/dir3/dir4
-</code></pre><h4 id="数字时钟"><a href="#数字时钟" class="headerlink" title="数字时钟"></a>数字时钟</h4><p>下面的函数在终端里创建了一个简单的数字时钟：</p>
-<pre><code>function digital_clock {
-    clear
-    while [ 1 ]
-    do
-        date +&#39;%T&#39;
-        sleep 1
-        clear
-    done
-}
-</code></pre><h3 id="函数库"><a href="#函数库" class="headerlink" title="函数库"></a>函数库</h3><p>库是函数的集合。将函数定义在文件里并在当前环境中导入那个文件，这样可以创建函数库。</p>
-<p>假设我们已经在 <code>utils.sh</code> 中定义好了所有函数，接着在当前的环境下使用下面的命令导入函数：</p>
-<pre><code>$ source utils.sh
-</code></pre><p>之后你就可以像调用其它 Bash 命令那样执行库中任何的函数了。</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本文我们讨论了诸多可以提升效率的实用技巧。我希望这篇文章能够启发你去创造自己的技巧。</p>
-<hr>
-<p>via: <a href="https://www.linuxtechi.com/define-use-functions-linux-shell-script/" target="_blank" rel="noopener">https://www.linuxtechi.com/define-use-functions-linux-shell-script/</a></p>
-<p>作者：<a href="http://www.linuxtechi.com/author/pradeep/" target="_blank" rel="noopener">Pradeep Kumar</a><br>选题：<a href="https://github.com/lujun9972" target="_blank" rel="noopener">lujun9972</a><br>译者：<a href="https://github.com/LuuMing" target="_blank" rel="noopener">LuuMing</a><br>校对：<a href="https://github.com/pityonline" target="_blank" rel="noopener">pityonline</a></p>
-<p>本文由 <a href="https://github.com/LCTT/TranslateProject" target="_blank" rel="noopener">LCTT</a> 原创编译，<a href="https://linux.cn/" target="_blank" rel="noopener">Linux中国</a> 荣誉推出</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/24/PAT-1103-Integer-Factorization/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/24/PAT-1103-Integer-Factorization/" itemprop="url">
-                  神一样的减枝操作
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-08-24 21:05:04 / Modified: 21:06:57" itemprop="dateCreated datePublished" datetime="2018-08-24T21:05:04+08:00">2018-08-24</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天在刷<a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805364711604224" target="_blank" rel="noopener">【PAT】1103 Integer Factorization（30 分）</a>，题目大意是这样的：</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1993,7 +2036,7 @@ Free memory : 2915428 kB
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
