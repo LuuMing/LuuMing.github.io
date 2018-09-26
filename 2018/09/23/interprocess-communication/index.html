@@ -108,27 +108,24 @@
 
 
 
-  <meta name="description" content="======  随着全球经济更加靠近数字化未来，每个垂直行业的公司和组织都在紧抓如何进一步在业务与运营上整合与部署技术。虽然 IT 企业在很大程度上遥遥领先，但是他们的经验与教训已经应用在了各行各业。尽管全国失业率为 4.1%，但整个科技专业人员的整体的失业率在 4 月份为 1.9%，开源工作的未来看起来尤其光明。我在开源网络领域工作，并且目睹着创新和机遇正在改变世界交流的方式。 曾经是个发展缓慢">
-<meta name="keywords" content="翻译">
+  <meta name="description" content="语法   #include &amp;lt;unistd.h&amp;gt;         int pipe(int pipefd[2]);         #define _GNU_SOURCE             /* See feature_test_macros(7) */        #include &amp;lt;fcntl.h&amp;gt;              /* Obtain O_* cons">
 <meta property="og:type" content="article">
-<meta property="og:title" content="&lt;翻译&gt;开源网络工作：创新与机遇的温床">
-<meta property="og:url" content="http://LuuMing.github.io/2018/08/23/translating-20180730-Open-Source-Networking-Jobs-A-Hotbed-of-Innovation-and-Opportunities/index.html">
+<meta property="og:title" content="进程通信的实现--管道">
+<meta property="og:url" content="http://LuuMing.github.io/2018/09/23/interprocess-communication/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="======  随着全球经济更加靠近数字化未来，每个垂直行业的公司和组织都在紧抓如何进一步在业务与运营上整合与部署技术。虽然 IT 企业在很大程度上遥遥领先，但是他们的经验与教训已经应用在了各行各业。尽管全国失业率为 4.1%，但整个科技专业人员的整体的失业率在 4 月份为 1.9%，开源工作的未来看起来尤其光明。我在开源网络领域工作，并且目睹着创新和机遇正在改变世界交流的方式。 曾经是个发展缓慢">
+<meta property="og:description" content="语法   #include &amp;lt;unistd.h&amp;gt;         int pipe(int pipefd[2]);         #define _GNU_SOURCE             /* See feature_test_macros(7) */        #include &amp;lt;fcntl.h&amp;gt;              /* Obtain O_* cons">
 <meta property="og:locale" content="zh">
-<meta property="og:image" content="https://www.linux.com/sites/lcom/files/styles/rendered_file/public/os-jobs-networking.jpg?itok=PgUzydn-">
-<meta property="og:updated_time" content="2018-08-30T10:21:33.197Z">
+<meta property="og:updated_time" content="2018-09-26T11:04:25.500Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="&lt;翻译&gt;开源网络工作：创新与机遇的温床">
-<meta name="twitter:description" content="======  随着全球经济更加靠近数字化未来，每个垂直行业的公司和组织都在紧抓如何进一步在业务与运营上整合与部署技术。虽然 IT 企业在很大程度上遥遥领先，但是他们的经验与教训已经应用在了各行各业。尽管全国失业率为 4.1%，但整个科技专业人员的整体的失业率在 4 月份为 1.9%，开源工作的未来看起来尤其光明。我在开源网络领域工作，并且目睹着创新和机遇正在改变世界交流的方式。 曾经是个发展缓慢">
-<meta name="twitter:image" content="https://www.linux.com/sites/lcom/files/styles/rendered_file/public/os-jobs-networking.jpg?itok=PgUzydn-">
+<meta name="twitter:title" content="进程通信的实现--管道">
+<meta name="twitter:description" content="语法   #include &amp;lt;unistd.h&amp;gt;         int pipe(int pipefd[2]);         #define _GNU_SOURCE             /* See feature_test_macros(7) */        #include &amp;lt;fcntl.h&amp;gt;              /* Obtain O_* cons">
 
 
 
 
 
 
-  <link rel="canonical" href="http://LuuMing.github.io/2018/08/23/translating-20180730-Open-Source-Networking-Jobs-A-Hotbed-of-Innovation-and-Opportunities/"/>
+  <link rel="canonical" href="http://LuuMing.github.io/2018/09/23/interprocess-communication/"/>
 
 
 
@@ -138,7 +135,7 @@
   };
 </script>
 
-  <title><翻译>开源网络工作：创新与机遇的温床 | LuMing's blog</title>
+  <title>进程通信的实现--管道 | LuMing's blog</title>
   
 
 
@@ -293,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/23/translating-20180730-Open-Source-Networking-Jobs-A-Hotbed-of-Innovation-and-Opportunities/">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/23/interprocess-communication/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LuMing">
@@ -310,7 +307,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"><翻译>开源网络工作：创新与机遇的温床
+          <h1 class="post-title" itemprop="name headline">进程通信的实现--管道
               
             
           </h1>
@@ -335,7 +332,7 @@
                 
               
 
-              <time title="Created: 2018-08-23 15:42:34" itemprop="dateCreated datePublished" datetime="2018-08-23T15:42:34+08:00">2018-08-23</time>
+              <time title="Created: 2018-09-23 12:24:41" itemprop="dateCreated datePublished" datetime="2018-09-23T12:24:41+08:00">2018-09-23</time>
             
 
             
@@ -352,7 +349,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-08-30 18:21:33" itemprop="dateModified" datetime="2018-08-30T18:21:33+08:00">2018-08-30</time>
+                <time title="Modified: 2018-09-26 19:04:25" itemprop="dateModified" datetime="2018-09-26T19:04:25+08:00">2018-09-26</time>
               
             
           </span>
@@ -385,27 +382,90 @@
       
 
       
-        <p>======</p>
-<p><img src="https://www.linux.com/sites/lcom/files/styles/rendered_file/public/os-jobs-networking.jpg?itok=PgUzydn-" alt=""></p>
-<p>随着全球经济更加靠近数字化未来，每个垂直行业的公司和组织都在紧抓如何进一步在业务与运营上整合与部署技术。虽然 IT 企业在很大程度上遥遥领先，但是他们的经验与教训已经应用在了各行各业。尽管全国失业率为 4.1%，但整个科技专业人员的整体的失业率在 4 月份为 1.9%，开源工作的未来看起来尤其光明。我在开源网络领域工作，并且目睹着创新和机遇正在改变世界交流的方式。</p>
-<p>曾经是个发展缓慢的行业，现在由网络运营商、供应商、系统集成商和开发者所组成的网络生态系统正在采用开源软件，并且正在向商用硬件上运行的虚拟化和软件定义网络上转移。事实上，接近 70% 的全球移动用户由<a href="https://www.lfnetworking.org/" target="_blank" rel="noopener">低频网络</a>运营商成员所代表。该网络运营商成员致力于协调构成开放网络栈和相邻技术的项目。</p>
-<h3 id="技能需求"><a href="#技能需求" class="headerlink" title="技能需求"></a>技能需求</h3><p>这一领域的开发者和系统管理员采用云原生和 DevOps 的方法开发新的使用案例，应对最紧迫的行业挑战。诸如容器、边缘计算等焦点领域大红大紫，并且在这一领域能够整合、协作、创新的开发者和系统管理员们的需求在日益增进。</p>
-<p>开源软件与 Linux 使这一切成为可能，根据最近出版的<a href="https://www.linuxfoundation.org/publications/2018/06/open-source-jobs-report-2018/" target="_blank" rel="noopener"> 2018开源软件工作报告</a>，高达 80% 的招聘经理寻找会 Linux 技能的应聘者，<strong>而 46% 希望在网络领域招聘人才，可以说“网络技术”在他们的招聘决策中起到了至关重要的作用。</strong></p>
-<p>开发人员相当抢手，72% 的招聘经理都在找他们，其次是 DevOps 开发者（59%），工程师（57%）和系统管理员（49%）。报告同时指出，对容器技能需求的惊人的增长符合了我们在网络领域所见到的，即创建云本地虚拟功能（CNFs）和在<a href="https://docs.opnfv.org/en/latest/submodules/releng-xci/docs/xci-overview.html" target="_blank" rel="noopener"> XCI倡议 </a>的 OPNFV 中持续集成／持续部署方法的增长。</p>
-<h3 id="开始吧"><a href="#开始吧" class="headerlink" title="开始吧"></a>开始吧</h3><p>对于求职者来说，好消息是有着大量的关于开源软件的内容，包括免费的<a href="https://www.edx.org/course/introduction-linux-linuxfoundationx-lfs101x-1" target="_blank" rel="noopener">Linux 入门课程</a>。好的工作需要有多项证书，因此我鼓励你探索更多领域，去寻求培训的机会。计算机网络方面，在<a href="https://training.linuxfoundation.org/training/opnfv-fundamentals/" target="_blank" rel="noopener">OPNFV</a>上查看最新的培训课程或者是<a href="https://training.linuxfoundation.org/training/onap-fundamentals/" target="_blank" rel="noopener">ONAP</a>项目，也可以选择这门<a href="https://www.edx.org/course/introduction-to-software-defined-networking-technologies" target="_blank" rel="noopener">开源网络技术简介</a>课程。</p>
-<p>如果你还没有做好这些，下载 <a href="https://www.linuxfoundation.org/publications/2018/06/open-source-jobs-report-2018/" target="_blank" rel="noopener">2018开源软件工作报告</a> 以获得更多见解，在广阔的开放源码技术世界中规划你的课程，去寻找另一边等待你的令人兴奋的职业！</p>
-<p>点击这里<a href="https://www.linuxfoundation.org/publications/open-source-jobs-report-2018/" target="_blank" rel="noopener">下载完整的开源软件工作报告</a>并且<a href="https://training.linuxfoundation.org/certification" target="_blank" rel="noopener">了解更多关于 Linux 的认证</a>。</p>
-<hr>
-<p>via: <a href="https://www.linux.com/blog/os-jobs-report/2018/7/open-source-networking-jobs-hotbed-innovation-and-opportunities" target="_blank" rel="noopener">https://www.linux.com/blog/os-jobs-report/2018/7/open-source-networking-jobs-hotbed-innovation-and-opportunities</a></p>
-<p>作者：<a href="https://www.linux.com/users/brandon-wick" target="_blank" rel="noopener">Brandon Wick</a><br>选题：<a href="https://github.com/lujun9972" target="_blank" rel="noopener">lujun9972</a><br>译者：<a href="https://github.com/LuuMing" target="_blank" rel="noopener">LuuMing</a><br>校对：<a href="https://github.com/校对者ID" target="_blank" rel="noopener">校对者ID</a></p>
-<p>本文由 <a href="https://github.com/LCTT/TranslateProject" target="_blank" rel="noopener">LCTT</a> 原创编译，<a href="https://linux.cn/" target="_blank" rel="noopener">Linux中国</a> 荣誉推出</p>
-<hr>
-<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>第一次翻译文章，水平很一般，用了好几次百度翻译和谷歌翻译。尤其是碰到长句子后就会发懵，其实用逗号隔开会容易理解很多。</p>
-<pre><code>Once a slower moving industry, the networking ecosystem of today -- made up of network operators, vendors, systems integrators, and developers -- is now embracing open source software and is shifting significantly towards virtualization and software defined networks running on commodity hardware.
+        <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code>
+  #include &lt;unistd.h&gt;
 
-Focus areas like containers and edge computing are red hot and the demand for developers and sysadmins who can integrate, collaborate, and innovate in this space is exploding.
-</code></pre><p>还有一些:</p>
-<p><code>native cloud---云本地</code><br><code>vendors---供应商</code><br><code>DevOps---专用名词，指过程、方法与系统的统称</code><br><code>sysadmins---系统管理员</code><br><code>tackle the most pressing industry challenges---应对最紧迫的行业挑战</code><br><code>most sought---抢手</code></p>
+       int pipe(int pipefd[2]);
+
+       #define _GNU_SOURCE             /* See feature_test_macros(7) */
+       #include &lt;fcntl.h&gt;              /* Obtain O_* constant definitions */
+       #include &lt;unistd.h&gt;
+
+       int pipe2(int pipefd[2], int flags);
+
+</code></pre><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p><code>pipe()</code> 创建一个单向的可用作进程间通信的数据通道。<code>pipefd</code>数组用作返回管道两端的文件描述符。<code>pipefd[0]</code>代表管道的读取端。<code>pipefd[1]</code>用作写入端。数据被写入到由内核所缓冲的管道写入端。</p>
+<p>如果 <code>flags</code> 为 0，那么<code>pipe2()</code>就和<code>pipe()</code>一样。下面这些变量可以在<code>flags</code>中按位或运算来获得不同的功能：</p>
+<h4 id="O-CLOEXEC"><a href="#O-CLOEXEC" class="headerlink" title="O_CLOEXEC"></a>O_CLOEXEC</h4><p>为两个文件描述符设置<code>close-on-exec (FD_CLOEXEC)</code>标志。在 <a href="http://man7.org/linux/man-pages/man2/open.2.html" target="_blank" rel="noopener">open</a> 中查看相同标志的描述，了解它为什么非常有用。</p>
+<h4 id="O-DIRECT-自从-Linux-3-4"><a href="#O-DIRECT-自从-Linux-3-4" class="headerlink" title="O_DIRECT( 自从 Linux 3.4 )"></a>O_DIRECT( 自从 Linux 3.4 )</h4><p>创建一个在 <strong>packet</strong> 模式下执行 I/O 的管道。每次对管道的 write 都被当作分开的包处理，并且每次从管道中 read 都会依次读取一个包。注意以下几点：</p>
+<ul>
+<li>写入超过 <strong>PIPE_BUF</strong> 字节（查看 <a href="http://man7.org/linux/man-pages/man7/pipe.7.html" target="_blank" rel="noopener">pipe(7)</a>）将会分为多个包。常数 <strong>PIPE_BUF</strong>定义在 <code>&lt;limits.h&gt;</code>中。</li>
+<li>如果 <a href="http://man7.org/linux/man-pages/man2/read.2.html" target="_blank" rel="noopener">read</a> 确定的缓冲区大小比下一个包小，这时，包中需要的字节被读取，超出的字节被丢弃。指定缓冲区大小为 <strong>PIPE_BUF</strong> 就足以读取尽可能大的包。</li>
+<li>不支持 0 长度的包。（read 指定缓冲区大小为 0 是一个空操作，返回 0。）<br>老版本内核不支持这个标志将会通过 <strong>EINVAL</strong> 错误指出。<br>自从 Linux 4.5，可以通过 <a href="http://man7.org/linux/man-pages/man2/fcntl.2.html" target="_blank" rel="noopener">fcntl</a> 改变管道文件描述符的 <strong>O_DIRECT</strong> 设置。</li>
+</ul>
+<h4 id="O-NONBLOCK"><a href="#O-NONBLOCK" class="headerlink" title="O_NONBLOCK"></a>O_NONBLOCK</h4><p>为两个新开的文件描述符设置 O_NONBLOCK 文件状态标志。使用这个标志节省额外的 <strong>fcntl</strong> 调用以达到同样的效果。</p>
+<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>成功，返回 0。错误，返回 -1 并且设置 errno。<br>在 Linux 上（和其他的系统），<strong>pipe()</strong>不在失败时修改<strong>pipefd</strong>。在 POSIX.1-2016 中添加了规范这一行为的要求。Linux 规定的 <strong>pipe2()</strong> 系统调用同样在失败时不修改 <strong>pipefd</strong>。</p>
+<h3 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h3><ul>
+<li>EFAULT 无效 pipefd</li>
+<li>EINVAL（pipe2()）flags 值非法</li>
+<li>EMFILE 达到之前进程所限制的打开文件描述符的数目</li>
+<li>ENFILE 达到系统所限制的打开文件描述符的数目</li>
+<li>ENFILE 管道空间达到用户强行限制的内存，或者调用者没有权限。查看<a href="http://man7.org/linux/man-pages/man7/pipe.7.html" target="_blank" rel="noopener">pipe(7)</a></li>
+</ul>
+<h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p><strong>pipe2()</strong>在 Linux 2.6.27 中被添加进去；glibc 支持从 2.9 版本后开始。</p>
+<h3 id="标准"><a href="#标准" class="headerlink" title="标准"></a>标准</h3><p><strong>pipe()</strong>: POSIX.1-2001,POSIX.1-2008。<br><strong>pipe2()</strong> 是 Linux 特有。</p>
+<h3 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h3><p>下面的程序创建一个管道，然后 <strong>frok</strong> 去创建一个子进程。子进程继承了一套指向同一管道的文件描述符。<strong>fork</strong> 之后，每个进程关闭了管道不需要的文件描述符。父进程这时写入管道从命令行参数获取的字符串，然后子进程依次按字节读取这个字符串并显示在标准输出上。</p>
+<pre><code>
+      #include &lt;sys/types.h&gt;
+       #include &lt;sys/wait.h&gt;
+       #include &lt;stdio.h&gt;
+       #include &lt;stdlib.h&gt;
+       #include &lt;unistd.h&gt;
+       #include &lt;string.h&gt;
+
+       int
+       main(int argc, char *argv[])
+       {
+           int pipefd[2];
+           pid_t cpid;
+           char buf;
+
+           if (argc != 2) {
+               fprintf(stderr, &quot;Usage: %s &lt;string&gt;\n&quot;, argv[0]);
+               exit(EXIT_FAILURE);
+           }
+
+           if (pipe(pipefd) == -1) {
+               perror(&quot;pipe&quot;);
+               exit(EXIT_FAILURE);
+           }
+
+           cpid = fork();
+           if (cpid == -1) {
+               perror(&quot;fork&quot;);
+               exit(EXIT_FAILURE);
+           }
+
+           if (cpid == 0) {    /* Child reads from pipe */
+               close(pipefd[1]);          /* Close unused write end */
+
+               while (read(pipefd[0], &amp;buf, 1) &gt; 0)
+                   write(STDOUT_FILENO, &amp;buf, 1);
+
+               write(STDOUT_FILENO, &quot;\n&quot;, 1);
+               close(pipefd[0]);
+               _exit(EXIT_SUCCESS);
+
+           } else {            /* Parent writes argv[1] to pipe */
+               close(pipefd[0]);          /* Close unused read end */
+               write(pipefd[1], argv[1], strlen(argv[1]));
+               close(pipefd[1]);          /* Reader will see EOF */
+               wait(NULL);                /* Wait for child */
+               exit(EXIT_SUCCESS);
+           }
+       }
+</code></pre><hr>
+<p>via: <a href="http://man7.org/linux/man-pages/man2/pipe.2.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man2/pipe.2.html</a></p>
+<p>译者：<a href="https://github.com/LuuMing" target="_blank" rel="noopener">LuuMing</a></p>
 
       
     </div>
@@ -448,12 +508,6 @@ Focus areas like containers and edge computing are red hot and the demand for de
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/翻译/" rel="tag"># 翻译</a>
-          
-        </div>
-      
 
       
       
@@ -463,8 +517,8 @@ Focus areas like containers and edge computing are red hot and the demand for de
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/10/X-Y-Problem/" rel="next" title="<翻译> X-Y Problem">
-                <i class="fa fa-chevron-left"></i> <翻译> X-Y Problem
+              <a href="/2018/09/22/coquettish-operation/" rel="next" title="c 中的骚操作">
+                <i class="fa fa-chevron-left"></i> c 中的骚操作
               </a>
             
           </div>
@@ -472,10 +526,6 @@ Focus areas like containers and edge computing are red hot and the demand for de
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/24/PAT-1103-Integer-Factorization/" rel="prev" title="神一样的减枝操作">
-                神一样的减枝操作 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -648,7 +698,7 @@ Focus areas like containers and edge computing are red hot and the demand for de
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#技能需求"><span class="nav-number">1.</span> <span class="nav-text">技能需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开始吧"><span class="nav-number">2.</span> <span class="nav-text">开始吧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后记"><span class="nav-number">3.</span> <span class="nav-text">后记</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#描述"><span class="nav-number">2.</span> <span class="nav-text">描述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#O-CLOEXEC"><span class="nav-number">2.1.</span> <span class="nav-text">O_CLOEXEC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#O-DIRECT-自从-Linux-3-4"><span class="nav-number">2.2.</span> <span class="nav-text">O_DIRECT( 自从 Linux 3.4 )</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#O-NONBLOCK"><span class="nav-number">2.3.</span> <span class="nav-text">O_NONBLOCK</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#返回值"><span class="nav-number">3.</span> <span class="nav-text">返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误"><span class="nav-number">4.</span> <span class="nav-text">错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本"><span class="nav-number">5.</span> <span class="nav-text">版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准"><span class="nav-number">6.</span> <span class="nav-text">标准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#范例"><span class="nav-number">7.</span> <span class="nav-text">范例</span></a></li></ol></div>
             
 
           </div>
