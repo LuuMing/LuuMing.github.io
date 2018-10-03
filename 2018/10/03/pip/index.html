@@ -108,24 +108,24 @@
 
 
 
-  <meta name="description" content="1.下载 JDK访问jdk 10 下载页面。根据机器的位数与系统选择响应的安装包。 2.解压tar -xvf [下载的.tar.gz] 3.移动到合适的位置个人推荐将解压后的文件放在如下目录里，注意要用sudo: sudo mkdir /usr/lib/jvm sudo mv jdk-10.0.2/ /usr/lib/jvm/ 4.配置环境变量打开 home 下的 .profile 文件，添加如下">
+  <meta name="description" content="今天试着参加 github 上参与一个开源 python 项目。在使用 pip 工具时遇到坑：  将项目克隆下来后，在其上修改 使用 pip install 模块名 。 发现修改后并未奏效。 创建新的 python 环境安装，依旧未奏效。 使用 pip install grank --no-cache-dir 禁用缓存安装，未奏效。  辗转多次，最后才知道 pip install 是从网上下载安装">
 <meta property="og:type" content="article">
-<meta property="og:title" content="安装 JAVA">
-<meta property="og:url" content="http://LuuMing.github.io/2018/09/20/java-install/index.html">
+<meta property="og:title" content="pip 的正确使用方法">
+<meta property="og:url" content="http://LuuMing.github.io/2018/10/03/pip/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="1.下载 JDK访问jdk 10 下载页面。根据机器的位数与系统选择响应的安装包。 2.解压tar -xvf [下载的.tar.gz] 3.移动到合适的位置个人推荐将解压后的文件放在如下目录里，注意要用sudo: sudo mkdir /usr/lib/jvm sudo mv jdk-10.0.2/ /usr/lib/jvm/ 4.配置环境变量打开 home 下的 .profile 文件，添加如下">
+<meta property="og:description" content="今天试着参加 github 上参与一个开源 python 项目。在使用 pip 工具时遇到坑：  将项目克隆下来后，在其上修改 使用 pip install 模块名 。 发现修改后并未奏效。 创建新的 python 环境安装，依旧未奏效。 使用 pip install grank --no-cache-dir 禁用缓存安装，未奏效。  辗转多次，最后才知道 pip install 是从网上下载安装">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-09-22T06:53:04.202Z">
+<meta property="og:updated_time" content="2018-10-03T15:45:35.621Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="安装 JAVA">
-<meta name="twitter:description" content="1.下载 JDK访问jdk 10 下载页面。根据机器的位数与系统选择响应的安装包。 2.解压tar -xvf [下载的.tar.gz] 3.移动到合适的位置个人推荐将解压后的文件放在如下目录里，注意要用sudo: sudo mkdir /usr/lib/jvm sudo mv jdk-10.0.2/ /usr/lib/jvm/ 4.配置环境变量打开 home 下的 .profile 文件，添加如下">
+<meta name="twitter:title" content="pip 的正确使用方法">
+<meta name="twitter:description" content="今天试着参加 github 上参与一个开源 python 项目。在使用 pip 工具时遇到坑：  将项目克隆下来后，在其上修改 使用 pip install 模块名 。 发现修改后并未奏效。 创建新的 python 环境安装，依旧未奏效。 使用 pip install grank --no-cache-dir 禁用缓存安装，未奏效。  辗转多次，最后才知道 pip install 是从网上下载安装">
 
 
 
 
 
 
-  <link rel="canonical" href="http://LuuMing.github.io/2018/09/20/java-install/"/>
+  <link rel="canonical" href="http://LuuMing.github.io/2018/10/03/pip/"/>
 
 
 
@@ -135,7 +135,7 @@
   };
 </script>
 
-  <title>安装 JAVA | LuMing's blog</title>
+  <title>pip 的正确使用方法 | LuMing's blog</title>
   
 
 
@@ -290,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/20/java-install/">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/10/03/pip/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LuMing">
@@ -307,7 +307,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">安装 JAVA
+          <h1 class="post-title" itemprop="name headline">pip 的正确使用方法
               
             
           </h1>
@@ -332,24 +332,12 @@
                 
               
 
-              <time title="Created: 2018-09-20 16:43:51" itemprop="dateCreated datePublished" datetime="2018-09-20T16:43:51+08:00">2018-09-20</time>
+              <time title="Created: 2018-10-03 23:34:03 / Modified: 23:45:35" itemprop="dateCreated datePublished" datetime="2018-10-03T23:34:03+08:00">2018-10-03</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-09-22 14:53:04" itemprop="dateModified" datetime="2018-09-22T14:53:04+08:00">2018-09-22</time>
               
             
           </span>
@@ -382,22 +370,15 @@
       
 
       
-        <h3 id="1-下载-JDK"><a href="#1-下载-JDK" class="headerlink" title="1.下载 JDK"></a>1.下载 JDK</h3><p>访问<a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html" target="_blank" rel="noopener">jdk 10 下载页面</a>。根据机器的位数与系统选择响应的安装包。</p>
-<h3 id="2-解压"><a href="#2-解压" class="headerlink" title="2.解压"></a>2.解压</h3><pre><code>tar -xvf [下载的.tar.gz]
-</code></pre><h3 id="3-移动到合适的位置"><a href="#3-移动到合适的位置" class="headerlink" title="3.移动到合适的位置"></a>3.移动到合适的位置</h3><p>个人推荐将解压后的文件放在如下目录里，注意要用<code>sudo</code>:</p>
-<pre><code>sudo mkdir /usr/lib/jvm
-sudo mv jdk-10.0.2/ /usr/lib/jvm/
-</code></pre><h3 id="4-配置环境变量"><a href="#4-配置环境变量" class="headerlink" title="4.配置环境变量"></a>4.配置环境变量</h3><p>打开 home 下的 <code>.profile</code> 文件，添加如下内容:</p>
-<pre><code>#set jdk env
-export JAVA_HOME=/usr/lib/jvm/jdk-10.0.1
-export PATH=$JAVA_HOME/bin:$PATH
-</code></pre><h3 id="5-检查是否安装成功"><a href="#5-检查是否安装成功" class="headerlink" title="5. 检查是否安装成功"></a>5. 检查是否安装成功</h3><p>执行：</p>
-<pre><code>java --version
-</code></pre><p>显示：</p>
-<pre><code>java 10.0.2 2018-04-17
-Java(TM) SE Runtime Environment 18.3 (build 10.0.1+10)
-Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.1+10, mixed mode)
-</code></pre><p>即成功安装。</p>
+        <p>今天试着参加 github 上参与一个开源 python 项目。在使用 pip 工具时遇到坑：</p>
+<ol>
+<li>将项目克隆下来后，在其上修改</li>
+<li>使用 <code>pip install 模块名</code> 。</li>
+<li>发现修改后并未奏效。</li>
+<li>创建新的 python 环境安装，依旧未奏效。</li>
+<li>使用 <code>pip install grank --no-cache-dir</code> 禁用缓存安装，未奏效。</li>
+</ol>
+<p>辗转多次，最后才知道 <code>pip install</code> 是从网上下载安装，与<strong>本地无关</strong>。<br>解决办法：<br>在一般的 python 模块中，项目根目录下会有 <code>setup.py</code>，<code>requirements.txt</code>。执行 <code>pip install -r requirements.txt</code>安装必要包。使用<code>python setup.py install</code> 从本地目录进行安装即可。</p>
 
       
     </div>
@@ -449,8 +430,8 @@ Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.1+10, mixed mode)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/20/polygon-inside/" rel="next" title="如何判断点在多边形内部？">
-                <i class="fa fa-chevron-left"></i> 如何判断点在多边形内部？
+              <a href="/2018/09/29/interprocess-communication-semget/" rel="next" title="进程通信-信号量">
+                <i class="fa fa-chevron-left"></i> 进程通信-信号量
               </a>
             
           </div>
@@ -458,10 +439,6 @@ Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.1+10, mixed mode)
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/21/squid/" rel="prev" title="使用 squid 代理上网">
-                使用 squid 代理上网 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -511,17 +488,8 @@ Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.1+10, mixed mode)
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -624,22 +592,6 @@ Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.1+10, mixed mode)
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-下载-JDK"><span class="nav-number">1.</span> <span class="nav-text">1.下载 JDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-解压"><span class="nav-number">2.</span> <span class="nav-text">2.解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-移动到合适的位置"><span class="nav-number">3.</span> <span class="nav-text">3.移动到合适的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-配置环境变量"><span class="nav-number">4.</span> <span class="nav-text">4.配置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-检查是否安装成功"><span class="nav-number">5.</span> <span class="nav-text">5. 检查是否安装成功</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

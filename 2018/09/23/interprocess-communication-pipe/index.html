@@ -108,24 +108,24 @@
 
 
 
-  <meta name="description" content="1.下载 JDK访问jdk 10 下载页面。根据机器的位数与系统选择响应的安装包。 2.解压tar -xvf [下载的.tar.gz] 3.移动到合适的位置个人推荐将解压后的文件放在如下目录里，注意要用sudo: sudo mkdir /usr/lib/jvm sudo mv jdk-10.0.2/ /usr/lib/jvm/ 4.配置环境变量打开 home 下的 .profile 文件，添加如下">
+  <meta name="description" content="语法   #include &amp;lt;unistd.h&amp;gt;         int pipe(int pipefd[2]);         #define _GNU_SOURCE             /* See feature_test_macros(7) */        #include &amp;lt;fcntl.h&amp;gt;              /* Obtain O_* cons">
 <meta property="og:type" content="article">
-<meta property="og:title" content="安装 JAVA">
-<meta property="og:url" content="http://LuuMing.github.io/2018/09/20/java-install/index.html">
+<meta property="og:title" content="进程通信的实现--管道">
+<meta property="og:url" content="http://LuuMing.github.io/2018/09/23/interprocess-communication-pipe/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="1.下载 JDK访问jdk 10 下载页面。根据机器的位数与系统选择响应的安装包。 2.解压tar -xvf [下载的.tar.gz] 3.移动到合适的位置个人推荐将解压后的文件放在如下目录里，注意要用sudo: sudo mkdir /usr/lib/jvm sudo mv jdk-10.0.2/ /usr/lib/jvm/ 4.配置环境变量打开 home 下的 .profile 文件，添加如下">
+<meta property="og:description" content="语法   #include &amp;lt;unistd.h&amp;gt;         int pipe(int pipefd[2]);         #define _GNU_SOURCE             /* See feature_test_macros(7) */        #include &amp;lt;fcntl.h&amp;gt;              /* Obtain O_* cons">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-09-22T06:53:04.202Z">
+<meta property="og:updated_time" content="2018-09-26T11:04:25.500Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="安装 JAVA">
-<meta name="twitter:description" content="1.下载 JDK访问jdk 10 下载页面。根据机器的位数与系统选择响应的安装包。 2.解压tar -xvf [下载的.tar.gz] 3.移动到合适的位置个人推荐将解压后的文件放在如下目录里，注意要用sudo: sudo mkdir /usr/lib/jvm sudo mv jdk-10.0.2/ /usr/lib/jvm/ 4.配置环境变量打开 home 下的 .profile 文件，添加如下">
+<meta name="twitter:title" content="进程通信的实现--管道">
+<meta name="twitter:description" content="语法   #include &amp;lt;unistd.h&amp;gt;         int pipe(int pipefd[2]);         #define _GNU_SOURCE             /* See feature_test_macros(7) */        #include &amp;lt;fcntl.h&amp;gt;              /* Obtain O_* cons">
 
 
 
 
 
 
-  <link rel="canonical" href="http://LuuMing.github.io/2018/09/20/java-install/"/>
+  <link rel="canonical" href="http://LuuMing.github.io/2018/09/23/interprocess-communication-pipe/"/>
 
 
 
@@ -135,7 +135,7 @@
   };
 </script>
 
-  <title>安装 JAVA | LuMing's blog</title>
+  <title>进程通信的实现--管道 | LuMing's blog</title>
   
 
 
@@ -290,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/20/java-install/">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/23/interprocess-communication-pipe/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LuMing">
@@ -307,7 +307,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">安装 JAVA
+          <h1 class="post-title" itemprop="name headline">进程通信的实现--管道
               
             
           </h1>
@@ -332,7 +332,7 @@
                 
               
 
-              <time title="Created: 2018-09-20 16:43:51" itemprop="dateCreated datePublished" datetime="2018-09-20T16:43:51+08:00">2018-09-20</time>
+              <time title="Created: 2018-09-23 12:24:41" itemprop="dateCreated datePublished" datetime="2018-09-23T12:24:41+08:00">2018-09-23</time>
             
 
             
@@ -349,7 +349,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-09-22 14:53:04" itemprop="dateModified" datetime="2018-09-22T14:53:04+08:00">2018-09-22</time>
+                <time title="Modified: 2018-09-26 19:04:25" itemprop="dateModified" datetime="2018-09-26T19:04:25+08:00">2018-09-26</time>
               
             
           </span>
@@ -382,22 +382,90 @@
       
 
       
-        <h3 id="1-下载-JDK"><a href="#1-下载-JDK" class="headerlink" title="1.下载 JDK"></a>1.下载 JDK</h3><p>访问<a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html" target="_blank" rel="noopener">jdk 10 下载页面</a>。根据机器的位数与系统选择响应的安装包。</p>
-<h3 id="2-解压"><a href="#2-解压" class="headerlink" title="2.解压"></a>2.解压</h3><pre><code>tar -xvf [下载的.tar.gz]
-</code></pre><h3 id="3-移动到合适的位置"><a href="#3-移动到合适的位置" class="headerlink" title="3.移动到合适的位置"></a>3.移动到合适的位置</h3><p>个人推荐将解压后的文件放在如下目录里，注意要用<code>sudo</code>:</p>
-<pre><code>sudo mkdir /usr/lib/jvm
-sudo mv jdk-10.0.2/ /usr/lib/jvm/
-</code></pre><h3 id="4-配置环境变量"><a href="#4-配置环境变量" class="headerlink" title="4.配置环境变量"></a>4.配置环境变量</h3><p>打开 home 下的 <code>.profile</code> 文件，添加如下内容:</p>
-<pre><code>#set jdk env
-export JAVA_HOME=/usr/lib/jvm/jdk-10.0.1
-export PATH=$JAVA_HOME/bin:$PATH
-</code></pre><h3 id="5-检查是否安装成功"><a href="#5-检查是否安装成功" class="headerlink" title="5. 检查是否安装成功"></a>5. 检查是否安装成功</h3><p>执行：</p>
-<pre><code>java --version
-</code></pre><p>显示：</p>
-<pre><code>java 10.0.2 2018-04-17
-Java(TM) SE Runtime Environment 18.3 (build 10.0.1+10)
-Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.1+10, mixed mode)
-</code></pre><p>即成功安装。</p>
+        <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code>
+  #include &lt;unistd.h&gt;
+
+       int pipe(int pipefd[2]);
+
+       #define _GNU_SOURCE             /* See feature_test_macros(7) */
+       #include &lt;fcntl.h&gt;              /* Obtain O_* constant definitions */
+       #include &lt;unistd.h&gt;
+
+       int pipe2(int pipefd[2], int flags);
+
+</code></pre><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p><code>pipe()</code> 创建一个单向的可用作进程间通信的数据通道。<code>pipefd</code>数组用作返回管道两端的文件描述符。<code>pipefd[0]</code>代表管道的读取端。<code>pipefd[1]</code>用作写入端。数据被写入到由内核所缓冲的管道写入端。</p>
+<p>如果 <code>flags</code> 为 0，那么<code>pipe2()</code>就和<code>pipe()</code>一样。下面这些变量可以在<code>flags</code>中按位或运算来获得不同的功能：</p>
+<h4 id="O-CLOEXEC"><a href="#O-CLOEXEC" class="headerlink" title="O_CLOEXEC"></a>O_CLOEXEC</h4><p>为两个文件描述符设置<code>close-on-exec (FD_CLOEXEC)</code>标志。在 <a href="http://man7.org/linux/man-pages/man2/open.2.html" target="_blank" rel="noopener">open</a> 中查看相同标志的描述，了解它为什么非常有用。</p>
+<h4 id="O-DIRECT-自从-Linux-3-4"><a href="#O-DIRECT-自从-Linux-3-4" class="headerlink" title="O_DIRECT( 自从 Linux 3.4 )"></a>O_DIRECT( 自从 Linux 3.4 )</h4><p>创建一个在 <strong>packet</strong> 模式下执行 I/O 的管道。每次对管道的 write 都被当作分开的包处理，并且每次从管道中 read 都会依次读取一个包。注意以下几点：</p>
+<ul>
+<li>写入超过 <strong>PIPE_BUF</strong> 字节（查看 <a href="http://man7.org/linux/man-pages/man7/pipe.7.html" target="_blank" rel="noopener">pipe(7)</a>）将会分为多个包。常数 <strong>PIPE_BUF</strong>定义在 <code>&lt;limits.h&gt;</code>中。</li>
+<li>如果 <a href="http://man7.org/linux/man-pages/man2/read.2.html" target="_blank" rel="noopener">read</a> 确定的缓冲区大小比下一个包小，这时，包中需要的字节被读取，超出的字节被丢弃。指定缓冲区大小为 <strong>PIPE_BUF</strong> 就足以读取尽可能大的包。</li>
+<li>不支持 0 长度的包。（read 指定缓冲区大小为 0 是一个空操作，返回 0。）<br>老版本内核不支持这个标志将会通过 <strong>EINVAL</strong> 错误指出。<br>自从 Linux 4.5，可以通过 <a href="http://man7.org/linux/man-pages/man2/fcntl.2.html" target="_blank" rel="noopener">fcntl</a> 改变管道文件描述符的 <strong>O_DIRECT</strong> 设置。</li>
+</ul>
+<h4 id="O-NONBLOCK"><a href="#O-NONBLOCK" class="headerlink" title="O_NONBLOCK"></a>O_NONBLOCK</h4><p>为两个新开的文件描述符设置 O_NONBLOCK 文件状态标志。使用这个标志节省额外的 <strong>fcntl</strong> 调用以达到同样的效果。</p>
+<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>成功，返回 0。错误，返回 -1 并且设置 errno。<br>在 Linux 上（和其他的系统），<strong>pipe()</strong>不在失败时修改<strong>pipefd</strong>。在 POSIX.1-2016 中添加了规范这一行为的要求。Linux 规定的 <strong>pipe2()</strong> 系统调用同样在失败时不修改 <strong>pipefd</strong>。</p>
+<h3 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h3><ul>
+<li>EFAULT 无效 pipefd</li>
+<li>EINVAL（pipe2()）flags 值非法</li>
+<li>EMFILE 达到之前进程所限制的打开文件描述符的数目</li>
+<li>ENFILE 达到系统所限制的打开文件描述符的数目</li>
+<li>ENFILE 管道空间达到用户强行限制的内存，或者调用者没有权限。查看<a href="http://man7.org/linux/man-pages/man7/pipe.7.html" target="_blank" rel="noopener">pipe(7)</a></li>
+</ul>
+<h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p><strong>pipe2()</strong>在 Linux 2.6.27 中被添加进去；glibc 支持从 2.9 版本后开始。</p>
+<h3 id="标准"><a href="#标准" class="headerlink" title="标准"></a>标准</h3><p><strong>pipe()</strong>: POSIX.1-2001,POSIX.1-2008。<br><strong>pipe2()</strong> 是 Linux 特有。</p>
+<h3 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h3><p>下面的程序创建一个管道，然后 <strong>frok</strong> 去创建一个子进程。子进程继承了一套指向同一管道的文件描述符。<strong>fork</strong> 之后，每个进程关闭了管道不需要的文件描述符。父进程这时写入管道从命令行参数获取的字符串，然后子进程依次按字节读取这个字符串并显示在标准输出上。</p>
+<pre><code>
+      #include &lt;sys/types.h&gt;
+       #include &lt;sys/wait.h&gt;
+       #include &lt;stdio.h&gt;
+       #include &lt;stdlib.h&gt;
+       #include &lt;unistd.h&gt;
+       #include &lt;string.h&gt;
+
+       int
+       main(int argc, char *argv[])
+       {
+           int pipefd[2];
+           pid_t cpid;
+           char buf;
+
+           if (argc != 2) {
+               fprintf(stderr, &quot;Usage: %s &lt;string&gt;\n&quot;, argv[0]);
+               exit(EXIT_FAILURE);
+           }
+
+           if (pipe(pipefd) == -1) {
+               perror(&quot;pipe&quot;);
+               exit(EXIT_FAILURE);
+           }
+
+           cpid = fork();
+           if (cpid == -1) {
+               perror(&quot;fork&quot;);
+               exit(EXIT_FAILURE);
+           }
+
+           if (cpid == 0) {    /* Child reads from pipe */
+               close(pipefd[1]);          /* Close unused write end */
+
+               while (read(pipefd[0], &amp;buf, 1) &gt; 0)
+                   write(STDOUT_FILENO, &amp;buf, 1);
+
+               write(STDOUT_FILENO, &quot;\n&quot;, 1);
+               close(pipefd[0]);
+               _exit(EXIT_SUCCESS);
+
+           } else {            /* Parent writes argv[1] to pipe */
+               close(pipefd[0]);          /* Close unused read end */
+               write(pipefd[1], argv[1], strlen(argv[1]));
+               close(pipefd[1]);          /* Reader will see EOF */
+               wait(NULL);                /* Wait for child */
+               exit(EXIT_SUCCESS);
+           }
+       }
+</code></pre><hr>
+<p>via: <a href="http://man7.org/linux/man-pages/man2/pipe.2.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man2/pipe.2.html</a></p>
+<p>译者：<a href="https://github.com/LuuMing" target="_blank" rel="noopener">LuuMing</a></p>
 
       
     </div>
@@ -449,8 +517,8 @@ Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.1+10, mixed mode)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/20/polygon-inside/" rel="next" title="如何判断点在多边形内部？">
-                <i class="fa fa-chevron-left"></i> 如何判断点在多边形内部？
+              <a href="/2018/09/22/coquettish-operation/" rel="next" title="c 中的骚操作">
+                <i class="fa fa-chevron-left"></i> c 中的骚操作
               </a>
             
           </div>
@@ -459,8 +527,8 @@ Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.1+10, mixed mode)
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/09/21/squid/" rel="prev" title="使用 squid 代理上网">
-                使用 squid 代理上网 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/09/29/interprocess-communication-semget/" rel="prev" title="进程通信-信号量">
+                进程通信-信号量 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -634,7 +702,7 @@ Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.1+10, mixed mode)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-下载-JDK"><span class="nav-number">1.</span> <span class="nav-text">1.下载 JDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-解压"><span class="nav-number">2.</span> <span class="nav-text">2.解压</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-移动到合适的位置"><span class="nav-number">3.</span> <span class="nav-text">3.移动到合适的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-配置环境变量"><span class="nav-number">4.</span> <span class="nav-text">4.配置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-检查是否安装成功"><span class="nav-number">5.</span> <span class="nav-text">5. 检查是否安装成功</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#描述"><span class="nav-number">2.</span> <span class="nav-text">描述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#O-CLOEXEC"><span class="nav-number">2.1.</span> <span class="nav-text">O_CLOEXEC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#O-DIRECT-自从-Linux-3-4"><span class="nav-number">2.2.</span> <span class="nav-text">O_DIRECT( 自从 Linux 3.4 )</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#O-NONBLOCK"><span class="nav-number">2.3.</span> <span class="nav-text">O_NONBLOCK</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#返回值"><span class="nav-number">3.</span> <span class="nav-text">返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误"><span class="nav-number">4.</span> <span class="nav-text">错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本"><span class="nav-number">5.</span> <span class="nav-text">版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#标准"><span class="nav-number">6.</span> <span class="nav-text">标准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#范例"><span class="nav-number">7.</span> <span class="nav-text">范例</span></a></li></ol></div>
             
 
           </div>
