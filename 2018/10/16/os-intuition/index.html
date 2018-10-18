@@ -108,24 +108,25 @@
 
 
 
-  <meta name="description" content="实现一个动态站点，所需要的工具语言有  1. Spring 框架  2. vue 3. Mysql Spring 框架用于接收 Http 请求，并做出响应。 Vue 是前端框架，本身基于 JavaScript，用作渲染页面，传递数据。MySql 存储数据。 在前后端分离的设计中，数据以 Json 的形式传递在前后端之间传递。具体表现形式为，在前端 Vue 框架中定义的变量(null/{}/[])">
+  <meta name="description" content="约束约束分为 I/O 约束与 CPU 约束。这两个概念是引出操作系统设计的主要问题之一。操作系统任务之一就是保证多个进程有条不紊的运行， 进程同步临界区通过互斥锁保护信号量完成 PV 操作进行进程同步。">
+<meta name="keywords" content="半吊子">
 <meta property="og:type" content="article">
-<meta property="og:title" content="动态网站">
-<meta property="og:url" content="http://LuuMing.github.io/2018/09/05/dynamic-website/index.html">
+<meta property="og:title" content="操作系统讲什么">
+<meta property="og:url" content="http://LuuMing.github.io/2018/10/16/os-intuition/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="实现一个动态站点，所需要的工具语言有  1. Spring 框架  2. vue 3. Mysql Spring 框架用于接收 Http 请求，并做出响应。 Vue 是前端框架，本身基于 JavaScript，用作渲染页面，传递数据。MySql 存储数据。 在前后端分离的设计中，数据以 Json 的形式传递在前后端之间传递。具体表现形式为，在前端 Vue 框架中定义的变量(null/{}/[])">
+<meta property="og:description" content="约束约束分为 I/O 约束与 CPU 约束。这两个概念是引出操作系统设计的主要问题之一。操作系统任务之一就是保证多个进程有条不紊的运行， 进程同步临界区通过互斥锁保护信号量完成 PV 操作进行进程同步。">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-09-18T14:28:43.133Z">
+<meta property="og:updated_time" content="2018-10-16T13:14:55.366Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="动态网站">
-<meta name="twitter:description" content="实现一个动态站点，所需要的工具语言有  1. Spring 框架  2. vue 3. Mysql Spring 框架用于接收 Http 请求，并做出响应。 Vue 是前端框架，本身基于 JavaScript，用作渲染页面，传递数据。MySql 存储数据。 在前后端分离的设计中，数据以 Json 的形式传递在前后端之间传递。具体表现形式为，在前端 Vue 框架中定义的变量(null/{}/[])">
+<meta name="twitter:title" content="操作系统讲什么">
+<meta name="twitter:description" content="约束约束分为 I/O 约束与 CPU 约束。这两个概念是引出操作系统设计的主要问题之一。操作系统任务之一就是保证多个进程有条不紊的运行， 进程同步临界区通过互斥锁保护信号量完成 PV 操作进行进程同步。">
 
 
 
 
 
 
-  <link rel="canonical" href="http://LuuMing.github.io/2018/09/05/dynamic-website/"/>
+  <link rel="canonical" href="http://LuuMing.github.io/2018/10/16/os-intuition/"/>
 
 
 
@@ -135,7 +136,7 @@
   };
 </script>
 
-  <title>动态网站 | LuMing's blog</title>
+  <title>操作系统讲什么 | LuMing's blog</title>
   
 
 
@@ -290,7 +291,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/05/dynamic-website/">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/10/16/os-intuition/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LuMing">
@@ -307,7 +308,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">动态网站
+          <h1 class="post-title" itemprop="name headline">操作系统讲什么
               
             
           </h1>
@@ -332,24 +333,12 @@
                 
               
 
-              <time title="Created: 2018-09-05 22:51:09" itemprop="dateCreated datePublished" datetime="2018-09-05T22:51:09+08:00">2018-09-05</time>
+              <time title="Created: 2018-10-16 21:00:00 / Modified: 21:14:55" itemprop="dateCreated datePublished" datetime="2018-10-16T21:00:00+08:00">2018-10-16</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-09-18 22:28:43" itemprop="dateModified" datetime="2018-09-18T22:28:43+08:00">2018-09-18</time>
               
             
           </span>
@@ -382,14 +371,8 @@
       
 
       
-        <p>实现一个动态站点，所需要的工具语言有 </p>
-<pre><code>1. Spring 框架 
-2. vue
-3. Mysql
-</code></pre><p>Spring 框架用于接收 Http 请求，并做出响应。</p>
-<p>Vue 是前端框架，本身基于 JavaScript，用作渲染页面，传递数据。<br>MySql 存储数据。</p>
-<p>在前后端分离的设计中，数据以 Json 的形式传递在前后端之间传递。具体表现形式为，在前端 Vue 框架中定义的变量(null/{}/[]) 以 Json 的形式传递给后端，后端代码中，用一个类封装好 Json 的属性并生成标准的get，set方法。这样，传递过去后 Spring 框架就能自动根据属性调用类的构造函数，形成后端的一个对象。</p>
-<p>通过 Mydao 与 Mysql 进行交互。简单的一个动态站点就是这样做起来的。</p>
+        <h3 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h3><p>约束分为 I/O 约束与 CPU 约束。这两个概念是引出操作系统设计的主要问题之一。<br>操作系统任务之一就是保证多个进程有条不紊的运行，</p>
+<h3 id="进程同步"><a href="#进程同步" class="headerlink" title="进程同步"></a>进程同步</h3><p>临界区通过互斥锁保护信号量完成 PV 操作进行进程同步。</p>
 
       
     </div>
@@ -432,6 +415,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/半吊子/" rel="tag"># 半吊子</a>
+          
+        </div>
+      
 
       
       
@@ -441,8 +430,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/02/translating-20180810-6-Reasons-Why-Linux-Users-Switch-to-BSD/" rel="next" title="<翻译> Linux 用户应该换到 BSD 的 6 个理由">
-                <i class="fa fa-chevron-left"></i> <翻译> Linux 用户应该换到 BSD 的 6 个理由
+              <a href="/2018/10/15/translating-20180709-How-To-Configure-SSH-Key-Based-Authentication-In-Linux/" rel="next" title="<翻译> 如何在 Linux 中配置基于密钥认证的 SSH">
+                <i class="fa fa-chevron-left"></i> <翻译> 如何在 Linux 中配置基于密钥认证的 SSH
               </a>
             
           </div>
@@ -450,10 +439,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/09/05/http/" rel="prev" title="http">
-                http <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -503,8 +488,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -607,6 +601,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#约束"><span class="nav-number">1.</span> <span class="nav-text">约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程同步"><span class="nav-number">2.</span> <span class="nav-text">进程同步</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
