@@ -287,6 +287,176 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/07/16/linux-0-11-setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/16/linux-0-11-setup/" itemprop="url">
+                  基于linux0.11的从零开始学操作系统-setup
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-07-16 14:01:26" itemprop="dateCreated datePublished" datetime="2018-07-16T14:01:26+08:00">2018-07-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-07-17 17:49:49" itemprop="dateModified" datetime="2018-07-17T17:49:49+08:00">2018-07-17</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="1-setup中获取扩展内存大小："><a href="#1-setup中获取扩展内存大小：" class="headerlink" title="1.setup中获取扩展内存大小："></a>1.setup中获取扩展内存大小：</h4><pre><code>! Get memory size (extended mem, kB)
+
+        mov     ah,#0x88
+        int     0x15
+        mov     [2],ax
+</code></pre><p><code>返回：ax=从0x100000(1M)处开始的扩展内存大小</code></p>
+<h4 id="2-保护模式"><a href="#2-保护模式" class="headerlink" title="2.保护模式"></a>2.保护模式</h4><p>setup切换保护模式位于<code>[0x00090348] 9020:0148</code></p>
+<pre><code>        mov     ax,#0x0001      ! protected mode (PE) bit
+        lmsw    ax              ! This is it!
+</code></pre><p>此时CPU已经进入32位保护模式</p>
+<pre><code>jmpi    0,8             ! jmp offset 0 of segment 8 (cs)
+</code></pre><p>这句话在16位实模式下解释如下:</p>
+<pre><code>CPU跳转至cs = 8,IP = 0 即0x80处开始执行
+</code></pre><p>而到了32位,CS称为选择子。此时的寻址方式为：<br>通过选择子配合gdt表查到一个值，把这个值重新组合作为新的地址。<br>此时<code>GDTR = 0x0009035b</code> 意味着当前gdt表起始位置在内存中的0x0009035b处。cs=8代表，以<code>GDTR</code>位起始位置，偏移8个字节。也就是选择‘0x00090363’。存放的东西是什么呢？</p>
+<pre><code>0x00090363 &lt;bogus+       8&gt;:    0xff    0x07    0x00    0x00    0x00    0x9a    0xc0    0x00
+p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是乎:
+0x00090363-0x00090371: 
+00C09A00000007FF
+</code></pre><p>上面的东西代表的是什么意思呢？其是，它是一段LDT(Local Descriptor Table)。一共64个bit，其解释方式如下图所示：<br><img src="/2018/07/16/linux-0-11-setup/./ldt.png" alt="ldt"><br>重点关心黑色字体部分:<br> <strong>00</strong>C09A<strong>000000</strong>07FF<br> 前面的就是32位保护模式下的基址，后面的就是保护模式下的偏移地址。所以，接下来CPU就到了<code>00:000000</code>处。<br> 用一张图概况保护模式下的寻址方式，一定就是这样了:<br> <img src="/2018/07/16/linux-0-11-setup/./gdt.png" alt="gdt"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/07/14/linux-0-11-bootsect/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1962,229 +2132,6 @@ p result
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/02/26/blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/26/blog/" itemprop="url">
-                  使用HEXO+Github打造你的blog(一)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-02-26 21:23:47" itemprop="dateCreated datePublished" datetime="2018-02-26T21:23:47+08:00">2018-02-26</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-03-04 00:20:59" itemprop="dateModified" datetime="2018-03-04T00:20:59+08:00">2018-03-04</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/集大成/" itemprop="url" rel="index"><span itemprop="name">集大成</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>说到博客，大家可能会想到QQ空间呀，微博等等的第三方博客。这些第三方的博客虽然方便好用，但是却做不到像你现在看到的这种效果。今天,我就教大家如何使用工具，打造自己的个人博客。</p>
-<p>但是在开始之前，我想要先让你区分<strong>动态网页</strong>与<strong>静态网页</strong>。<br><strong>静态网页</strong>顾名思义，你所看到的东西与别人所看到的是一模一样的。</p>
-<p>区分于静态网页的是<strong>动态网页</strong>，它与静态网页最根本的区别是在它的背后有一个叫做“web服务器”的东西。这个东西有什么用呢？设想以下情景：当你第一次登录github, 你被要求输入帐号和密码。当你登录后，再打开github就会直接显示你的个人profile。 这个就是“web服务器”的magic。</p>
-<p>再举个形象的例子:</p>
-<pre><code>    静态网页就像银行的自动门，无论是谁走过去，门都会自动打开。
-    而动态网页就像银行柜员，男的过去她就会说“您好，先生...”，女的过去就会叫你“您好，女士”。
-</code></pre><p>本教程所实现的blog本质上就是静态网页。<br><strong>系统: Linux/ windows</strong><br><strong>工具: Nodejs + HEXO + Github</strong></p>
-<h2 id="1-安装HEXO"><a href="#1-安装HEXO" class="headerlink" title="1.安装HEXO"></a>1.安装HEXO</h2><p>我们所看到的网页是用一种叫做HTML的语言所写的。当你浏览网页时，HTML语言把你想要呈现在网页上的图片/文字/视频等等东西合理的布置起来，形成一个让人能看懂的页面。你可以在你的浏览器里按<code>F12</code>查看到一个网页的HTML代码，以下就是我的主页的部分HTML代码 (可以看到我加了广告哈哈哈):</p>
-<pre><code>&lt;html class=&quot;theme-next muse use-motion&quot; lang=&quot;zh&quot;&gt;
-&lt;head&gt;
-&lt;!-- ad start --&gt;
-&lt;script async src=&quot;//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js&quot;&gt;&lt;/script&gt;
-&lt;script&gt;
-  (adsbygoogle = window.adsbygoogle || []).push({
-    google_ad_client: &quot;ca-pub-9964492323779082&quot;,
-    enable_page_level_ads: true
-  });
-&lt;/script&gt;
-&lt;!-- ad end --&gt;
-  &lt;meta charset=&quot;UTF-8&quot;/&gt;
-&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot; /&gt;
-&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, maximum-scale=1&quot;/&gt;
-&lt;meta name=&quot;theme-color&quot; content=&quot;#222&quot;&gt;
-
-</code></pre><p>看到这里你可能就晕了，能不能不学习HTML就搭建一个博客呢？<br>答案是：能。 好在博客这种形式的网站有固定的套路，前人已经给你设计好了一个框架，你不必从头学起，只需要把重点放在内容本身就行了，我们所使用的工具就是HEXO<strong><em>(点击图片进入官网)</em></strong><br><a href="https://hexo.io" target="_blank" rel="noopener"><img src="/2018/02/26/blog/hexo.png" alt="hexo"></a><br>我们找到<a href="https://hexo.io/docs/" target="_blank" rel="noopener">Installation</a>这一项，其原文如下:</p>
-<pre><code>It only takes a few minutes to set up Hexo. If you encounter a problem and can’t find the solution here, please submit a GitHub issue and I’ll try to solve it.
-Requirements
-
-Installing Hexo is quite easy. However, you do need to have a couple of other things installed first:
-
-    Node.js
-    Git
-
-If your computer already has these, congratulations! Just install Hexo with npm:
-
-$ npm install -g hexo-cli
-
-If not, please follow the following instructions to install all the requirements.
-</code></pre><p>啥，你说你看不懂，没关系，我会百度翻译</p>
-<pre><code>只需要几分钟的时间来设置Hexo。如果你遇到了一个问题，不能在这里找到解决方案，请提交一个GitHub的问题我会尽力解决它。
-
-要求
-
-安装hexo是很容易的。然而，您确实需要先安装一些其他的东西：
-Node.js
-Git
-如果你的电脑已经有了这些，祝贺你！只要安装Hexo与新公共管理：
-
-NPM安装- G hexo CLI美元
-
-如果没有，请按照以下说明安装所有的要求。
-</code></pre><p>看来百度翻译也不过如此，把倒数第二行的安装命令给翻译了，我国人工智能行业有需提高呀～</p>
-<p>言归正传，看来安装个HEXO还不是那么容易的…</p>
-<p>(未完待续)</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2232,7 +2179,7 @@ NPM安装- G hexo CLI美元
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-count">43</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

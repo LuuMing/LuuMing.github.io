@@ -287,6 +287,233 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/10/20/translating-20180907-How-to-Use-the-Netplan-Network-Configuration-Tool-on-Linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/20/translating-20180907-How-to-Use-the-Netplan-Network-Configuration-Tool-on-Linux/" itemprop="url">
+                  <翻译>如何在 Linux 上使用网络配置工具 Netplan
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-10-20 22:47:22 / Modified: 23:00:21" itemprop="dateCreated datePublished" datetime="2018-10-20T22:47:22+08:00">2018-10-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p> netplan 是一个命令行工具，用于在某些 Linux 发行版上配置网络。</p>
+<p><img src="https://www.linux.com/sites/lcom/files/styles/rendered_file/public/netplan.jpg?itok=Gu_ZfNGa" alt=""></p>
+<p>多年以来 Linux 管理员和用户们以相同的方式配置他们的网络接口。例如，如果你是 Ubuntu 用户，你能够用桌面 GUI 配置网络连接，也可以在 <code>/etc/network/interfaces</code> 文件里配置。配置相当简单且可以奏效。在文件中配置看起来就像这样：</p>
+<pre><code>auto enp10s0
+iface enp10s0 inet static
+address 192.168.1.162
+netmask 255.255.255.0
+gateway 192.168.1.100
+dns-nameservers 1.0.0.1,1.1.1.1
+</code></pre><p>保存并关闭文件。使用命令重启网络：</p>
+<pre><code>sudo systemctl restart networking
+</code></pre><p>或者，如果你使用不带 systemd 的发行版，你可以通过老办法来重启网络：</p>
+<pre><code>sudo /etc/init.d/networking restart
+</code></pre><p>你的网络将会重新启动，新的配置将会生效。</p>
+<p>这就是多年以来的做法。但是现在，在某些发行版上（例如 Ubuntu Linux 18.04），网络的配置与控制发生了很大的变化。不需要那个 <code>interfaces</code> 文件和 <code>/etc/init.d/networking</code> 脚本，我们现在转向使用 <a href="https://netplan.io/" target="_blank" rel="noopener">Netplan</a>。Netplan 是一个在某些 Linux 发行版上配置网络连接的命令行工具。Netplan 使用 YAML 描述文件来配置网络接口，然后，通过这些描述为任何给定的呈现工具生成必要的配置选项。</p>
+<p>我将向你展示如何在 Linux 上使用 Netplan 配置静态 IP 地址和 DHCP 地址。我会在 Ubuntu Server 18.04 上演示。有句忠告，你创建的 .yaml 文件中的缩进必须保持一致，否则将会失败。你不用为每行使用特定的缩进间距，只需保持一致就行了。</p>
+<h3 id="新的配置文件"><a href="#新的配置文件" class="headerlink" title="新的配置文件"></a>新的配置文件</h3><p>打开终端窗口（或者通过 SSH 登录进 Ubuntu 服务器）。你会在 <code>/etc/netplan</code> 文件夹下发现 Netplan 的新配置文件。使用 <code>cd /etc/netplan</code> 命令进入到那个文件夹下。一旦进到了那个文件夹，也许你就能够看到一个文件：</p>
+<pre><code>01-netcfg.yaml
+</code></pre><p>你可以创建一个新的文件或者是编辑默认文件。如果你打算修改默认文件，我建议你先做一个备份：</p>
+<pre><code>sudo cp /etc/netplan/01-netcfg.yaml /etc/netplan/01-netcfg.yaml.bak
+</code></pre><p>备份好后，就可以开始配置了。</p>
+<h3 id="网络设备名称"><a href="#网络设备名称" class="headerlink" title="网络设备名称"></a>网络设备名称</h3><p>在你开始配置静态 IP 之前，你需要知道设备名称。要做到这一点，你可以使用命令 <code>ip a</code>，然后找出哪一个设备将会被用到（图 1）。</p>
+<p><img src="https://www.linux.com/sites/lcom/files/styles/rendered_file/public/netplan_1.jpg?itok=XuIsXWbV" alt="netplan" title="netplan"></p>
+<p><em>图 1：使用 ip a 命令找出设备名称</em></p>
+<p>我将为 ens5 配置一个静态的 IP。</p>
+<h3 id="配置静态-IP-地址"><a href="#配置静态-IP-地址" class="headerlink" title="配置静态 IP 地址"></a>配置静态 IP 地址</h3><p>使用命令打开原来的 .yaml 文件：</p>
+<pre><code>sudo nano /etc/netplan/01-netcfg.yaml
+</code></pre><p>文件的布局看起来就像这样：</p>
+<pre><code>network:
+    Version: 2
+    Renderer: networkd
+    ethernets:
+       DEVICE_NAME:
+          Dhcp4: yes/no
+          Addresses: [IP/NETMASK]
+          Gateway: GATEWAY
+          Nameservers:
+             Addresses: [NAMESERVER, NAMESERVER]
+</code></pre><p>其中：</p>
+<ul>
+<li><code>DEVICE_NAME</code> 是需要配置设备的实际名称。</li>
+<li><code>yes</code>/<code>no</code> 代表是否启用 dhcp4。</li>
+<li><code>IP</code> 是设备的 IP 地址。</li>
+<li><code>NETMASK</code> 是 IP 地址的掩码。</li>
+<li><code>GATEWAY</code> 是网关的地址。</li>
+<li><code>NAMESERVER</code> 是由逗号分开的 DNS 服务器列表。</li>
+</ul>
+<p>这是一份 .yaml 文件的样例：</p>
+<pre><code>network:
+    version: 2
+    renderer: networkd
+    ethernets:
+       ens5:
+       dhcp4: no
+       addresses: [192.168.1.230/24]
+       gateway4: 192.168.1.254
+       nameservers:
+          addresses: [8.8.4.4,8.8.8.8]
+</code></pre><p>编辑上面的文件以达到你想要的效果。保存并关闭文件。</p>
+<p>注意，掩码已经不用再配置为 <code>255.255.255.0</code> 这种形式。取而代之的是，掩码已被添加进了 IP 地址中。</p>
+<h3 id="测试配置"><a href="#测试配置" class="headerlink" title="测试配置"></a>测试配置</h3><p>在应用改变之前，让我们测试一下配置。为此，使用命令：</p>
+<pre><code>sudo netplan try
+</code></pre><p>上面的命令会在应用配置之前验证其是否有效。如果成功，你就会看到配置被接受。换句话说，Netplan 会尝试将新的配置应用到运行的系统上。如果新的配置失败了，Netplan 会自动地恢复到之前使用的配置。成功后，新的配置就会被使用。</p>
+<h3 id="应用新的配置"><a href="#应用新的配置" class="headerlink" title="应用新的配置"></a>应用新的配置</h3><p>如果你确信配置文件没有问题，你就可以跳过测试环节并且直接使用新的配置。它的命令是：</p>
+<pre><code>sudo netplan apply
+</code></pre><p>此时，你可以使用 ip a 看看新的地址是否正确。</p>
+<h3 id="配置-DHCP"><a href="#配置-DHCP" class="headerlink" title="配置 DHCP"></a>配置 DHCP</h3><p>虽然你可能不会配置 DHCP 服务，但通常还是知道比较好。例如，你也许不知道网络上当前可用的静态 IP 地址是多少。你可以为设备配置 DHCP，获取到 IP 地址，然后将那个地址重新配置为静态地址。</p>
+<p>在 Netplan 上使用 DHCP，配置文件看起来就像这样：</p>
+<pre><code>network:
+    version: 2
+    renderer: networkd
+    ethernets:
+       ens5:
+       Addresses: []
+       dhcp4: true
+       optional: true
+</code></pre><p>保存并退出。用下面命令来测试文件：</p>
+<pre><code>sudo netplan try
+</code></pre><p>Netplan 应该会成功配置 DHCP 服务。这时你可以使用 <code>ip a</code> 命令得到动态分配的地址，然后重新配置静态地址。或者，你可以直接使用 DHCP 分配的地址（但看看这是一个服务器，你可能不想这样做）。</p>
+<p>也许你有不只一个的网络接口，你可以命名第二个 .yaml 文件为 <code>02-netcfg.yaml</code> 。Netplan 会按照数字顺序应用配置文件，因此 01 会在 02 之前使用。根据你的需要创建多个配置文件。</p>
+<h3 id="就是这些了"><a href="#就是这些了" class="headerlink" title="就是这些了"></a>就是这些了</h3><p>不管怎样，那些就是所有关于使用 Netplan 的东西了。虽然它对于我们习惯性的配置网络地址来说是一个相当大的改变，但并不是所有人都用的惯。但这种配置方式值得一提……因此你会适应的。</p>
+<p>在 Linux Foundation 和 edX 上通过 <a href="https://training.linuxfoundation.org/linux-courses/system-administration-training/introduction-to-linux" target="_blank" rel="noopener">“Introduction to Linux”</a> 课程学习更多关于 Linux 的内容。</p>
+<hr>
+<p>via: <a href="https://www.linux.com/learn/intro-to-linux/2018/9/how-use-netplan-network-configuration-tool-linux" target="_blank" rel="noopener">https://www.linux.com/learn/intro-to-linux/2018/9/how-use-netplan-network-configuration-tool-linux</a></p>
+<p>作者：<a href="https://www.linux.com/users/jlwallen" target="_blank" rel="noopener">Jack Wallen</a><br>选题：<a href="https://github.com/lujun9972" target="_blank" rel="noopener">lujun9972</a><br>译者：<a href="https://github.com/LuuMing" target="_blank" rel="noopener">LuuMing</a><br>校对：<a href="https://github.com/wxy" target="_blank" rel="noopener">wxy</a></p>
+<p>本文由 <a href="https://github.com/LCTT/TranslateProject" target="_blank" rel="noopener">LCTT</a> 原创编译，<a href="https://linux.cn/" target="_blank" rel="noopener">Linux中国</a> 荣誉推出</p>
+<hr>
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>感谢<a href="https://github.com/LCTT/TranslateProject/pull/10584/files" target="_blank" rel="noopener">校对</a>。示例代码要精简，不能照搬原文，要删除多余的空行。后面的标点符号也要注意，即使是英文的引用内容，也要使用中文的引号<code>&quot; ”</code>。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/10/16/os-intuition/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1891,168 +2118,6 @@ count = ori_count;
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/21/squid/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/21/squid/" itemprop="url">
-                  使用 squid 代理上网
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-09-21 19:13:00" itemprop="dateCreated datePublished" datetime="2018-09-21T19:13:00+08:00">2018-09-21</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-09-22 17:14:43" itemprop="dateModified" datetime="2018-09-22T17:14:43+08:00">2018-09-22</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>局域网内有多台电脑，其中只有一台能够上网，怎样通过 squid 软件搭建代理服务器让多台电脑上网呢？</p>
-<h3 id="1-安装-squid"><a href="#1-安装-squid" class="headerlink" title="1. 安装 squid"></a>1. 安装 squid</h3><p><code>sudo apt-get install squid</code></p>
-<h3 id="2-修改配置文件"><a href="#2-修改配置文件" class="headerlink" title="2.修改配置文件"></a>2.修改配置文件</h3><p>打开/etc/squid/squid.conf，更改</p>
-<pre><code># And finally deny all other access to this proxy
-http_access deny all
-</code></pre><p>为</p>
-<pre><code># And finally deny all other access to this proxy
-http_access allow all
-</code></pre><h3 id="3-连接代理服务器"><a href="#3-连接代理服务器" class="headerlink" title="3. 连接代理服务器"></a>3. 连接代理服务器</h3><p>Ubuntu 14.04 下，打开【系统设置】-【网络】-【网络代理】。设置【方法】为【手动】。在【HTTP代理】那里填上代理服务器的 IP 地址。端口设置为【3128（默认）】。最后，点击应用到整个系统。</p>
-<h3 id="4-测试"><a href="#4-测试" class="headerlink" title="4. 测试"></a>4. 测试</h3><p>经过测试，百度、淘宝、京东等国内网站均遭到拒绝访问。而像，leetcode、stackoverflow、dappradar 等均正常访问。</p>
-<h3 id="5-后记"><a href="#5-后记" class="headerlink" title="5.后记"></a>5.后记</h3><p>关于不能访问有些网站的事情，调查了一下，是因为 squid 不能正常代理 <code>https</code>。百度了许多，最后发现直接使用 <code>tinyporxy</code>作为代理，将 <code>http</code>、<code>https</code> 的代理都设置为 <code>tinyproxy</code> 的 <code>8888</code> 就能上网了。哎，折腾这么多不如找对工具呀～</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2100,7 +2165,7 @@ http_access allow all
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-count">43</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
