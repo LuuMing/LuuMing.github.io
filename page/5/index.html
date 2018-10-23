@@ -287,6 +287,209 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/02/28/plus-of-two-string/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/28/plus-of-two-string/" itemprop="url">
+                  字符串加法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-02-28 12:35:56 / Modified: 13:26:55" itemprop="dateCreated datePublished" datetime="2018-02-28T12:35:56+08:00">2018-02-28</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/编程/" itemprop="url" rel="index"><span itemprop="name">编程</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>最近在刷PAT(Programming Ability Test). 发现许多题目都用到了字符串相加，今天就来总结一下。</p>
+<h2 id="1-stoi等"><a href="#1-stoi等" class="headerlink" title="1.stoi等"></a>1.stoi等</h2><p>在c++ 11 中可以直接调用<code>stoi</code>,<code>stol</code>, <code>stoll</code>,<code>stoull</code>全局函数.分别将字符串转换为<code>int</code>,<code>long int</code>, <code>long long int</code>, <code>unsigned long long int</code></p>
+<pre><code> string  a  = &quot;123&quot;;
+ string b = &quot;456&quot;;
+ cout &lt;&lt; stoi(a) + stoi(b)&lt;&lt;endl;
+</code></pre><p>输出</p>
+<pre><code>579
+</code></pre><p>其他函数的用法同上</p>
+<h2 id="2-自定义函数"><a href="#2-自定义函数" class="headerlink" title="2.自定义函数"></a>2.自定义函数</h2><p>先贴上核心代码</p>
+<pre><code>string string_add(string a,string b)
+{
+    string result;            //结果存放
+    int sum = 0;                //每位相加和
+    int remain = 0;            //余
+    int carry = 0;            //进位
+    for(int i = a.size()-1,j = b.size()-1; i &gt;=0 || j&gt;= 0; i--,j--)  
+    {                                            //终止条件：同时扫描完a,b
+         sum = ((i&gt;=0?a[i]:&#39;0&#39;) - &#39;0&#39;) + ((j&gt;=0?b[j]:&#39;0&#39;)-&#39;0&#39;) + carry;   //求和，如果已扫描完其中一个字符串，用0代替。
+         remain = sum%10;                                    //计算余数
+         carry = sum /10;                                    //计算进位
+        result += to_string(remain);                            //附加结果
+    }
+    if(carry !=0)
+        result += to_string(carry);                 
+    reverse(result.begin(),result.end());                        //因为结果是逆序的，因此翻转
+    return result;
+}
+</code></pre><h4 id="实例测试-a-“19”-b-”1”"><a href="#实例测试-a-“19”-b-”1”" class="headerlink" title="实例测试: a = “19”,b=”1”"></a>实例测试: a = “19”,b=”1”</h4><pre><code>times i = 1,j = 0:
+//    sum = &#39;9&#39; - &#39;0&#39; + &#39;1&#39; - &#39;0&#39; + 0;                     sum = 10
+//    remain = 10 % 10;                                     remain = 0;
+//    carry = 10/10;                         carry = 1;
+//    result += to_string(0);
+p result
+    &quot;0&quot;
+times 2 i = 0,j = -1:
+//    sum = &#39;1&#39; - &#39;0&#39; + &#39;0&#39; - &#39;0&#39; + 1;                     sum = 2
+//    remain = 2 % 10;                                     remain = 2;
+//    carry = 2/10;                         carry = 0;
+//    result += to_string(0);
+p result
+    &quot;02&quot;
+if(carry == 0)                                       //false
+reverse(result.begin(),result.end());
+p result
+&quot;20&quot;
+</code></pre><p>很多题目都用到了字符串相加，例如：<br><a href="https://www.patest.cn/contests/pat-a-practise/1024" target="_blank" rel="noopener">1024. Palindromic Number (25)</a><br><a href="https://www.patest.cn/contests/pat-a-practise/1136" target="_blank" rel="noopener">1136. A Delayed Palindrome (20)</a><br>感兴趣的同学也可以刷刷看</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/02/26/blog/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -888,7 +1091,7 @@ NPM安装- G hexo CLI美元
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">43</span>
+                    <span class="site-state-item-count">44</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

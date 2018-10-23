@@ -108,14 +108,18 @@
 
 
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="语法#include &amp;lt;sys/types.h&amp;gt; #include &amp;lt;sys/ipc.h&amp;gt; #include &amp;lt;sys/sem.h&amp;gt;  int semget(key_t key, int nsems, int semflg); 描述semget() 系统调用返回 System V 系统中的一个信号量标识符并给参数key。 via: http://man7.org">
+<meta name="keywords" content="半吊子">
+<meta property="og:type" content="article">
 <meta property="og:title" content="进程通信-信号量">
 <meta property="og:url" content="http://LuuMing.github.io/2018/09/29/interprocess-communication-semget/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
+<meta property="og:description" content="语法#include &amp;lt;sys/types.h&amp;gt; #include &amp;lt;sys/ipc.h&amp;gt; #include &amp;lt;sys/sem.h&amp;gt;  int semget(key_t key, int nsems, int semflg); 描述semget() 系统调用返回 System V 系统中的一个信号量标识符并给参数key。 via: http://man7.org">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-09-29T15:29:51.050Z">
+<meta property="og:updated_time" content="2018-10-21T08:36:31.581Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="进程通信-信号量">
+<meta name="twitter:description" content="语法#include &amp;lt;sys/types.h&amp;gt; #include &amp;lt;sys/ipc.h&amp;gt; #include &amp;lt;sys/sem.h&amp;gt;  int semget(key_t key, int nsems, int semflg); 描述semget() 系统调用返回 System V 系统中的一个信号量标识符并给参数key。 via: http://man7.org">
 
 
 
@@ -329,12 +333,24 @@
                 
               
 
-              <time title="Created: 2018-09-29 23:29:23 / Modified: 23:29:51" itemprop="dateCreated datePublished" datetime="2018-09-29T23:29:23+08:00">2018-09-29</time>
+              <time title="Created: 2018-09-29 23:29:23" itemprop="dateCreated datePublished" datetime="2018-09-29T23:29:23+08:00">2018-09-29</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-10-21 16:36:31" itemprop="dateModified" datetime="2018-10-21T16:36:31+08:00">2018-10-21</time>
               
             
           </span>
@@ -367,7 +383,14 @@
       
 
       
-        
+        <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code>#include &lt;sys/types.h&gt;
+#include &lt;sys/ipc.h&gt;
+#include &lt;sys/sem.h&gt;
+
+int semget(key_t key, int nsems, int semflg);
+</code></pre><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p><code>semget()</code> 系统调用返回 <a href="https://baike.baidu.com/item/System%20V/1376562?fr=aladdin" target="_blank" rel="noopener">System V</a> 系统中的一个信号量标识符并给参数<code>key</code>。</p>
+<p>via: <a href="http://man7.org/linux/man-pages/man2/semget.2.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man2/semget.2.html</a></p>
+
       
     </div>
 
@@ -408,6 +431,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/半吊子/" rel="tag"># 半吊子</a>
+          
+        </div>
       
 
       
@@ -480,8 +509,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -496,7 +534,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">43</span>
+                    <span class="site-state-item-count">44</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -584,6 +622,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法"><span class="nav-number">1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#描述"><span class="nav-number">2.</span> <span class="nav-text">描述</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

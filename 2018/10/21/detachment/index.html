@@ -108,24 +108,25 @@
 
 
 
-  <meta name="description" content="今天试着参加 github 上参与一个开源 python 项目。在使用 pip 工具时遇到坑：  将项目克隆下来后，在其上修改 使用 pip install 模块名 。 发现修改后并未奏效。 创建新的 python 环境安装，依旧未奏效。 使用 pip install grank --no-cache-dir 禁用缓存安装，未奏效。  辗转多次，最后才知道 pip install 是从网上下载安装">
+  <meta name="description" content="这几句台词总是不时地在脑中浮现： UBIQUITOUS ASSIMILATE &amp;quot;Awlay absorbing everything everwhere all the time.&amp;quot; ... How are you to imagine anything, if the images are always provide for you? ... DOUBLETHINK To">
+<meta name="keywords" content="随想">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pip 的正确使用方法">
-<meta property="og:url" content="http://LuuMing.github.io/2018/10/03/pip/index.html">
+<meta property="og:title" content="《超脱》">
+<meta property="og:url" content="http://LuuMing.github.io/2018/10/21/detachment/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="今天试着参加 github 上参与一个开源 python 项目。在使用 pip 工具时遇到坑：  将项目克隆下来后，在其上修改 使用 pip install 模块名 。 发现修改后并未奏效。 创建新的 python 环境安装，依旧未奏效。 使用 pip install grank --no-cache-dir 禁用缓存安装，未奏效。  辗转多次，最后才知道 pip install 是从网上下载安装">
+<meta property="og:description" content="这几句台词总是不时地在脑中浮现： UBIQUITOUS ASSIMILATE &amp;quot;Awlay absorbing everything everwhere all the time.&amp;quot; ... How are you to imagine anything, if the images are always provide for you? ... DOUBLETHINK To">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-10-03T15:45:35.621Z">
+<meta property="og:updated_time" content="2018-10-21T04:36:36.036Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="pip 的正确使用方法">
-<meta name="twitter:description" content="今天试着参加 github 上参与一个开源 python 项目。在使用 pip 工具时遇到坑：  将项目克隆下来后，在其上修改 使用 pip install 模块名 。 发现修改后并未奏效。 创建新的 python 环境安装，依旧未奏效。 使用 pip install grank --no-cache-dir 禁用缓存安装，未奏效。  辗转多次，最后才知道 pip install 是从网上下载安装">
+<meta name="twitter:title" content="《超脱》">
+<meta name="twitter:description" content="这几句台词总是不时地在脑中浮现： UBIQUITOUS ASSIMILATE &amp;quot;Awlay absorbing everything everwhere all the time.&amp;quot; ... How are you to imagine anything, if the images are always provide for you? ... DOUBLETHINK To">
 
 
 
 
 
 
-  <link rel="canonical" href="http://LuuMing.github.io/2018/10/03/pip/"/>
+  <link rel="canonical" href="http://LuuMing.github.io/2018/10/21/detachment/"/>
 
 
 
@@ -135,7 +136,7 @@
   };
 </script>
 
-  <title>pip 的正确使用方法 | LuMing's blog</title>
+  <title>《超脱》 | LuMing's blog</title>
   
 
 
@@ -290,7 +291,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/10/03/pip/">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/10/21/detachment/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LuMing">
@@ -307,7 +308,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">pip 的正确使用方法
+          <h1 class="post-title" itemprop="name headline">《超脱》
               
             
           </h1>
@@ -332,7 +333,7 @@
                 
               
 
-              <time title="Created: 2018-10-03 23:34:03 / Modified: 23:45:35" itemprop="dateCreated datePublished" datetime="2018-10-03T23:34:03+08:00">2018-10-03</time>
+              <time title="Created: 2018-10-21 09:55:29 / Modified: 12:36:36" itemprop="dateCreated datePublished" datetime="2018-10-21T09:55:29+08:00">2018-10-21</time>
             
 
             
@@ -370,15 +371,16 @@
       
 
       
-        <p>今天试着参加 github 上参与一个开源 python 项目。在使用 pip 工具时遇到坑：</p>
-<ol>
-<li>将项目克隆下来后，在其上修改</li>
-<li>使用 <code>pip install 模块名</code> 。</li>
-<li>发现修改后并未奏效。</li>
-<li>创建新的 python 环境安装，依旧未奏效。</li>
-<li>使用 <code>pip install grank --no-cache-dir</code> 禁用缓存安装，未奏效。</li>
-</ol>
-<p>辗转多次，最后才知道 <code>pip install</code> 是从网上下载安装，与<strong>本地无关</strong>。<br>解决办法：<br>在一般的 python 模块中，项目根目录下会有 <code>setup.py</code>，<code>requirements.txt</code>。执行 <code>pip install -r requirements.txt</code>安装必要包。使用<code>python setup.py install</code> 从本地目录进行安装即可。</p>
+        <p>这几句<a href="https://movie.douban.com/subject/5322596/" target="_blank" rel="noopener">台词</a>总是不时地在脑中浮现：</p>
+<pre><code>UBIQUITOUS
+ASSIMILATE
+&quot;Awlay absorbing everything everwhere all the time.&quot;
+...
+How are you to imagine anything, if the images are always provide for you?
+...
+DOUBLETHINK
+To deliberately believe in lies while knowing they&#39;re false. Examples of this  in everyday life: oh, I... need to be pretty, to be happy. I need surgery to be pretty. I need to be thin, famous, fashionable. Our young men, today, are being told that women, are whorses, bitches, thing to be screwed, beaten, shit on, ashamed. This is a marketing holocaust. 24 hours of a day, for the rest of our lives, the powers that be are hard at work, dumbing us to death. So, to defend ourselves and fight against assimilating this dullness into our thought processes, we must learn to read, to stimulate our own imaginatiion, to cultivate, our own consciousness, our own belief system. We all need these skills, to defend, to preserve, our own minds.
+</code></pre><p>恩，为什么呢？</p>
 
       
     </div>
@@ -421,6 +423,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/随想/" rel="tag"># 随想</a>
+          
+        </div>
+      
 
       
       
@@ -430,8 +438,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/29/interprocess-communication-semget/" rel="next" title="进程通信-信号量">
-                <i class="fa fa-chevron-left"></i> 进程通信-信号量
+              <a href="/2018/10/20/translating-20180907-How-to-Use-the-Netplan-Network-Configuration-Tool-on-Linux/" rel="next" title="<翻译>如何在 Linux 上使用网络配置工具 Netplan">
+                <i class="fa fa-chevron-left"></i> <翻译>如何在 Linux 上使用网络配置工具 Netplan
               </a>
             
           </div>
@@ -439,10 +447,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/05/githubAPI/" rel="prev" title="githubAPI">
-                githubAPI <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

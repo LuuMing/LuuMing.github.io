@@ -287,6 +287,260 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/22/i-plus-plus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/22/i-plus-plus/" itemprop="url">
+                  i++
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-22 10:36:53 / Modified: 14:50:37" itemprop="dateCreated datePublished" datetime="2018-09-22T10:36:53+08:00">2018-09-22</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>关于 <code>i++</code> 操作总会在一些意想不到的地方给程序员带来各种各样的麻烦。例如：多次执行<code>count = count ++</code> 后，为什么 <code>count</code> 的值不变？ 要深入理解这个操作，就需要从更深层次的汇编来解释它了。</p>
+<h3 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a>1. 准备工作</h3><p>在 Linux 64 位机器下编写 <code>c++</code> 代码：</p>
+<pre><code>int main()
+{
+        int i = 0;
+        i++;
+        cout &lt;&lt; i;
+}
+</code></pre><p>使用 <code>g++ -g 1.cpp</code> 对其进行编译并加入调试信息。</p>
+<h3 id="2-分析汇编指令"><a href="#2-分析汇编指令" class="headerlink" title="2. 分析汇编指令"></a>2. 分析汇编指令</h3><p>使用 <code>objdum -S a.out</code> 可以将汇编代码与调试信息打开。找到 <code>main</code> 函数开始的地方：</p>
+<pre><code>int main()
+{
+  400756:    55                       push   %rbp
+  400757:    48 89 e5                 mov    %rsp,%rbp 
+  40075a:    48 83 ec 10              sub    $0x10,%rsp 
+    int i = 0;
+  40075e:    c7 45 fc 00 00 00 00     movl   $0x0,-0x4(%rbp)
+    i++;
+  400765:    83 45 fc 01              addl   $0x1,-0x4(%rbp)
+    cout &lt;&lt; i;
+  400769:    8b 45 fc                 mov    -0x4(%rbp),%eax
+  40076c:    89 c6                    mov    %eax,%esi
+  40076e:    bf 60 10 60 00           mov    $0x601060,%edi
+  400773:    e8 88 fe ff ff           callq  400600 &lt;_ZNSolsEi@plt&gt;
+}
+</code></pre><p>这些都是 <a href="">AT&amp;T</a> 汇编，想要深入了解就得参考 GUN AS 手册。在此不赘述。可见，<code>i++</code> 操作被翻译为：</p>
+<pre><code>addl   $0x1,-0x4(%rbp)
+</code></pre><p>也就是，<strong>将 rpb-4 内存地址中的值加1</strong>。很简单，没啥问题。</p>
+<h3 id="3-复杂情况"><a href="#3-复杂情况" class="headerlink" title="3.复杂情况"></a>3.复杂情况</h3><p>当然了，单步执行 <code>i++</code> 操作翻译成汇编指令看起来很简单，但是当组合<code>i++</code> 操作在一些语句中，例如：</p>
+<pre><code>int main()
+{
+        int i = 1;
+        int count = 0;
+        for(i = 0; i &lt; 10; i++)
+        {
+                count = count++;
+        }
+        cout &lt;&lt; count;
+}
+</code></pre><p>这时候的汇编指令又会是怎么样的？如法泡制，看一看汇编指令：</p>
+<pre><code>using namespace std;
+int main()
+{
+  400756:    55                       push   %rbp
+  400757:    48 89 e5                 mov    %rsp,%rbp
+  40075a:    48 83 ec 10              sub    $0x10,%rsp
+    int i = 1;
+  40075e:    c7 45 f8 01 00 00 00     movl   $0x1,-0x8(%rbp)
+    int count = 0;
+  400765:    c7 45 fc 00 00 00 00     movl   $0x0,-0x4(%rbp)
+    for(i = 0; i &lt; 10; i++)
+  40076c:    c7 45 f8 00 00 00 00     movl   $0x0,-0x8(%rbp)
+  400773:    eb 10                    jmp    400785 &lt;main+0x2f&gt;
+    {
+        count = count++;
+  400775:    8b 45 fc                 mov    -0x4(%rbp),%eax
+  400778:    8d 50 01                 lea    0x1(%rax),%edx
+  40077b:    89 55 fc                 mov    %edx,-0x4(%rbp)
+  40077e:    89 45 fc                 mov    %eax,-0x4(%rbp)
+using namespace std;
+int main()
+{
+    int i = 1;
+    int count = 0;
+    for(i = 0; i &lt; 10; i++)
+  400781:    83 45 f8 01              addl   $0x1,-0x8(%rbp)
+  400785:    83 7d f8 09              cmpl   $0x9,-0x8(%rbp)
+  400789:    7e ea                    jle    400775 &lt;main+0x1f&gt;
+    {
+        count = count++;
+    }
+    cout &lt;&lt; count;
+  40078b:    8b 45 fc                 mov    -0x4(%rbp),%eax
+  40078e:    89 c6                    mov    %eax,%esi
+  400790:    bf 60 10 60 00           mov    $0x601060,%edi
+  400795:    e8 66 fe ff ff           callq  400600 &lt;_ZNSolsEi@plt&gt;
+}
+</code></pre><p>可以看到，仅仅增加了一个循环，汇编代码就变得非常有意思了。一步步分析。</p>
+<h5 id="1-定义变量"><a href="#1-定义变量" class="headerlink" title="1. 定义变量"></a>1. 定义变量</h5><pre><code>movl   $0x1,-0x8(%rbp)     //分配变量 i 的空间
+movl   $0x0,-0x4(%rbp)     //分配变量 count 的空间
+</code></pre><p>可以看到，先定义的变量被分到了低地值区域。</p>
+<h5 id="2-开始循环"><a href="#2-开始循环" class="headerlink" title="2. 开始循环"></a>2. 开始循环</h5><pre><code>movl   $0x0,-0x8(%rbp)
+jmp    400785 &lt;main+0x2f&gt;
+</code></pre><p>接着是 for 循环中的第一条语句，即 <code>i = 0</code>，然后跳至循环主体<strong> &lt;main+0x2f&gt;</strong>。</p>
+<h5 id="3-循环体"><a href="#3-循环体" class="headerlink" title="3. 循环体"></a>3. 循环体</h5><pre><code>cmpl   $0x9,-0x8(%rbp)
+jle    400775 &lt;main+0x1f&gt;
+</code></pre><p>上面两句用于判断循环是否结束，若未结束，继续执行：</p>
+<pre><code>mov    -0x4(%rbp),%eax    // 将 count 的地址放在 eax 中
+lea    0x1(%rax),%edx       // 从 eax 存放的地址取值加 1，放在 edx 中
+mov    %edx,-0x4(%rbp)   // 将 edx 值赋给 count
+mov    %eax,-0x4(%rbp)   // 将 eax 值赋给 count
+</code></pre><p>这几句汇编就是 <code>count = count++</code> 了。可以看到，在最后一步中将 +1 的结果覆盖掉了。也就是说，<strong>i++ 操作需要将原内容拷贝一份</strong>。<br>因此，实际上<code>count = count + 1</code>等价于：</p>
+<pre><code>int tmp1 = count;
+int tmp2 = tmp + 1;
+count = tmp2;
+count = tmp1;
+</code></pre><h3 id="3-从运算符角度看"><a href="#3-从运算符角度看" class="headerlink" title="3. 从运算符角度看"></a>3. 从运算符角度看</h3><p>感谢<a href="https://www.cnblogs.com/AndyJee/p/4550391.html" target="_blank" rel="noopener">这篇文章</a> 。其实，产生上面汇编代码的根本原因在于 c++ 对<code>++</code>操作的定义。</p>
+<pre><code>Operator Operator::operator++()
+{
+++value; //内部成员变量
+return *this;
+}
+
+Operator Operator::operator++(int)
+{
+Operator temp;
+temp.value=value;
+value++;
+return temp;
+}
+</code></pre><p>可以看到，<code>++</code> 操作返回的是原值。所以，<code>count = count ++</code> 可以看作：</p>
+<pre><code>int ori_count = count;
+count = count + 1;
+count = ori_count;
+</code></pre><p>这样，就解开了 <code>count</code> 值不变之迷。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/21/squid/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1737,147 +1991,6 @@ blacklist 恢复到原始状态
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/01/thread-safe/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/01/thread-safe/" itemprop="url">
-                  什么是线程安全
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-09-01 22:11:44 / Modified: 22:19:54" itemprop="dateCreated datePublished" datetime="2018-09-01T22:11:44+08:00">2018-09-01</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-什么是线程安全？"><a href="#1-什么是线程安全？" class="headerlink" title="1. 什么是线程安全？"></a>1. 什么是线程安全？</h3><p>因为多线程编程的特点</p>
-<h3 id="2-不安全因素"><a href="#2-不安全因素" class="headerlink" title="2. 不安全因素"></a>2. 不安全因素</h3><p>因为一个进程中具有多个线程，这些线程具有共享数据的特点。因而在并发过程中，会对全局变量或静态变量产生<a href="">诸多不安全的操作</a>。</p>
-<h3 id="3-如何解决"><a href="#3-如何解决" class="headerlink" title="3. 如何解决"></a>3. 如何解决</h3>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1925,7 +2038,7 @@ blacklist 恢复到原始状态
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">43</span>
+                    <span class="site-state-item-count">44</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
