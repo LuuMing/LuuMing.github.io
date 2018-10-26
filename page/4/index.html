@@ -768,7 +768,7 @@ int main()
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-07-17 17:49:49" itemprop="dateModified" datetime="2018-07-17T17:49:49+08:00">2018-07-17</time>
+                <time title="Modified: 2018-10-27 00:11:00" itemprop="dateModified" datetime="2018-10-27T00:11:00+08:00">2018-10-27</time>
               
             
           </span>
@@ -822,6 +822,8 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
 0x00090363-0x00090371: 
 00C09A00000007FF
 </code></pre><p>上面的东西代表的是什么意思呢？其是，它是一段LDT(Local Descriptor Table)。一共64个bit，其解释方式如下图所示：<br><img src="/2018/07/16/linux-0-11-setup/./ldt.png" alt="ldt"><br>重点关心黑色字体部分:<br> <strong>00</strong>C09A<strong>000000</strong>07FF<br> 前面的就是32位保护模式下的基址，后面的就是保护模式下的偏移地址。所以，接下来CPU就到了<code>00:000000</code>处。<br> 用一张图概况保护模式下的寻址方式，一定就是这样了:<br> <img src="/2018/07/16/linux-0-11-setup/./gdt.png" alt="gdt"></p>
+<hr>
+<p> 2018.10/27<br> 为了加深理解，补充一张 GDT 的图片：<br><img src="/2018/07/16/linux-0-11-setup/./gdt2.png" alt="gdt2"><br>可以看到，除了 LDT 外，GDT 还包含有 TSS。而 TSS 却跟任务调度有着莫大的联系…<br>来源：赵炯《Linux 内核完全注释》</p>
 
           
         
