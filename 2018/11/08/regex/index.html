@@ -108,27 +108,25 @@
 
 
 
-  <meta name="description" content="一个数字的相反数等于它本身 或许只有在计算机界中，这样的数字有两个：一个是0，一个是2147483648（32位 int）。在今年的1024里碰到这个 bug，告诉了我界的重要性。 代码一直在写，单词一直在背，步一直在跑。 就奔着这个塔尖而去吧（斜眼笑）：">
-<meta name="keywords" content="随想">
+  <meta name="description" content="引言65. Valid Number。如何去判断给定的字符串是否为有效的数字？使用正则表达式的描述如下： ^\\s*[+-]?(?:[0-9]+[.][0-9]*|[0-9]+|[.][0-9]+)(e[+-]?[0-9]+)?\\s*$ ^：标注起始位置.\\s*：若干个空格。[+-]?：包含与否正负号的情况。(?:[0-9]+[.][0-9]*|[0-9]+|[.][0-9]+)：三种底数部分">
+<meta name="keywords" content="学习笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="1024">
-<meta property="og:url" content="http://LuuMing.github.io/2018/10/24/1024/index.html">
+<meta property="og:title" content="正则表达式">
+<meta property="og:url" content="http://LuuMing.github.io/2018/11/08/regex/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="一个数字的相反数等于它本身 或许只有在计算机界中，这样的数字有两个：一个是0，一个是2147483648（32位 int）。在今年的1024里碰到这个 bug，告诉了我界的重要性。 代码一直在写，单词一直在背，步一直在跑。 就奔着这个塔尖而去吧（斜眼笑）：">
+<meta property="og:description" content="引言65. Valid Number。如何去判断给定的字符串是否为有效的数字？使用正则表达式的描述如下： ^\\s*[+-]?(?:[0-9]+[.][0-9]*|[0-9]+|[.][0-9]+)(e[+-]?[0-9]+)?\\s*$ ^：标注起始位置.\\s*：若干个空格。[+-]?：包含与否正负号的情况。(?:[0-9]+[.][0-9]*|[0-9]+|[.][0-9]+)：三种底数部分">
 <meta property="og:locale" content="zh">
-<meta property="og:image" content="http://luuming.github.io/2018/10/24/1024/1.jpg">
-<meta property="og:updated_time" content="2018-10-24T13:27:27.721Z">
+<meta property="og:updated_time" content="2018-11-08T11:57:20.074Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="1024">
-<meta name="twitter:description" content="一个数字的相反数等于它本身 或许只有在计算机界中，这样的数字有两个：一个是0，一个是2147483648（32位 int）。在今年的1024里碰到这个 bug，告诉了我界的重要性。 代码一直在写，单词一直在背，步一直在跑。 就奔着这个塔尖而去吧（斜眼笑）：">
-<meta name="twitter:image" content="http://luuming.github.io/2018/10/24/1024/1.jpg">
+<meta name="twitter:title" content="正则表达式">
+<meta name="twitter:description" content="引言65. Valid Number。如何去判断给定的字符串是否为有效的数字？使用正则表达式的描述如下： ^\\s*[+-]?(?:[0-9]+[.][0-9]*|[0-9]+|[.][0-9]+)(e[+-]?[0-9]+)?\\s*$ ^：标注起始位置.\\s*：若干个空格。[+-]?：包含与否正负号的情况。(?:[0-9]+[.][0-9]*|[0-9]+|[.][0-9]+)：三种底数部分">
 
 
 
 
 
 
-  <link rel="canonical" href="http://LuuMing.github.io/2018/10/24/1024/"/>
+  <link rel="canonical" href="http://LuuMing.github.io/2018/11/08/regex/"/>
 
 
 
@@ -138,7 +136,7 @@
   };
 </script>
 
-  <title>1024 | LuMing's blog</title>
+  <title>正则表达式 | LuMing's blog</title>
   
 
 
@@ -301,7 +299,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/10/24/1024/">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/11/08/regex/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LuMing">
@@ -318,7 +316,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">1024
+          <h1 class="post-title" itemprop="name headline">正则表达式
               
             
           </h1>
@@ -343,7 +341,7 @@
                 
               
 
-              <time title="Created: 2018-10-24 17:42:23 / Modified: 21:27:27" itemprop="dateCreated datePublished" datetime="2018-10-24T17:42:23+08:00">2018-10-24</time>
+              <time title="Created: 2018-11-08 19:49:02 / Modified: 19:57:20" itemprop="dateCreated datePublished" datetime="2018-11-08T19:49:02+08:00">2018-11-08</time>
             
 
             
@@ -381,10 +379,9 @@
       
 
       
-        <pre><code>一个数字的相反数等于它本身
-</code></pre><p>或许只有在计算机界中，这样的数字有两个：一个是<code>0</code>，一个是<code>2147483648</code>（32位 int）。<br>在今年的<code>1024</code>里碰到这个 <code>bug</code>，告诉了我<code>界</code>的重要性。</p>
-<p>代码一直在写，单词一直在背，步一直在跑。</p>
-<p>就奔着这个塔尖而去吧（斜眼笑）：<br><img src="/2018/10/24/1024/1.jpg" alt="1.jpg"></p>
+        <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p><a href="https://leetcode.com/problems/valid-number/description/" target="_blank" rel="noopener">65. Valid Number</a>。如何去判断给定的字符串是否为有效的数字？<br>使用正则表达式的描述如下：</p>
+<pre><code>^\\s*[+-]?(?:[0-9]+[.][0-9]*|[0-9]+|[.][0-9]+)(e[+-]?[0-9]+)?\\s*$
+</code></pre><p><code>^</code>：标注起始位置.<br><code>\\s*</code>：若干个空格。<br><code>[+-]?</code>：包含与否正负号的情况。<br><code>(?:[0-9]+[.][0-9]*|[0-9]+|[.][0-9]+)</code>：三种底数部分的表示，a.b 形式（1.2、1. ），a 形式（1、2、3），.a形式（.1、.2）。<br><code>(e[+-]?[0-9]+)?</code>：指数部分，用括号表示一个整体，别忘记最后的<code>?</code>。<br><code>\\s*</code>：若干个空格。<br><code>$</code>：结束标记。</p>
 
       
     </div>
@@ -429,7 +426,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/随想/" rel="tag"># 随想</a>
+            <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
           
         </div>
       
@@ -442,8 +439,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/21/detachment/" rel="next" title="《超脱》">
-                <i class="fa fa-chevron-left"></i> 《超脱》
+              <a href="/2018/11/07/2018-11-7/" rel="next" title="记一次大宕机">
+                <i class="fa fa-chevron-left"></i> 记一次大宕机
               </a>
             
           </div>
@@ -451,10 +448,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/02/science-and-technology/" rel="prev" title="科学与技术">
-                科学与技术 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -504,8 +497,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -612,6 +614,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

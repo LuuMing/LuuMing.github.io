@@ -295,6 +295,148 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/11/08/regex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/08/regex/" itemprop="url">
+                  正则表达式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-08 19:49:02 / Modified: 19:57:20" itemprop="dateCreated datePublished" datetime="2018-11-08T19:49:02+08:00">2018-11-08</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p><a href="https://leetcode.com/problems/valid-number/description/" target="_blank" rel="noopener">65. Valid Number</a>。如何去判断给定的字符串是否为有效的数字？<br>使用正则表达式的描述如下：</p>
+<pre><code>^\\s*[+-]?(?:[0-9]+[.][0-9]*|[0-9]+|[.][0-9]+)(e[+-]?[0-9]+)?\\s*$
+</code></pre><p><code>^</code>：标注起始位置.<br><code>\\s*</code>：若干个空格。<br><code>[+-]?</code>：包含与否正负号的情况。<br><code>(?:[0-9]+[.][0-9]*|[0-9]+|[.][0-9]+)</code>：三种底数部分的表示，a.b 形式（1.2、1. ），a 形式（1、2、3），.a形式（.1、.2）。<br><code>(e[+-]?[0-9]+)?</code>：指数部分，用括号表示一个整体，别忘记最后的<code>?</code>。<br><code>\\s*</code>：若干个空格。<br><code>$</code>：结束标记。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/11/07/2018-11-7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -484,7 +626,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/2018/11/02/science-and-technology/" itemprop="url">
-                  science_and_technology
+                  科学与技术
                 </a>
               
             
@@ -513,6 +655,22 @@
               <time title="Created: 2018-11-02 16:51:55" itemprop="dateCreated datePublished" datetime="2018-11-02T16:51:55+08:00">2018-11-02</time>
             
 
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-11-08 19:48:42" itemprop="dateModified" datetime="2018-11-08T19:48:42+08:00">2018-11-08</time>
+              
             
           </span>
 
@@ -546,7 +704,9 @@
       
         
           
-            
+            <p>读《concepts, techniques, models of computer programming》时有一段关于科学与技术的描述，非常精彩：</p>
+<p>“The technology consists of tools, practical techniques, and standards, allowing us to do programming. The science consists of a broad and deep theory with predictive power, allowing us to understand programming. Ideally, the science should explain the thechnology in a way that is as direct and useful as possible.<strong>If either part is left out, we are nolong doing programming. Without the technology, we are doing pure mathematics. Without the science, we are doing a craft,</strong>i.e., we lack deep understanding. Teaching programming correctly therefore means teaching both the technolog (current tools) and the science (fundamental concepts). <strong>Knowing the tools prepares the student for the present. Knowing the concepts prepares the student  for future developments.</strong>”</p>
+
           
         
       
@@ -1793,154 +1953,6 @@ Permission denied (publickey).
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/10/03/pip/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/03/pip/" itemprop="url">
-                  pip 的正确使用方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-10-03 23:34:03 / Modified: 23:45:35" itemprop="dateCreated datePublished" datetime="2018-10-03T23:34:03+08:00">2018-10-03</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天试着参加 github 上参与一个开源 python 项目。在使用 pip 工具时遇到坑：</p>
-<ol>
-<li>将项目克隆下来后，在其上修改</li>
-<li>使用 <code>pip install 模块名</code> 。</li>
-<li>发现修改后并未奏效。</li>
-<li>创建新的 python 环境安装，依旧未奏效。</li>
-<li>使用 <code>pip install grank --no-cache-dir</code> 禁用缓存安装，未奏效。</li>
-</ol>
-<p>辗转多次，最后才知道 <code>pip install</code> 是从网上下载安装，与<strong>本地无关</strong>。<br>解决办法：<br>在一般的 python 模块中，项目根目录下会有 <code>setup.py</code>，<code>requirements.txt</code>。执行 <code>pip install -r requirements.txt</code>安装必要包。使用<code>python setup.py install</code> 从本地目录进行安装即可。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1988,7 +2000,7 @@ Permission denied (publickey).
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">47</span>
+                    <span class="site-state-item-count">48</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2036,7 +2048,11 @@ Permission denied (publickey).
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
