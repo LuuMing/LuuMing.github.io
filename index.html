@@ -295,6 +295,310 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/11/07/2018-11-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/07/2018-11-7/" itemprop="url">
+                  记一次大宕机
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-07 23:44:05" itemprop="dateCreated datePublished" datetime="2018-11-07T23:44:05+08:00">2018-11-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-11-08 14:28:22" itemprop="dateModified" datetime="2018-11-08T14:28:22+08:00">2018-11-08</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>这次开 win10 时，它报了一条错误</p>
+<pre><code>无法加载应用程序或操作系统，原因是所需文件丢失或包含错误。
+
+文件：\Windows\system32\winload.exe
+错误代码：0xc000000e
+</code></pre><p>那一刻，人类又想起了被折腾系统支配的恐惧。</p>
+<h3 id="折腾Win10"><a href="#折腾Win10" class="headerlink" title="折腾Win10"></a>折腾Win10</h3><p>先百度呗，给到的方法大致有这么几种：</p>
+<ol>
+<li>chkdisk /f 先修复。<br>结果：卡到某一进度上，失败。</li>
+<li>进WinPe，BOOTICE 修复。<br>结果：失败。</li>
+<li>下一个系统烧录到 U 盘上，利用 win10 自带的 repair 功能。<br>结果：错误都不报，失败。<br>感觉不大对劲，打开系统盘。少了整整 20多个G！这系统都被硬砍掉了一大半还能启动个X。<br>事已至此，格式化吧，反正该备份的早都备份过，没备份的就当清理垃圾了。就这样了。<br>可没想到…<h3 id="折腾Ubuntu"><a href="#折腾Ubuntu" class="headerlink" title="折腾Ubuntu"></a>折腾Ubuntu</h3>造孽，双系统 Ubuntu都被连累了。打开 Ubuntu，<pre><code>error:file &#39;/boot/grub/i386-pc/normal.mod&#39; not found.
+</code></pre>心里一万句馍馍片。继续折腾。<br>原本看起来挺简单的方法：<br>烧录一个系统盘到 U盘上，启动微型 Ubuntu，连上网，上工具<code>boot-repair</code><br>结果：等待一个多小时，报错啥不能 purge grub2。<br>沿着这条线索，百度这边已经断了。换谷歌。<br>又是一大堆方法：<br>mount 原系统所在分区，用 grub-install…balabala…如果还有额外的<code>/boot</code>分区，还要分情况讨论…balabala…<br>被劝退了，放弃了，直接换最新的Ubuntu 18。<h3 id="峰回路转"><a href="#峰回路转" class="headerlink" title="峰回路转"></a>峰回路转</h3>装就装吧，可总得备份一下。这一打开备份的文件，就想起之前为了配置个环境忙的死去活来。再搏一搏吧，<strong>百度一下 error:file ‘/boot/grub/i386-pc/normal.mod’ </strong>。<br>按着<a href="https://blog.csdn.net/wh357589873/article/details/51167830" target="_blank" rel="noopener">教程</a>那么一敲，熟悉的紫色画面映入眼帘，心中一片欢喜。<br>但是！重启之后又遇到了这个问题，怎么办。继续教程往下看，重新安装<code>grub</code>。但结果是：<pre><code>无法嵌入。在此次安装中 GRUB 只能通过使用块列表安装。但是块列表是不可信赖的，不推荐使用。
+</code></pre>试一试 <code>boot-repair</code>。又是漫长几分钟的添加仓库源，下载，安装，扫描，修复。报错：<pre><code>当前在 legacy 模式下，请重启并改为 UEFI 模式启动。
+</code></pre>改就改吧。<br>可这改了后，根本找不到 Ubuntu 的启动选项了。这…<h3 id="结局"><a href="#结局" class="headerlink" title="结局"></a>结局</h3>天无绝人之路，终于在<a href="https://blog.csdn.net/wh357589873/article/details/51167830?d=123" target="_blank" rel="noopener">这篇文章</a>中找到办法。大意是这样的：<br>1.进入用 U 盘烧录的微型系统中</li>
+<li>将原来系统的东西原封不动地 mount 进去。</li>
+<li>chroot，临时进入原来的系统。</li>
+<li>重装 grub。<br>OK，这次全都搞定了。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/11/02/science-and-technology/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/02/science-and-technology/" itemprop="url">
+                  science_and_technology
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-02 16:51:55" itemprop="dateCreated datePublished" datetime="2018-11-02T16:51:55+08:00">2018-11-02</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/10/24/1024/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1637,399 +1941,6 @@ Permission denied (publickey).
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/29/interprocess-communication-semget/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/29/interprocess-communication-semget/" itemprop="url">
-                  进程通信-信号量
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-09-29 23:29:23" itemprop="dateCreated datePublished" datetime="2018-09-29T23:29:23+08:00">2018-09-29</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-10-21 16:36:31" itemprop="dateModified" datetime="2018-10-21T16:36:31+08:00">2018-10-21</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code>#include &lt;sys/types.h&gt;
-#include &lt;sys/ipc.h&gt;
-#include &lt;sys/sem.h&gt;
-
-int semget(key_t key, int nsems, int semflg);
-</code></pre><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p><code>semget()</code> 系统调用返回 <a href="https://baike.baidu.com/item/System%20V/1376562?fr=aladdin" target="_blank" rel="noopener">System V</a> 系统中的一个信号量标识符并给参数<code>key</code>。</p>
-<p>via: <a href="http://man7.org/linux/man-pages/man2/semget.2.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man2/semget.2.html</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/23/interprocess-communication-pipe/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/23/interprocess-communication-pipe/" itemprop="url">
-                  进程通信的实现--管道
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-09-23 12:24:41" itemprop="dateCreated datePublished" datetime="2018-09-23T12:24:41+08:00">2018-09-23</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-09-26 19:04:25" itemprop="dateModified" datetime="2018-09-26T19:04:25+08:00">2018-09-26</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code>
-  #include &lt;unistd.h&gt;
-
-       int pipe(int pipefd[2]);
-
-       #define _GNU_SOURCE             /* See feature_test_macros(7) */
-       #include &lt;fcntl.h&gt;              /* Obtain O_* constant definitions */
-       #include &lt;unistd.h&gt;
-
-       int pipe2(int pipefd[2], int flags);
-
-</code></pre><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p><code>pipe()</code> 创建一个单向的可用作进程间通信的数据通道。<code>pipefd</code>数组用作返回管道两端的文件描述符。<code>pipefd[0]</code>代表管道的读取端。<code>pipefd[1]</code>用作写入端。数据被写入到由内核所缓冲的管道写入端。</p>
-<p>如果 <code>flags</code> 为 0，那么<code>pipe2()</code>就和<code>pipe()</code>一样。下面这些变量可以在<code>flags</code>中按位或运算来获得不同的功能：</p>
-<h4 id="O-CLOEXEC"><a href="#O-CLOEXEC" class="headerlink" title="O_CLOEXEC"></a>O_CLOEXEC</h4><p>为两个文件描述符设置<code>close-on-exec (FD_CLOEXEC)</code>标志。在 <a href="http://man7.org/linux/man-pages/man2/open.2.html" target="_blank" rel="noopener">open</a> 中查看相同标志的描述，了解它为什么非常有用。</p>
-<h4 id="O-DIRECT-自从-Linux-3-4"><a href="#O-DIRECT-自从-Linux-3-4" class="headerlink" title="O_DIRECT( 自从 Linux 3.4 )"></a>O_DIRECT( 自从 Linux 3.4 )</h4><p>创建一个在 <strong>packet</strong> 模式下执行 I/O 的管道。每次对管道的 write 都被当作分开的包处理，并且每次从管道中 read 都会依次读取一个包。注意以下几点：</p>
-<ul>
-<li>写入超过 <strong>PIPE_BUF</strong> 字节（查看 <a href="http://man7.org/linux/man-pages/man7/pipe.7.html" target="_blank" rel="noopener">pipe(7)</a>）将会分为多个包。常数 <strong>PIPE_BUF</strong>定义在 <code>&lt;limits.h&gt;</code>中。</li>
-<li>如果 <a href="http://man7.org/linux/man-pages/man2/read.2.html" target="_blank" rel="noopener">read</a> 确定的缓冲区大小比下一个包小，这时，包中需要的字节被读取，超出的字节被丢弃。指定缓冲区大小为 <strong>PIPE_BUF</strong> 就足以读取尽可能大的包。</li>
-<li>不支持 0 长度的包。（read 指定缓冲区大小为 0 是一个空操作，返回 0。）<br>老版本内核不支持这个标志将会通过 <strong>EINVAL</strong> 错误指出。<br>自从 Linux 4.5，可以通过 <a href="http://man7.org/linux/man-pages/man2/fcntl.2.html" target="_blank" rel="noopener">fcntl</a> 改变管道文件描述符的 <strong>O_DIRECT</strong> 设置。</li>
-</ul>
-<h4 id="O-NONBLOCK"><a href="#O-NONBLOCK" class="headerlink" title="O_NONBLOCK"></a>O_NONBLOCK</h4><p>为两个新开的文件描述符设置 O_NONBLOCK 文件状态标志。使用这个标志节省额外的 <strong>fcntl</strong> 调用以达到同样的效果。</p>
-<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>成功，返回 0。错误，返回 -1 并且设置 errno。<br>在 Linux 上（和其他的系统），<strong>pipe()</strong>不在失败时修改<strong>pipefd</strong>。在 POSIX.1-2016 中添加了规范这一行为的要求。Linux 规定的 <strong>pipe2()</strong> 系统调用同样在失败时不修改 <strong>pipefd</strong>。</p>
-<h3 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h3><ul>
-<li>EFAULT 无效 pipefd</li>
-<li>EINVAL（pipe2()）flags 值非法</li>
-<li>EMFILE 达到之前进程所限制的打开文件描述符的数目</li>
-<li>ENFILE 达到系统所限制的打开文件描述符的数目</li>
-<li>ENFILE 管道空间达到用户强行限制的内存，或者调用者没有权限。查看<a href="http://man7.org/linux/man-pages/man7/pipe.7.html" target="_blank" rel="noopener">pipe(7)</a></li>
-</ul>
-<h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p><strong>pipe2()</strong>在 Linux 2.6.27 中被添加进去；glibc 支持从 2.9 版本后开始。</p>
-<h3 id="标准"><a href="#标准" class="headerlink" title="标准"></a>标准</h3><p><strong>pipe()</strong>: POSIX.1-2001,POSIX.1-2008。<br><strong>pipe2()</strong> 是 Linux 特有。</p>
-<h3 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h3><p>下面的程序创建一个管道，然后 <strong>frok</strong> 去创建一个子进程。子进程继承了一套指向同一管道的文件描述符。<strong>fork</strong> 之后，每个进程关闭了管道不需要的文件描述符。父进程这时写入管道从命令行参数获取的字符串，然后子进程依次按字节读取这个字符串并显示在标准输出上。</p>
-<pre><code>
-      #include &lt;sys/types.h&gt;
-       #include &lt;sys/wait.h&gt;
-       #include &lt;stdio.h&gt;
-       #include &lt;stdlib.h&gt;
-       #include &lt;unistd.h&gt;
-       #include &lt;string.h&gt;
-
-       int
-       main(int argc, char *argv[])
-       {
-           int pipefd[2];
-           pid_t cpid;
-           char buf;
-
-           if (argc != 2) {
-               fprintf(stderr, &quot;Usage: %s &lt;string&gt;\n&quot;, argv[0]);
-               exit(EXIT_FAILURE);
-           }
-
-           if (pipe(pipefd) == -1) {
-               perror(&quot;pipe&quot;);
-               exit(EXIT_FAILURE);
-           }
-
-           cpid = fork();
-           if (cpid == -1) {
-               perror(&quot;fork&quot;);
-               exit(EXIT_FAILURE);
-           }
-
-           if (cpid == 0) {    /* Child reads from pipe */
-               close(pipefd[1]);          /* Close unused write end */
-
-               while (read(pipefd[0], &amp;buf, 1) &gt; 0)
-                   write(STDOUT_FILENO, &amp;buf, 1);
-
-               write(STDOUT_FILENO, &quot;\n&quot;, 1);
-               close(pipefd[0]);
-               _exit(EXIT_SUCCESS);
-
-           } else {            /* Parent writes argv[1] to pipe */
-               close(pipefd[0]);          /* Close unused read end */
-               write(pipefd[1], argv[1], strlen(argv[1]));
-               close(pipefd[1]);          /* Reader will see EOF */
-               wait(NULL);                /* Wait for child */
-               exit(EXIT_SUCCESS);
-           }
-       }
-</code></pre><hr>
-<p>via: <a href="http://man7.org/linux/man-pages/man2/pipe.2.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man2/pipe.2.html</a></p>
-<p>译者：<a href="https://github.com/LuuMing" target="_blank" rel="noopener">LuuMing</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2077,7 +1988,7 @@ int semget(key_t key, int nsems, int semflg);
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">45</span>
+                    <span class="site-state-item-count">47</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
