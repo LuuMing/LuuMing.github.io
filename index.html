@@ -295,6 +295,433 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/11/26/lazy-evaluation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/26/lazy-evaluation/" itemprop="url">
+                  懒汉模式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-26 19:20:05 / Modified: 19:22:00" itemprop="dateCreated datePublished" datetime="2018-11-26T19:20:05+08:00">2018-11-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>程序在必要的时候才进行相应操作。成对的概念为”eager evaluation”。</p>
+<h3 id="例1-string-类"><a href="#例1-string-类" class="headerlink" title="例1. string 类"></a>例1. string 类</h3><h3 id="例2-Copy-On-Write"><a href="#例2-Copy-On-Write" class="headerlink" title="例2. Copy On Write"></a>例2. Copy On Write</h3><h3 id="例3-单例模式"><a href="#例3-单例模式" class="headerlink" title="例3. 单例模式"></a>例3. 单例模式</h3>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/11/26/design-pattern-singletion/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/26/design-pattern-singletion/" itemprop="url">
+                  设计模式-单例
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-26 19:05:48 / Modified: 19:17:30" itemprop="dateCreated datePublished" datetime="2018-11-26T19:05:48+08:00">2018-11-26</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>最近在做 Android <a href="https://github.com/LuuMing/IIS" target="_blank" rel="noopener">项目</a>时，碰到一个实际问题的场景，查了一下解决办法，居然凑巧捕获到一种设计模式，文以记之～</p>
+<h3 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h3><p>当 app 运行在 MainActivity 时，需要连接一个服务端以获取服务端的配置信息。而后根据配置信息进入相应的管理界面。<br>这就会带来一个问题，获取配置时会建立一个 socket，而 Android 又不支持直接将这个 socket 会话传到另一个 Activity 当中，这就导致同一个会话需要建立两次： 1. 获取设备配置 2. 发送控制信息<br>众所周知，建立 socket 是一种资源占用型很高的行为，可不可以只用建立一次呢？<br>答案是 OK 的。</p>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p>参考<a href="https://www.cnblogs.com/zhaoyan001/p/6365064.html" target="_blank" rel="noopener">这里</a>使用了单例模式的第三种，全局状态下 socket 只用实例化一次，因为存在着严格的时间先后关系，所以连线程同步都不用考虑，轻松解决～</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/11/14/formal-semantics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/14/formal-semantics/" itemprop="url">
+                  formal-semantics
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-11-14 23:35:19 / Modified: 23:47:55" itemprop="dateCreated datePublished" datetime="2018-11-14T23:35:19+08:00">2018-11-14</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>operational semantics</li>
+<li>axiomatic semantics</li>
+<li>denotational semantics</li>
+<li>logical semantics </li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/11/14/An-experimental-time-sharing-system/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -341,12 +768,24 @@
                 
               
 
-              <time title="Created: 2018-11-14 20:59:47 / Modified: 21:26:20" itemprop="dateCreated datePublished" datetime="2018-11-14T20:59:47+08:00">2018-11-14</time>
+              <time title="Created: 2018-11-14 20:59:47" itemprop="dateCreated datePublished" datetime="2018-11-14T20:59:47+08:00">2018-11-14</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-11-25 23:30:48" itemprop="dateModified" datetime="2018-11-25T23:30:48+08:00">2018-11-25</time>
               
             
           </span>
@@ -381,11 +820,11 @@
       
         
           
-            <h1 id="一种实验性的分时系统"><a href="#一种实验性的分时系统" class="headerlink" title="一种实验性的分时系统"></a>一种实验性的分时系统</h1><center>Fernando J. Corbato, Marjorie Merwin-Daggett, Robert C. Daley</center><br><center>麻省理工科技学院计算机中心</center><br><center>剑桥市麻省理工学院</center>
+            <center>Fernando J. Corbato, Marjorie Merwin-Daggett, Robert C. Daley</center><br><center>麻省理工科技学院计算机中心</center><br><center>剑桥市麻省理工学院</center>
 
 <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文简要的讨论了分时的必要性，实现过程中存在的一些问题，和当代 IBM 7090 上所部署的一种分时系统，最终并使用我们团队之一所提出的调度算法（FJC）展示了一些可用在这种分时系统上提高运行性能并可定量分析的技术。</p>
 <h1 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h1><p>在过去的十几年里，计算机的使用取得了巨大的进展。在 20 世纪 50 年代早期，解决的问题大多在硬件的制造与维护上；到了 50 年代中期，随着编译器的出现，编程语言的使用得到了极大的改善；进入了 20 世纪 60 年代，我们正经历计算机使用的第三次巨大变革：通过分时技术所带来的人机交互的改善。<br>本文所描述的分时的思想，大部分是与麻省理工学院<ruby>基础研究委员会<rt>preliminary study committee</rt></ruby>（由 H.Teager 担任主席）的工作相结合而发展起来的，该委员会研究了学院的长期计算需求，以及随后参与的由 J.McCarthy 担任主席的麻省理工计算机工作委员会。然而，本文所表述的观点与结论应单独作为本文作者所阐述的。<br>在开始之前，最好还是对于分时做一个精确的解释。其含义为同一时刻在不同的任务上使用硬件的不同部分，或是多个人同时使用计算机。第一个含义，通常称之为多道程序设计，它面向硬件的使用效率，在某种意义上尝试完全利用计算机的所有部件。分时在这里的第二个含义，主要关注于个人尝试去使用计算机的效率。计算机效率也应当考虑，但只应从整个系统效用的角度来看。<br>分时计算机的使用可能出于现在人们与更大、更先进的计算机之间缓慢的人机交互效率。这个效率在过去计算机广泛使用的十年间改变微乎其微（在某些情况下更糟）。<br>某种程度上，这种现象是由于随着计算机上基础的问题得到掌握，更多复杂的问题引起了人们的兴趣。结果，更大、更复杂的程序设计去利用计算机更快、更强进的性能。这个过程不可避免的导致出现了更多编程上的错误以及更长的调试周期。就像在大多数大型计算机上所使用的现有的<ruby>批监控<rt>batch monitor</rt>技术</ruby>，每个程序的 bug 通常需要数小时甚至一整天去排除。目前唯一可替代的方法是让程序员直接在计算机上调试，这一过程极大地浪费了计算机运行时间，并且由于通常可用的控制台通信能力极差而严重受阻。即使用打字机当作控制台，通常情况下依然缺乏复杂的命令和相应程序，而这些程序对于实现有效的交互非常重要。因此，我们希望在不造成巨大经济损失的情况下，大幅度提升程序员与计算机之间的交互效率，并且通过广泛而复杂系统编程来辅助进行人机通信，让每次交互更有意义。</p>
-<p>为了解决这些交互问题，我们想让计算机制作的像<ruby>电话交换台<rt>telephone exchange</rt></ruby>那样同时让多个用户去使用。每位用户能够根据自己的需要去使用一个终端并且无需关心其他使用系统的用户。这个终端可以最小化到仅仅像打字机那样，但更理想的是包含一个可扩展修改的独立显示。在任何情况下，数据传输都要求在远程安装上没有大的障碍。<br>分时系统的基本技术是让多个人通过打字机终端同时使用计算机，并通过分时管理程序在短时间内或是一定计算量内按顺序地运行每一个用户程序。形成这个序列，最直接的方式是简单的<ruby>时间片轮转<rt>round-robin</rt></ruby>，它应当多次被调度以便让每个保存在高速存储中的用户程序在人的反应时间内（大约 0.2 秒）至少运行一定量。用这种方式，用户看到计算机可以充分响应每一次键击，它也许只需要简单的计算；而复杂情况下，用户看到响应时间的逐渐减少与响应计算的复杂度、计算机速度、活动用户的总数成比例。也就是说，如果有 n 个用户同时请求服务，那么每个用户只会看到 1/n 的有效计算机速度，这一点应当清楚。在进行例如调试程序这样高交互率的过程中，原先计算量所产生的计算机响应要足够小，这不应当成为阻碍。<br>这种分时系统不仅可以提升传统程序一到两个数量级的能力，还能够开创出几种新的计算机使用方式。许多科学和工程上的应用将逐步重新规划，程序中包含的<ruby>决策树<rt>decision trees</rt></ruby>需要提前指定将被废除，取而代之的是仅指定需要的决策分支。</p>
+<p>为了解决这些交互问题，我们想让计算机制作的像<ruby>电话交换台<rt>telephone exchange</rt></ruby>那样同时让多个用户去使用。每位用户能够根据自己的需要去使用一个终端并且无需关心其他使用系统的用户。这个终端可以最小化到仅仅像打字机那样，但更理想的是包含一个可扩展修改的独立显示。在任何情况下，数据传输都要求在远程安装上没有大的障碍。<br>分时系统的基本技术是让多个人通过打字机终端同时使用计算机，并通过分时管理程序在短时间内或是一定计算量内按顺序地运行每一个用户程序。形成这个序列，最直接的方式是简单的<ruby>时间片轮转<rt>round-robin</rt></ruby>，它应当多次被调度以便让每个保存在高速存储中的用户程序在人的反应时间内（大约 0.2 秒）至少运行一定量。用这种方式，用户看到计算机可以充分响应每一次键击，它也许只需要简单的计算；而复杂情况下，用户看到响应时间的逐渐减少与响应计算的复杂度、计算机速度、活动用户的总数成比例。也就是说，如果有 n 个用户同时请求服务，那么每个用户只会看到 1/n 的有效计算机速度，这一点应当清楚。在进行例如调试程序这样高交互率的过程中，原先计算量所产生的计算机响应要足够小，这不应当成为阻碍。<br>这种分时系统不仅可以提升传统程序一到两个数量级的能力，还能够开创出几种新的计算机使用方式。许多科学和工程上的应用将逐步重新规划，程序中包含的<ruby>决策树<rt>decision trees</rt></ruby>需要提前指定将被废除，取而代之的是仅指定需要的决策分支。另一个重要的领域是在计算机教学机器上，尽管这些机器的计算量很小，但它们可以自然而然地利用分时系统的终端，以使用更复杂更适合的教学程序。</p>
 <p>未完待续</p>
 <h1 id="译者后记"><a href="#译者后记" class="headerlink" title="译者后记"></a>译者后记</h1><p><ruby>在某种意义上<rt>in the sense of</rt></ruby><br><ruby><rt>in a manner</rt> </ruby><br>one or two orders of magnitude 一两个数量级</p>
 
@@ -815,7 +1254,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-08 19:48:42" itemprop="dateModified" datetime="2018-11-08T19:48:42+08:00">2018-11-08</time>
+                <time title="Modified: 2018-11-14 23:48:06" itemprop="dateModified" datetime="2018-11-14T23:48:06+08:00">2018-11-14</time>
               
             
           </span>
@@ -1409,560 +1848,11 @@ dns-nameservers 1.0.0.1,1.1.1.1
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/10/16/os-intuition/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/16/os-intuition/" itemprop="url">
-                  操作系统讲什么
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-10-16 21:00:00 / Modified: 21:14:55" itemprop="dateCreated datePublished" datetime="2018-10-16T21:00:00+08:00">2018-10-16</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="约束"><a href="#约束" class="headerlink" title="约束"></a>约束</h3><p>约束分为 I/O 约束与 CPU 约束。这两个概念是引出操作系统设计的主要问题之一。<br>操作系统任务之一就是保证多个进程有条不紊的运行，</p>
-<h3 id="进程同步"><a href="#进程同步" class="headerlink" title="进程同步"></a>进程同步</h3><p>临界区通过互斥锁保护信号量完成 PV 操作进行进程同步。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/10/15/translating-20180709-How-To-Configure-SSH-Key-Based-Authentication-In-Linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/15/translating-20180709-How-To-Configure-SSH-Key-Based-Authentication-In-Linux/" itemprop="url">
-                  <翻译> 如何在 Linux 中配置基于密钥认证的 SSH
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-10-15 11:22:45" itemprop="dateCreated datePublished" datetime="2018-10-15T11:22:45+08:00">2018-10-15</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-10-16 22:56:15" itemprop="dateModified" datetime="2018-10-16T22:56:15+08:00">2018-10-16</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="https://www.ostechnix.com/wp-content/uploads/2017/01/Configure-SSH-Key-based-Authentication-In-Linux-720x340.png" alt=""></p>
-<h3 id="什么是基于-SSH-密钥的认证？"><a href="#什么是基于-SSH-密钥的认证？" class="headerlink" title="什么是基于 SSH 密钥的认证？"></a>什么是基于 SSH 密钥的认证？</h3><p>众所周知，<strong>Secure Shell</strong>，又称 <strong>SSH</strong>，是允许你通过无安全网络（例如 Internet）和远程系统之间安全访问/通信的加密网络协议。无论何时使用 SSH 在无安全网络上发送数据，它都会在源系统上自动地被加密，并且在目的系统上解密。SSH 提供了四种加密方式，<strong>基于密码认证</strong>，<strong>基于密钥认证</strong>，<strong>基于主机认证</strong>和<strong>键盘认证</strong>。最常用的认证方式是基于密码认证和基于密钥认证。</p>
-<p>在基于密码认证中，你需要的仅仅是远程系统上用户的密码。如果你知道远程用户的密码，你可以使用 <code>ssh user@remote-system-name</code> 访问各自的系统。另一方面，在基于密钥认证中，为了通过 SSH 通信，你需要生成 SSH 密钥对，并且为远程系统上传 SSH 公钥。每个 SSH 密钥对由私钥与公钥组成。私钥应该保存在客户系统上，公钥应该上传给远程系统。你不应该将私钥透露给任何人。希望你已经对 SSH 和它的认证方式有了基本的概念。</p>
-<p>这篇教程，我们将讨论如何在 Linux 上配置基于密钥认证的 SSH。</p>
-<h3 id="在-Linux-上配置基于密钥认证的-SSH"><a href="#在-Linux-上配置基于密钥认证的-SSH" class="headerlink" title="在 Linux 上配置基于密钥认证的 SSH"></a>在 Linux 上配置基于密钥认证的 SSH</h3><p>为方便演示，我将使用 Arch Linux 为本地系统，Ubuntu 18.04 LTS 为远程系统。</p>
-<p>本地系统详情：</p>
-<ul>
-<li>OS: Arch Linux Desktop</li>
-<li>IP address: 192.168.225.37/24</li>
-</ul>
-<p>远程系统详情：</p>
-<ul>
-<li>OS: Ubuntu 18.04 LTS Server</li>
-<li>IP address: 192.168.225.22/24</li>
-</ul>
-<h3 id="本地系统配置"><a href="#本地系统配置" class="headerlink" title="本地系统配置"></a>本地系统配置</h3><p>就像我之前所说，在基于密钥认证的方法中，想要通过 SSH 访问远程系统，需要将公钥上传到远程系统。公钥通常会被保存在远程系统的一个 <code>~/.ssh/authorized_keys</code> 文件中。</p>
-<p><strong>注意事项</strong>：不要使用 <strong>root</strong> 用户生成密钥对，这样只有 root 用户才可以使用。使用普通用户创建密钥对。</p>
-<p>现在，让我们在本地系统上创建一个 SSH 密钥对。只需要在客户端系统上运行下面的命令。</p>
-<pre><code>$ ssh-keygen
-</code></pre><p>上面的命令将会创建一个 2048 位的 RSA 密钥对。你需要输入两次密码。更重要的是，记住你的密码。后面将会用到它。</p>
-<p><strong>样例输出</strong>：</p>
-<pre><code>Generating public/private rsa key pair.
-Enter file in which to save the key (/home/sk/.ssh/id_rsa):
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved in /home/sk/.ssh/id_rsa.
-Your public key has been saved in /home/sk/.ssh/id_rsa.pub.
-The key fingerprint is:
-SHA256:wYOgvdkBgMFydTMCUI3qZaUxvjs+p2287Tn4uaZ5KyE [email protected]
-The key&#39;s randomart image is:
-+---[RSA 2048]----+
-|+=+*= + |
-|o.o=.* = |
-|.oo * o + |
-|. = + . o |
-|. o + . S |
-| . E . |
-| + o |
-| +.*o+o |
-| .o*=OO+ |
-+----[SHA256]-----+
-</code></pre><p>如果你已经创建了密钥对，你将看到以下信息。输入 <code>y</code> 就会覆盖已存在的密钥。</p>
-<pre><code>/home/username/.ssh/id_rsa already exists.
-Overwrite (y/n)?
-</code></pre><p>请注意<strong>密码是可选的</strong>。如果你输入了密码，那么每次通过 SSH 访问远程系统时都要求输入密码，除非你使用了 SSH 代理保存了密码。如果你不想要密码（虽然不安全），简单地敲两次回车。不过，我建议你使用密码。从安全的角度来看，使用无密码的 ssh 密钥对不是什么好主意。这种方式应该限定在特殊的情况下使用，例如，没有用户介入的服务访问远程系统。（例如，用 <code>rsync</code> 远程备份……）</p>
-<p>如果你已经在个人文件 <code>~/.ssh/id_rsa</code> 中有了无密码的密钥，但想要更新为带密码的密钥。使用下面的命令：</p>
-<pre><code>$ ssh-keygen -p -f ~/.ssh/id_rsa
-</code></pre><p><strong>样例输出</strong>：</p>
-<pre><code>Enter new passphrase (empty for no passphrase):
-Enter same passphrase again:
-Your identification has been saved with the new passphrase.
-</code></pre><p>现在，我们已经在本地系统上创建了密钥对。接下来，使用下面的命令将 SSH 公钥拷贝到你的远程 SSH 服务端上。</p>
-<pre><code>$ ssh-copy-id sk@192.168.225.22
-</code></pre><p>在这里，我把本地（Arch Linux）系统上的公钥拷贝到了远程系统（Ubuntu 18.04 LTS）上。从技术上讲，上面的命令会把本地系统 <code>~/.ssh/id_rsa.pub</code> 文件中的内容拷贝到远程系统 <code>~/.ssh/authorized_keys</code> 中。明白了吗？非常棒。</p>
-<p>输入 <code>yes</code> 来继续连接你的远程 SSH 服务端。接着，输入远程系统用户  <code>sk</code> 的密码。</p>
-<pre><code>/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
-/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
-sk@192.168.225.22&#39;s password:
-
-Number of key(s) added: 1
-
-Now try logging into the machine, with: &quot;ssh &#39;sk@192.168.225.22&#39;&quot;
-and check to make sure that only the key(s) you wanted were added.
-</code></pre><p>如果你已经拷贝了密钥，但想要替换为新的密码，使用 <code>-f</code> 选项覆盖已有的密钥。</p>
-<pre><code>$ ssh-copy-id -f sk@192.168.225.22
-</code></pre><p>我们现在已经成功地将本地系统的 SSH 公钥添加进了远程系统。现在，让我们在远程系统上完全禁用掉基于密码认证的方式。因为我们已经配置了密钥认证，因此不再需要密码认证了。</p>
-<h3 id="在远程系统上禁用基于密码认证的-SSH"><a href="#在远程系统上禁用基于密码认证的-SSH" class="headerlink" title="在远程系统上禁用基于密码认证的 SSH"></a>在远程系统上禁用基于密码认证的 SSH</h3><p>你需要在 root 用户或者 <code>sudo</code> 执行下面的命令。</p>
-<p>禁用基于密码的认证，你需要在远程系统的终端里编辑 <code>/etc/ssh/sshd_config</code> 配置文件：</p>
-<pre><code>$ sudo vi /etc/ssh/sshd_config
-</code></pre><p>找到下面这一行，去掉注释然后将值设为 <code>no</code>：</p>
-<pre><code>PasswordAuthentication no
-</code></pre><p>重启 ssh 服务让它生效。</p>
-<pre><code>$ sudo systemctl restart sshd
-</code></pre><h3 id="从本地系统访问远程系统"><a href="#从本地系统访问远程系统" class="headerlink" title="从本地系统访问远程系统"></a>从本地系统访问远程系统</h3><p>在本地系统上使用命令 SSH 你的远程服务端：</p>
-<pre><code>$ ssh sk@192.168.225.22
-</code></pre><p>输入密码。</p>
-<p><strong>样例输出</strong>：</p>
-<pre><code>Enter passphrase for key &#39;/home/sk/.ssh/id_rsa&#39;:
-Last login: Mon Jul 9 09:59:51 2018 from 192.168.225.37
-sk@ubuntuserver:~$
-</code></pre><p>现在，你就能 SSH 你的远程系统了。如你所见，我们已经使用之前 <code>ssh-keygen</code> 创建的密码登录进了远程系统的账户，而不是使用当前账户实际的密码。</p>
-<p>如果你试图从其它客户端系统 ssh（远程系统），你将会得到这条错误信息。比如，我试图通过命令从 CentOS SSH 访问 Ubuntu 系统：</p>
-<p><strong>样例输出</strong>：</p>
-<pre><code>The authenticity of host &#39;192.168.225.22 (192.168.225.22)&#39; can&#39;t be established.
-ECDSA key fingerprint is 67:fc:69:b7:d4:4d:fd:6e:38:44:a8:2f:08:ed:f4:21.
-Are you sure you want to continue connecting (yes/no)? yes
-Warning: Permanently added &#39;192.168.225.22&#39; (ECDSA) to the list of known hosts.
-Permission denied (publickey).
-</code></pre><p>如你所见，除了 CentOS（LCTT 译注：根据上文，这里应该是 Arch）系统外，我不能通过其它任何系统 SSH 访问我的远程系统 Ubuntu 18.04。</p>
-<h3 id="为-SSH-服务端添加更多客户端系统的密钥"><a href="#为-SSH-服务端添加更多客户端系统的密钥" class="headerlink" title="为 SSH 服务端添加更多客户端系统的密钥"></a>为 SSH 服务端添加更多客户端系统的密钥</h3><p>这点非常重要。就像我说过的那样，除非你配置过（在之前的例子中，是 Ubuntu），否则你不能通过 SSH 访问到远程系统。如果我希望给更多客户端予以权限去访问远程 SSH 服务端，我应该怎么做？很简单。你需要在所有的客户端系统上生成 SSH 密钥对并且手动拷贝 ssh 公钥到想要通过 ssh 访问的远程服务端上。</p>
-<p>在客户端系统上创建 SSH 密钥对，运行：</p>
-<pre><code>$ ssh-keygen
-</code></pre><p>输入两次密码。现在，ssh 密钥对已经生成了。你需要手动把公钥（不是私钥）拷贝到远程服务端上。</p>
-<p>使用以下命令查看公钥：</p>
-<pre><code>$ cat ~/.ssh/id_rsa.pub
-</code></pre><p>应该会输出类似下面的信息：</p>
-<pre><code>ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCt3a9tIeK5rPx9p74/KjEVXa6/OODyRp0QLS/sLp8W6iTxFL+UgALZlupVNgFjvRR5luJ9dLHWwc+d4umavAWz708e6Na9ftEPQtC28rTFsHwmyLKvLkzcGkC5+A0NdbiDZLaK3K3wgq1jzYYKT5k+IaNS6vtrx5LDObcPNPEBDt4vTixQ7GZHrDUUk5586IKeFfwMCWguHveTN7ykmo2EyL2rV7TmYq+eY2ZqqcsoK0fzXMK7iifGXVmuqTkAmZLGZK8a3bPb6VZd7KFum3Ezbu4BXZGp7FVhnOMgau2kYeOH/ItKPzpCAn+dg3NAAziCCxnII9b4nSSGz3mMY4Y7 ostechnix@centosserver
-</code></pre><p>拷贝所有内容（通过 USB 驱动器或者其它任何介质），然后去你的远程服务端的终端，像下面那样，在 <code>$HOME</code> 下创建文件夹叫做 <code>.ssh</code>。你需要以 root 身份执行命令（注：不一定需要 root）。</p>
-<pre><code>$ mkdir -p ~/.ssh
-</code></pre><p>现在，将前几步创建的客户端系统的公钥添加进文件中。</p>
-<pre><code>echo {Your_public_key_contents_here} &gt;&gt; ~/.ssh/authorized_keys
-</code></pre><p>在远程系统上重启 ssh 服务。现在，你可以在新的客户端上 SSH 远程服务端了。</p>
-<p>如果觉得手动添加 ssh 公钥有些困难，在远程系统上暂时性启用密码认证，使用 <code>ssh-copy-id</code> 命令从本地系统上拷贝密钥，最后禁用密码认证。</p>
-<p><strong>推荐阅读：</strong></p>
-<ul>
-<li><a href="https://www.ostechnix.com/sslh-share-port-https-ssh/" target="_blank" rel="noopener">SSLH – Share A Same Port For HTTPS And SSH</a></li>
-<li><a href="https://www.ostechnix.com/scanssh-fast-ssh-server-open-proxy-scanner/" target="_blank" rel="noopener">ScanSSH – Fast SSH Server And Open Proxy Scanner</a></li>
-</ul>
-<p>好了，到此为止。基于密钥认证的 SSH 提供了一层防止暴力破解的额外保护。如你所见，配置密钥认证一点也不困难。这是一个非常好的方法让你的 Linux 服务端安全可靠。</p>
-<p>不久我会带来另一篇有用的文章。请继续关注 OSTechNix。</p>
-<p>干杯！</p>
-<hr>
-<p>via: <a href="https://www.ostechnix.com/configure-ssh-key-based-authentication-linux/" target="_blank" rel="noopener">https://www.ostechnix.com/configure-ssh-key-based-authentication-linux/</a></p>
-<p>作者：<a href="https://www.ostechnix.com/author/sk/" target="_blank" rel="noopener">SK</a><br>选题：<a href="https://github.com/lujun9972" target="_blank" rel="noopener">lujun9972</a><br>译者：<a href="https://github.com/LuuMing" target="_blank" rel="noopener">LuuMing</a><br>校对：<a href="https://github.com/pityonline" target="_blank" rel="noopener">pityonline</a></p>
-<p>本文由 <a href="https://github.com/LCTT/TranslateProject" target="_blank" rel="noopener">LCTT</a> 原创编译，<a href="https://linux.cn/" target="_blank" rel="noopener">Linux中国</a> 荣誉推出</p>
-<hr>
-<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>感谢<a href="https://github.com/LCTT/TranslateProject/pull/10501/files" target="_blank" rel="noopener">校对</a>，除了空格的使用需要注意外，对于特殊内容应该使用` `来标记。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/10/12/learning-mind-method/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/12/learning-mind-method/" itemprop="url">
-                  学习的两种心法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-10-12 23:10:02 / Modified: 23:11:15" itemprop="dateCreated datePublished" datetime="2018-10-12T23:10:02+08:00">2018-10-12</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.将自己变复杂<br>关键字:类比 归纳 联想 总结<br>2.将自己变简单<br>关键字:死磕 致知 探索 深究<br>这两种心法在实际运用中不是非此即彼的，而在于一个度的把握。<br>二者共同的源泉是“纯粹”。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2005,7 +1895,7 @@ Permission denied (publickey).
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">49</span>
+                    <span class="site-state-item-count">52</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

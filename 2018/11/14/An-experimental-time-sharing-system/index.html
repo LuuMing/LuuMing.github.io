@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="一种实验性的分时系统Fernando J. Corbato, Marjorie Merwin-Daggett, Robert C. Daley麻省理工科技学院计算机中心剑桥市麻省理工学院  摘要本文简要的讨论了分时的必要性，实现过程中存在的一些问题，和当代 IBM 7090 上所部署的一种分时系统，最终并使用我们团队之一所提出的调度算法（FJC）展示了一些可用在这种分时系统上提高运行性能并可定量分">
+  <meta name="description" content="Fernando J. Corbato, Marjorie Merwin-Daggett, Robert C. Daley麻省理工科技学院计算机中心剑桥市麻省理工学院  摘要本文简要的讨论了分时的必要性，实现过程中存在的一些问题，和当代 IBM 7090 上所部署的一种分时系统，最终并使用我们团队之一所提出的调度算法（FJC）展示了一些可用在这种分时系统上提高运行性能并可定量分析的技术。 绪论在过">
 <meta name="keywords" content="翻译">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一种实验性的分时系统">
 <meta property="og:url" content="http://LuuMing.github.io/2018/11/14/An-experimental-time-sharing-system/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="一种实验性的分时系统Fernando J. Corbato, Marjorie Merwin-Daggett, Robert C. Daley麻省理工科技学院计算机中心剑桥市麻省理工学院  摘要本文简要的讨论了分时的必要性，实现过程中存在的一些问题，和当代 IBM 7090 上所部署的一种分时系统，最终并使用我们团队之一所提出的调度算法（FJC）展示了一些可用在这种分时系统上提高运行性能并可定量分">
+<meta property="og:description" content="Fernando J. Corbato, Marjorie Merwin-Daggett, Robert C. Daley麻省理工科技学院计算机中心剑桥市麻省理工学院  摘要本文简要的讨论了分时的必要性，实现过程中存在的一些问题，和当代 IBM 7090 上所部署的一种分时系统，最终并使用我们团队之一所提出的调度算法（FJC）展示了一些可用在这种分时系统上提高运行性能并可定量分析的技术。 绪论在过">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-11-14T13:26:20.119Z">
+<meta property="og:updated_time" content="2018-11-25T15:30:48.258Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一种实验性的分时系统">
-<meta name="twitter:description" content="一种实验性的分时系统Fernando J. Corbato, Marjorie Merwin-Daggett, Robert C. Daley麻省理工科技学院计算机中心剑桥市麻省理工学院  摘要本文简要的讨论了分时的必要性，实现过程中存在的一些问题，和当代 IBM 7090 上所部署的一种分时系统，最终并使用我们团队之一所提出的调度算法（FJC）展示了一些可用在这种分时系统上提高运行性能并可定量分">
+<meta name="twitter:description" content="Fernando J. Corbato, Marjorie Merwin-Daggett, Robert C. Daley麻省理工科技学院计算机中心剑桥市麻省理工学院  摘要本文简要的讨论了分时的必要性，实现过程中存在的一些问题，和当代 IBM 7090 上所部署的一种分时系统，最终并使用我们团队之一所提出的调度算法（FJC）展示了一些可用在这种分时系统上提高运行性能并可定量分析的技术。 绪论在过">
 
 
 
@@ -341,12 +341,24 @@
                 
               
 
-              <time title="Created: 2018-11-14 20:59:47 / Modified: 21:26:20" itemprop="dateCreated datePublished" datetime="2018-11-14T20:59:47+08:00">2018-11-14</time>
+              <time title="Created: 2018-11-14 20:59:47" itemprop="dateCreated datePublished" datetime="2018-11-14T20:59:47+08:00">2018-11-14</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-11-25 23:30:48" itemprop="dateModified" datetime="2018-11-25T23:30:48+08:00">2018-11-25</time>
               
             
           </span>
@@ -379,11 +391,11 @@
       
 
       
-        <h1 id="一种实验性的分时系统"><a href="#一种实验性的分时系统" class="headerlink" title="一种实验性的分时系统"></a>一种实验性的分时系统</h1><center>Fernando J. Corbato, Marjorie Merwin-Daggett, Robert C. Daley</center><br><center>麻省理工科技学院计算机中心</center><br><center>剑桥市麻省理工学院</center>
+        <center>Fernando J. Corbato, Marjorie Merwin-Daggett, Robert C. Daley</center><br><center>麻省理工科技学院计算机中心</center><br><center>剑桥市麻省理工学院</center>
 
 <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>本文简要的讨论了分时的必要性，实现过程中存在的一些问题，和当代 IBM 7090 上所部署的一种分时系统，最终并使用我们团队之一所提出的调度算法（FJC）展示了一些可用在这种分时系统上提高运行性能并可定量分析的技术。</p>
 <h1 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h1><p>在过去的十几年里，计算机的使用取得了巨大的进展。在 20 世纪 50 年代早期，解决的问题大多在硬件的制造与维护上；到了 50 年代中期，随着编译器的出现，编程语言的使用得到了极大的改善；进入了 20 世纪 60 年代，我们正经历计算机使用的第三次巨大变革：通过分时技术所带来的人机交互的改善。<br>本文所描述的分时的思想，大部分是与麻省理工学院<ruby>基础研究委员会<rt>preliminary study committee</rt></ruby>（由 H.Teager 担任主席）的工作相结合而发展起来的，该委员会研究了学院的长期计算需求，以及随后参与的由 J.McCarthy 担任主席的麻省理工计算机工作委员会。然而，本文所表述的观点与结论应单独作为本文作者所阐述的。<br>在开始之前，最好还是对于分时做一个精确的解释。其含义为同一时刻在不同的任务上使用硬件的不同部分，或是多个人同时使用计算机。第一个含义，通常称之为多道程序设计，它面向硬件的使用效率，在某种意义上尝试完全利用计算机的所有部件。分时在这里的第二个含义，主要关注于个人尝试去使用计算机的效率。计算机效率也应当考虑，但只应从整个系统效用的角度来看。<br>分时计算机的使用可能出于现在人们与更大、更先进的计算机之间缓慢的人机交互效率。这个效率在过去计算机广泛使用的十年间改变微乎其微（在某些情况下更糟）。<br>某种程度上，这种现象是由于随着计算机上基础的问题得到掌握，更多复杂的问题引起了人们的兴趣。结果，更大、更复杂的程序设计去利用计算机更快、更强进的性能。这个过程不可避免的导致出现了更多编程上的错误以及更长的调试周期。就像在大多数大型计算机上所使用的现有的<ruby>批监控<rt>batch monitor</rt>技术</ruby>，每个程序的 bug 通常需要数小时甚至一整天去排除。目前唯一可替代的方法是让程序员直接在计算机上调试，这一过程极大地浪费了计算机运行时间，并且由于通常可用的控制台通信能力极差而严重受阻。即使用打字机当作控制台，通常情况下依然缺乏复杂的命令和相应程序，而这些程序对于实现有效的交互非常重要。因此，我们希望在不造成巨大经济损失的情况下，大幅度提升程序员与计算机之间的交互效率，并且通过广泛而复杂系统编程来辅助进行人机通信，让每次交互更有意义。</p>
-<p>为了解决这些交互问题，我们想让计算机制作的像<ruby>电话交换台<rt>telephone exchange</rt></ruby>那样同时让多个用户去使用。每位用户能够根据自己的需要去使用一个终端并且无需关心其他使用系统的用户。这个终端可以最小化到仅仅像打字机那样，但更理想的是包含一个可扩展修改的独立显示。在任何情况下，数据传输都要求在远程安装上没有大的障碍。<br>分时系统的基本技术是让多个人通过打字机终端同时使用计算机，并通过分时管理程序在短时间内或是一定计算量内按顺序地运行每一个用户程序。形成这个序列，最直接的方式是简单的<ruby>时间片轮转<rt>round-robin</rt></ruby>，它应当多次被调度以便让每个保存在高速存储中的用户程序在人的反应时间内（大约 0.2 秒）至少运行一定量。用这种方式，用户看到计算机可以充分响应每一次键击，它也许只需要简单的计算；而复杂情况下，用户看到响应时间的逐渐减少与响应计算的复杂度、计算机速度、活动用户的总数成比例。也就是说，如果有 n 个用户同时请求服务，那么每个用户只会看到 1/n 的有效计算机速度，这一点应当清楚。在进行例如调试程序这样高交互率的过程中，原先计算量所产生的计算机响应要足够小，这不应当成为阻碍。<br>这种分时系统不仅可以提升传统程序一到两个数量级的能力，还能够开创出几种新的计算机使用方式。许多科学和工程上的应用将逐步重新规划，程序中包含的<ruby>决策树<rt>decision trees</rt></ruby>需要提前指定将被废除，取而代之的是仅指定需要的决策分支。</p>
+<p>为了解决这些交互问题，我们想让计算机制作的像<ruby>电话交换台<rt>telephone exchange</rt></ruby>那样同时让多个用户去使用。每位用户能够根据自己的需要去使用一个终端并且无需关心其他使用系统的用户。这个终端可以最小化到仅仅像打字机那样，但更理想的是包含一个可扩展修改的独立显示。在任何情况下，数据传输都要求在远程安装上没有大的障碍。<br>分时系统的基本技术是让多个人通过打字机终端同时使用计算机，并通过分时管理程序在短时间内或是一定计算量内按顺序地运行每一个用户程序。形成这个序列，最直接的方式是简单的<ruby>时间片轮转<rt>round-robin</rt></ruby>，它应当多次被调度以便让每个保存在高速存储中的用户程序在人的反应时间内（大约 0.2 秒）至少运行一定量。用这种方式，用户看到计算机可以充分响应每一次键击，它也许只需要简单的计算；而复杂情况下，用户看到响应时间的逐渐减少与响应计算的复杂度、计算机速度、活动用户的总数成比例。也就是说，如果有 n 个用户同时请求服务，那么每个用户只会看到 1/n 的有效计算机速度，这一点应当清楚。在进行例如调试程序这样高交互率的过程中，原先计算量所产生的计算机响应要足够小，这不应当成为阻碍。<br>这种分时系统不仅可以提升传统程序一到两个数量级的能力，还能够开创出几种新的计算机使用方式。许多科学和工程上的应用将逐步重新规划，程序中包含的<ruby>决策树<rt>decision trees</rt></ruby>需要提前指定将被废除，取而代之的是仅指定需要的决策分支。另一个重要的领域是在计算机教学机器上，尽管这些机器的计算量很小，但它们可以自然而然地利用分时系统的终端，以使用更复杂更适合的教学程序。</p>
 <p>未完待续</p>
 <h1 id="译者后记"><a href="#译者后记" class="headerlink" title="译者后记"></a>译者后记</h1><p><ruby>在某种意义上<rt>in the sense of</rt></ruby><br><ruby><rt>in a manner</rt> </ruby><br>one or two orders of magnitude 一两个数量级</p>
 
@@ -452,6 +464,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/14/formal-semantics/" rel="prev" title="formal-semantics">
+                formal-semantics <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -526,7 +542,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">49</span>
+                    <span class="site-state-item-count">52</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -628,7 +644,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一种实验性的分时系统"><span class="nav-number">1.</span> <span class="nav-text">一种实验性的分时系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">2.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#绪论"><span class="nav-number">3.</span> <span class="nav-text">绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#译者后记"><span class="nav-number">4.</span> <span class="nav-text">译者后记</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摘要"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#绪论"><span class="nav-number">2.</span> <span class="nav-text">绪论</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#译者后记"><span class="nav-number">3.</span> <span class="nav-text">译者后记</span></a></li></ol></div>
             
 
           </div>

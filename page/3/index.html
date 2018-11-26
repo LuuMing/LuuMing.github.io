@@ -295,6 +295,479 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/20/java-install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/20/java-install/" itemprop="url">
+                  安装 JAVA
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-20 16:43:51" itemprop="dateCreated datePublished" datetime="2018-09-20T16:43:51+08:00">2018-09-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-22 14:53:04" itemprop="dateModified" datetime="2018-09-22T14:53:04+08:00">2018-09-22</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="1-下载-JDK"><a href="#1-下载-JDK" class="headerlink" title="1.下载 JDK"></a>1.下载 JDK</h3><p>访问<a href="https://www.oracle.com/technetwork/java/javase/downloads/jdk10-downloads-4416644.html" target="_blank" rel="noopener">jdk 10 下载页面</a>。根据机器的位数与系统选择响应的安装包。</p>
+<h3 id="2-解压"><a href="#2-解压" class="headerlink" title="2.解压"></a>2.解压</h3><pre><code>tar -xvf [下载的.tar.gz]
+</code></pre><h3 id="3-移动到合适的位置"><a href="#3-移动到合适的位置" class="headerlink" title="3.移动到合适的位置"></a>3.移动到合适的位置</h3><p>个人推荐将解压后的文件放在如下目录里，注意要用<code>sudo</code>:</p>
+<pre><code>sudo mkdir /usr/lib/jvm
+sudo mv jdk-10.0.2/ /usr/lib/jvm/
+</code></pre><h3 id="4-配置环境变量"><a href="#4-配置环境变量" class="headerlink" title="4.配置环境变量"></a>4.配置环境变量</h3><p>打开 home 下的 <code>.profile</code> 文件，添加如下内容:</p>
+<pre><code>#set jdk env
+export JAVA_HOME=/usr/lib/jvm/jdk-10.0.1
+export PATH=$JAVA_HOME/bin:$PATH
+</code></pre><h3 id="5-检查是否安装成功"><a href="#5-检查是否安装成功" class="headerlink" title="5. 检查是否安装成功"></a>5. 检查是否安装成功</h3><p>执行：</p>
+<pre><code>java --version
+</code></pre><p>显示：</p>
+<pre><code>java 10.0.2 2018-04-17
+Java(TM) SE Runtime Environment 18.3 (build 10.0.1+10)
+Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.1+10, mixed mode)
+</code></pre><p>即成功安装。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/20/polygon-inside/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/20/polygon-inside/" itemprop="url">
+                  如何判断点在多边形内部？
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-20 11:45:29 / Modified: 15:16:24" itemprop="dateCreated datePublished" datetime="2018-09-20T11:45:29+08:00">2018-09-20</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="引射线法"><a href="#引射线法" class="headerlink" title="引射线法"></a>引射线法</h3><p>从目标点出发，看这条射线与多边形所有边的交点数目，如果是奇数个。说明在多边形内部，偶数个，在多边形外部。</p>
+<pre><code>bool inside(vector&lt;point&gt; polygon, point target)
+{
+        int crossing = 0;
+        for(int i = 1; i &lt; polygon.size(); i++)
+        {
+                double slope = (polygon[i].y - polygon[i-1].y) / (polygon[i].x - polygon[ i-1 ].x);  // 两点之间的斜率
+                bool cond1 = ( target.x &gt;= polygon[i-1].x &amp;&amp; target.x &lt;= polygon[i].x);              // target 在某边两端点之间
+                bool cond2 = ( target.x &gt;= polygon[i].x &amp;&amp; target.x &lt;= polygon[i-1].x);              // target 在某边两端点之间
+                bool above = (target.y &lt; slope * ( target.x - polygon[i-1].x) + polygon[i-1].y);        // y0 &lt; ax0+b (a = slope)即在两线的下方，因此必有一点相交
+                if( (cond1 || cond2) &amp;&amp; above) crossing++;
+        }
+        return (crossing % 2 != 0);                                                                     //若有奇数个点交点，在内部
+
+}
+</code></pre>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/16/process-space/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/16/process-space/" itemprop="url">
+                  process_space
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-16 19:38:01" itemprop="dateCreated datePublished" datetime="2018-09-16T19:38:01+08:00">2018-09-16</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-18 22:15:41" itemprop="dateModified" datetime="2018-09-18T22:15:41+08:00">2018-09-18</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>看一百遍这张图片<br><img src="/2018/09/16/process-space/./process.jpg" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/05/http/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1509,492 +1982,11 @@ Free memory : 2915428 kB
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/24/PAT-1103-Integer-Factorization/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/24/PAT-1103-Integer-Factorization/" itemprop="url">
-                  神一样的减枝操作
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-08-24 21:05:04 / Modified: 21:06:57" itemprop="dateCreated datePublished" datetime="2018-08-24T21:05:04+08:00">2018-08-24</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天在刷<a href="https://pintia.cn/problem-sets/994805342720868352/problems/994805364711604224" target="_blank" rel="noopener">【PAT】1103 Integer Factorization（30 分）</a>，题目大意是这样的：</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/23/translating-20180730-Open-Source-Networking-Jobs-A-Hotbed-of-Innovation-and-Opportunities/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/23/translating-20180730-Open-Source-Networking-Jobs-A-Hotbed-of-Innovation-and-Opportunities/" itemprop="url">
-                  <翻译>开源网络工作：创新与机遇的温床
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-08-23 15:42:34" itemprop="dateCreated datePublished" datetime="2018-08-23T15:42:34+08:00">2018-08-23</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-08-30 18:21:33" itemprop="dateModified" datetime="2018-08-30T18:21:33+08:00">2018-08-30</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>======</p>
-<p><img src="https://www.linux.com/sites/lcom/files/styles/rendered_file/public/os-jobs-networking.jpg?itok=PgUzydn-" alt=""></p>
-<p>随着全球经济更加靠近数字化未来，每个垂直行业的公司和组织都在紧抓如何进一步在业务与运营上整合与部署技术。虽然 IT 企业在很大程度上遥遥领先，但是他们的经验与教训已经应用在了各行各业。尽管全国失业率为 4.1%，但整个科技专业人员的整体的失业率在 4 月份为 1.9%，开源工作的未来看起来尤其光明。我在开源网络领域工作，并且目睹着创新和机遇正在改变世界交流的方式。</p>
-<p>曾经是个发展缓慢的行业，现在由网络运营商、供应商、系统集成商和开发者所组成的网络生态系统正在采用开源软件，并且正在向商用硬件上运行的虚拟化和软件定义网络上转移。事实上，接近 70% 的全球移动用户由<a href="https://www.lfnetworking.org/" target="_blank" rel="noopener">低频网络</a>运营商成员所代表。该网络运营商成员致力于协调构成开放网络栈和相邻技术的项目。</p>
-<h3 id="技能需求"><a href="#技能需求" class="headerlink" title="技能需求"></a>技能需求</h3><p>这一领域的开发者和系统管理员采用云原生和 DevOps 的方法开发新的使用案例，应对最紧迫的行业挑战。诸如容器、边缘计算等焦点领域大红大紫，并且在这一领域能够整合、协作、创新的开发者和系统管理员们的需求在日益增进。</p>
-<p>开源软件与 Linux 使这一切成为可能，根据最近出版的<a href="https://www.linuxfoundation.org/publications/2018/06/open-source-jobs-report-2018/" target="_blank" rel="noopener"> 2018开源软件工作报告</a>，高达 80% 的招聘经理寻找会 Linux 技能的应聘者，<strong>而 46% 希望在网络领域招聘人才，可以说“网络技术”在他们的招聘决策中起到了至关重要的作用。</strong></p>
-<p>开发人员相当抢手，72% 的招聘经理都在找他们，其次是 DevOps 开发者（59%），工程师（57%）和系统管理员（49%）。报告同时指出，对容器技能需求的惊人的增长符合了我们在网络领域所见到的，即创建云本地虚拟功能（CNFs）和在<a href="https://docs.opnfv.org/en/latest/submodules/releng-xci/docs/xci-overview.html" target="_blank" rel="noopener"> XCI倡议 </a>的 OPNFV 中持续集成／持续部署方法的增长。</p>
-<h3 id="开始吧"><a href="#开始吧" class="headerlink" title="开始吧"></a>开始吧</h3><p>对于求职者来说，好消息是有着大量的关于开源软件的内容，包括免费的<a href="https://www.edx.org/course/introduction-linux-linuxfoundationx-lfs101x-1" target="_blank" rel="noopener">Linux 入门课程</a>。好的工作需要有多项证书，因此我鼓励你探索更多领域，去寻求培训的机会。计算机网络方面，在<a href="https://training.linuxfoundation.org/training/opnfv-fundamentals/" target="_blank" rel="noopener">OPNFV</a>上查看最新的培训课程或者是<a href="https://training.linuxfoundation.org/training/onap-fundamentals/" target="_blank" rel="noopener">ONAP</a>项目，也可以选择这门<a href="https://www.edx.org/course/introduction-to-software-defined-networking-technologies" target="_blank" rel="noopener">开源网络技术简介</a>课程。</p>
-<p>如果你还没有做好这些，下载 <a href="https://www.linuxfoundation.org/publications/2018/06/open-source-jobs-report-2018/" target="_blank" rel="noopener">2018开源软件工作报告</a> 以获得更多见解，在广阔的开放源码技术世界中规划你的课程，去寻找另一边等待你的令人兴奋的职业！</p>
-<p>点击这里<a href="https://www.linuxfoundation.org/publications/open-source-jobs-report-2018/" target="_blank" rel="noopener">下载完整的开源软件工作报告</a>并且<a href="https://training.linuxfoundation.org/certification" target="_blank" rel="noopener">了解更多关于 Linux 的认证</a>。</p>
-<hr>
-<p>via: <a href="https://www.linux.com/blog/os-jobs-report/2018/7/open-source-networking-jobs-hotbed-innovation-and-opportunities" target="_blank" rel="noopener">https://www.linux.com/blog/os-jobs-report/2018/7/open-source-networking-jobs-hotbed-innovation-and-opportunities</a></p>
-<p>作者：<a href="https://www.linux.com/users/brandon-wick" target="_blank" rel="noopener">Brandon Wick</a><br>选题：<a href="https://github.com/lujun9972" target="_blank" rel="noopener">lujun9972</a><br>译者：<a href="https://github.com/LuuMing" target="_blank" rel="noopener">LuuMing</a><br>校对：<a href="https://github.com/校对者ID" target="_blank" rel="noopener">校对者ID</a></p>
-<p>本文由 <a href="https://github.com/LCTT/TranslateProject" target="_blank" rel="noopener">LCTT</a> 原创编译，<a href="https://linux.cn/" target="_blank" rel="noopener">Linux中国</a> 荣誉推出</p>
-<hr>
-<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>第一次翻译文章，水平很一般，用了好几次百度翻译和谷歌翻译。尤其是碰到长句子后就会发懵，其实用逗号隔开会容易理解很多。</p>
-<pre><code>Once a slower moving industry, the networking ecosystem of today -- made up of network operators, vendors, systems integrators, and developers -- is now embracing open source software and is shifting significantly towards virtualization and software defined networks running on commodity hardware.
-
-Focus areas like containers and edge computing are red hot and the demand for developers and sysadmins who can integrate, collaborate, and innovate in this space is exploding.
-</code></pre><p>还有一些:</p>
-<p><code>native cloud---云本地</code><br><code>vendors---供应商</code><br><code>DevOps---专用名词，指过程、方法与系统的统称</code><br><code>sysadmins---系统管理员</code><br><code>tackle the most pressing industry challenges---应对最紧迫的行业挑战</code><br><code>most sought---抢手</code></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/08/10/X-Y-Problem/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/10/X-Y-Problem/" itemprop="url">
-                  <翻译> X-Y Problem
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-08-10 15:32:27" itemprop="dateCreated datePublished" datetime="2018-08-10T15:32:27+08:00">2018-08-10</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-09-01 10:46:36" itemprop="dateModified" datetime="2018-09-01T10:46:36+08:00">2018-09-01</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>什么是XY problem，抛开定义举个例子先：</p>
-<h3 id="1-举个例子"><a href="#1-举个例子" class="headerlink" title="1.举个例子"></a>1.举个例子</h3><p>Q：有没有个函数能返回两个分隔符之间的字符串？<br>B：我不知道你说啥，但我觉得有。<br>C：<a href="http://www.runoob.com/python/att-string-split.html" target="_blank" rel="noopener">split</a>和<a href="http://www.runoob.com/python/python-func-slice.html" target="_blank" rel="noopener">splice</a>呗。<br>D：<a href="http://www.runoob.com/python/att-string-partition.html" target="_blank" rel="noopener">Partition</a>也行<br>Q：我试着用<a href="https://docs.python.org/3/library/builtins.html" target="_blank" rel="noopener">builtins</a>得到字符串”attribute1: 50.223, attribute2: 442.1”中的数字。<br>D:为啥不直接解析字符串呢？<br>Q:我觉得(python) 有内建的解析函数。<br>D: 这样</p>
-<pre class=" language-python"><code class="language-python">pairs <span class="token operator">=</span> <span class="token punctuation">[</span>x<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> s<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">","</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-attribs <span class="token operator">=</span> <span class="token punctuation">{</span>k<span class="token punctuation">:</span> v <span class="token keyword">for</span> x <span class="token keyword">in</span> pairs <span class="token keyword">for</span> k<span class="token punctuation">,</span> v <span class="token keyword">in</span> <span class="token punctuation">[</span>x<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">": "</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">}</span>
-</code></pre>
-<p>D:虽然有一些库，但我觉得这样已经足够简单了(如果你不关心错误处理的话)<br>D:如果可以的话用一些比较好的原始数据，比如json或yaml就简单多了。<br>Q:代码实际上来自于HTML<br>Q:我不知道怎样用HTML解析器或者别的来解析JavaScript<br>D:是不是仅仅嵌入在HTML里或者是拼版的HTML？<br>Q: 对，是嵌在HTML里的。<br>D: 如果是JavaScript，json就可以解析它。<br>Q: 谢谢<br>D:我没有说明白:json只是解析了数据结构，不是js代码<br>Q:我要解析的就是数据结构.<br>来源:<a href="https://meta.stackexchange.com/questions/66377/what-is-the-xy-problem/" target="_blank" rel="noopener">what-is-the-xy-problem</a></p>
-<h3 id="2-定义"><a href="#2-定义" class="headerlink" title="2.定义"></a>2.定义</h3><p>回过头来看X-Y problem</p>
-<pre><code>1）有人想解决问题X
-2）他觉得Y可能是解决X问题的方法
-3）但是他不知道Y应该怎么做
-4）于是他去问别人Y应该怎么做？
-</code></pre><p>来源:<a href="http://www.piaoyi.org/other/x-y-problem-1.html" target="_blank" rel="noopener">提问的智慧：X-Y PROBLEM
-</a></p>
-<h3 id="3-分析"><a href="#3-分析" class="headerlink" title="3.分析"></a>3.分析</h3><p>也就是说，在上述例子中，</p>
-<pre><code>Q原本的目的是想解析HTML中嵌入的JavaScript中的数据 (X problem)
-</code></pre><p>而他不知道如何解析JS，因此他自己想了个办法</p>
-<pre><code>有没有个函数能返回两个分隔符之间的字符串？ (Y problem)
-</code></pre><p>因此他花费了大量的时间来解决Y，岂不知单单改变数据格式json就可以解决问题。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2037,7 +2029,7 @@ attribs <span class="token operator">=</span> <span class="token punctuation">{<
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">49</span>
+                    <span class="site-state-item-count">52</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
