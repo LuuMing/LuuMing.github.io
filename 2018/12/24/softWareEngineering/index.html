@@ -108,25 +108,27 @@
 
 
 
-  <meta name="description" content="引言这次开 win10 时，它报了一条错误 无法加载应用程序或操作系统，原因是所需文件丢失或包含错误。  文件：\Windows\system32\winload.exe 错误代码：0xc000000e 那一刻，人类又想起了被折腾系统支配的恐惧。 折腾Win10先百度呗，给到的方法大致有这么几种：  chkdisk /f 先修复。结果：卡到某一进度上，失败。 进WinPe，BOOTICE 修复。结">
-<meta name="keywords" content="随想">
+  <meta name="description" content="学完了软件工程，不苟妄得多少分，但至少让我发表一下见解吧。 “高内聚，低耦合？” 有点小陷阱结构化程序设计核心思想之一叫做“高内聚，低耦合”。很直观，模块与模块独立，模块之间保持简单的调用/依赖关系，模块之内完成单一的任务。不错，你已经明白了其含义。让我画一张图，请问下图模块的内聚与耦合度呢？你一定会回答，“很明显，耦合度很高，是一个糟糕的设计”。OK，A 调用 B、C。B 调用 C，C 调用 D">
+<meta name="keywords" content="半吊子">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记一次大宕机">
-<meta property="og:url" content="http://LuuMing.github.io/2018/11/07/2018-11-7/index.html">
+<meta property="og:title" content="软件工程">
+<meta property="og:url" content="http://LuuMing.github.io/2018/12/24/softWareEngineering/index.html">
 <meta property="og:site_name" content="LuMing&#39;s blog">
-<meta property="og:description" content="引言这次开 win10 时，它报了一条错误 无法加载应用程序或操作系统，原因是所需文件丢失或包含错误。  文件：\Windows\system32\winload.exe 错误代码：0xc000000e 那一刻，人类又想起了被折腾系统支配的恐惧。 折腾Win10先百度呗，给到的方法大致有这么几种：  chkdisk /f 先修复。结果：卡到某一进度上，失败。 进WinPe，BOOTICE 修复。结">
+<meta property="og:description" content="学完了软件工程，不苟妄得多少分，但至少让我发表一下见解吧。 “高内聚，低耦合？” 有点小陷阱结构化程序设计核心思想之一叫做“高内聚，低耦合”。很直观，模块与模块独立，模块之间保持简单的调用/依赖关系，模块之内完成单一的任务。不错，你已经明白了其含义。让我画一张图，请问下图模块的内聚与耦合度呢？你一定会回答，“很明显，耦合度很高，是一个糟糕的设计”。OK，A 调用 B、C。B 调用 C，C 调用 D">
 <meta property="og:locale" content="zh">
-<meta property="og:updated_time" content="2018-11-08T06:28:22.096Z">
+<meta property="og:image" content="http://luuming.github.io/2018/12/24/softWareEngineering/">
+<meta property="og:updated_time" content="2018-12-28T09:23:14.585Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记一次大宕机">
-<meta name="twitter:description" content="引言这次开 win10 时，它报了一条错误 无法加载应用程序或操作系统，原因是所需文件丢失或包含错误。  文件：\Windows\system32\winload.exe 错误代码：0xc000000e 那一刻，人类又想起了被折腾系统支配的恐惧。 折腾Win10先百度呗，给到的方法大致有这么几种：  chkdisk /f 先修复。结果：卡到某一进度上，失败。 进WinPe，BOOTICE 修复。结">
+<meta name="twitter:title" content="软件工程">
+<meta name="twitter:description" content="学完了软件工程，不苟妄得多少分，但至少让我发表一下见解吧。 “高内聚，低耦合？” 有点小陷阱结构化程序设计核心思想之一叫做“高内聚，低耦合”。很直观，模块与模块独立，模块之间保持简单的调用/依赖关系，模块之内完成单一的任务。不错，你已经明白了其含义。让我画一张图，请问下图模块的内聚与耦合度呢？你一定会回答，“很明显，耦合度很高，是一个糟糕的设计”。OK，A 调用 B、C。B 调用 C，C 调用 D">
+<meta name="twitter:image" content="http://luuming.github.io/2018/12/24/softWareEngineering/">
 
 
 
 
 
 
-  <link rel="canonical" href="http://LuuMing.github.io/2018/11/07/2018-11-7/"/>
+  <link rel="canonical" href="http://LuuMing.github.io/2018/12/24/softWareEngineering/"/>
 
 
 
@@ -136,7 +138,7 @@
   };
 </script>
 
-  <title>记一次大宕机 | LuMing's blog</title>
+  <title>软件工程 | LuMing's blog</title>
   
 
 
@@ -299,7 +301,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/11/07/2018-11-7/">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/12/24/softWareEngineering/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="LuMing">
@@ -316,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">记一次大宕机
+          <h1 class="post-title" itemprop="name headline">软件工程
               
             
           </h1>
@@ -341,7 +343,7 @@
                 
               
 
-              <time title="Created: 2018-11-07 23:44:05" itemprop="dateCreated datePublished" datetime="2018-11-07T23:44:05+08:00">2018-11-07</time>
+              <time title="Created: 2018-12-24 20:07:56" itemprop="dateCreated datePublished" datetime="2018-12-24T20:07:56+08:00">2018-12-24</time>
             
 
             
@@ -358,7 +360,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-11-08 14:28:22" itemprop="dateModified" datetime="2018-11-08T14:28:22+08:00">2018-11-08</time>
+                <time title="Modified: 2018-12-28 17:23:14" itemprop="dateModified" datetime="2018-12-28T17:23:14+08:00">2018-12-28</time>
               
             
           </span>
@@ -391,24 +393,10 @@
       
 
       
-        <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>这次开 win10 时，它报了一条错误</p>
-<pre><code>无法加载应用程序或操作系统，原因是所需文件丢失或包含错误。
-
-文件：\Windows\system32\winload.exe
-错误代码：0xc000000e
-</code></pre><p>那一刻，人类又想起了被折腾系统支配的恐惧。</p>
-<h3 id="折腾Win10"><a href="#折腾Win10" class="headerlink" title="折腾Win10"></a>折腾Win10</h3><p>先百度呗，给到的方法大致有这么几种：</p>
-<ol>
-<li>chkdisk /f 先修复。<br>结果：卡到某一进度上，失败。</li>
-<li>进WinPe，BOOTICE 修复。<br>结果：失败。</li>
-<li>下一个系统烧录到 U 盘上，利用 win10 自带的 repair 功能。<br>结果：错误都不报，失败。<br>感觉不大对劲，打开系统盘。少了整整 20多个G！这系统都被硬砍掉了一大半还能启动个X。<br>事已至此，格式化吧，反正该备份的早都备份过，没备份的就当清理垃圾了。就这样了。<br>可没想到…<h3 id="折腾Ubuntu"><a href="#折腾Ubuntu" class="headerlink" title="折腾Ubuntu"></a>折腾Ubuntu</h3>造孽，双系统 Ubuntu都被连累了。打开 Ubuntu，<pre><code>error:file &#39;/boot/grub/i386-pc/normal.mod&#39; not found.
-</code></pre>心里一万句馍馍片。继续折腾。<br>原本看起来挺简单的方法：<br>烧录一个系统盘到 U盘上，启动微型 Ubuntu，连上网，上工具<code>boot-repair</code><br>结果：等待一个多小时，报错啥不能 purge grub2。<br>沿着这条线索，百度这边已经断了。换谷歌。<br>又是一大堆方法：<br>mount 原系统所在分区，用 grub-install…balabala…如果还有额外的<code>/boot</code>分区，还要分情况讨论…balabala…<br>被劝退了，放弃了，直接换最新的Ubuntu 18。<h3 id="峰回路转"><a href="#峰回路转" class="headerlink" title="峰回路转"></a>峰回路转</h3>装就装吧，可总得备份一下。这一打开备份的文件，就想起之前为了配置个环境忙的死去活来。再搏一搏吧，<strong>百度一下 error:file ‘/boot/grub/i386-pc/normal.mod’ </strong>。<br>按着<a href="https://blog.csdn.net/wh357589873/article/details/51167830" target="_blank" rel="noopener">教程</a>那么一敲，熟悉的紫色画面映入眼帘，心中一片欢喜。<br>但是！重启之后又遇到了这个问题，怎么办。继续教程往下看，重新安装<code>grub</code>。但结果是：<pre><code>无法嵌入。在此次安装中 GRUB 只能通过使用块列表安装。但是块列表是不可信赖的，不推荐使用。
-</code></pre>试一试 <code>boot-repair</code>。又是漫长几分钟的添加仓库源，下载，安装，扫描，修复。报错：<pre><code>当前在 legacy 模式下，请重启并改为 UEFI 模式启动。
-</code></pre>改就改吧。<br>可这改了后，根本找不到 Ubuntu 的启动选项了。这…<h3 id="结局"><a href="#结局" class="headerlink" title="结局"></a>结局</h3>天无绝人之路，终于在<a href="https://blog.csdn.net/wh357589873/article/details/51167830?d=123" target="_blank" rel="noopener">这篇文章</a>中找到办法。大意是这样的：<br>1.进入用 U 盘烧录的微型系统中</li>
-<li>将原来系统的东西原封不动地 mount 进去。</li>
-<li>chroot，临时进入原来的系统。</li>
-<li>重装 grub。<br>OK，这次全都搞定了。</li>
-</ol>
+        <p>学完了软件工程，不苟妄得多少分，但至少让我发表一下见解吧。</p>
+<h3 id="“高内聚，低耦合？”-有点小陷阱"><a href="#“高内聚，低耦合？”-有点小陷阱" class="headerlink" title="“高内聚，低耦合？” 有点小陷阱"></a>“高内聚，低耦合？” 有点小陷阱</h3><p>结构化程序设计核心思想之一叫做“高内聚，低耦合”。很直观，模块与模块独立，模块之间保持简单的调用/依赖关系，模块之内完成单一的任务。<br>不错，你已经明白了其含义。让我画一张图，请问下图模块的内聚与耦合度呢？<br><img src="/2018/12/24/softWareEngineering/" alt=""><br>你一定会回答，“很明显，耦合度很高，是一个糟糕的设计”。<br>OK，A 调用 B、C。B 调用 C，C 调用 D。乱七八糟的的确让人感到不愉快。但是，如果让我换个角度看看呢？</p>
+<p>请再次回答它的内聚与耦合程度。怎么，耦合度很低？<br>你有没有觉得，<strong>内聚和耦合其实是一回事</strong>。那么当我们谈论到“高内聚，低耦合”时，我们在谈论什么呢？<br>让我再给图上画一个圈，现在我问你，<strong>圈内</strong>的耦合度与内聚度？<br>一目了然吧。</p>
+<p>好吧，我的观点其实是<strong>在讨论内聚与耦合程度时，应以某个界限作为划分</strong>，实际上在谈论“模块”这个概念时，就已经有了一条边界了，只不过很容易会忽视掉我们所讨论的对象的性质（之前虽然没有提到但阅读起来毫无违和感对吧？）所以还应该明确，<strong>内聚是边界之内，耦合是边界之间</strong>。</p>
 
       
     </div>
@@ -453,7 +441,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/随想/" rel="tag"># 随想</a>
+            <a href="/tags/半吊子/" rel="tag"># 半吊子</a>
           
         </div>
       
@@ -466,8 +454,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/02/science-and-technology/" rel="next" title="科学与技术">
-                <i class="fa fa-chevron-left"></i> 科学与技术
+              <a href="/2018/12/09/My2018/" rel="next" title="我的 2018">
+                <i class="fa fa-chevron-left"></i> 我的 2018
               </a>
             
           </div>
@@ -475,10 +463,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/08/regex/" rel="prev" title="正则表达式">
-                正则表达式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -655,7 +639,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#折腾Win10"><span class="nav-number">2.</span> <span class="nav-text">折腾Win10</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#折腾Ubuntu"><span class="nav-number">3.</span> <span class="nav-text">折腾Ubuntu</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#峰回路转"><span class="nav-number">4.</span> <span class="nav-text">峰回路转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结局"><span class="nav-number">5.</span> <span class="nav-text">结局</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#“高内聚，低耦合？”-有点小陷阱"><span class="nav-number">1.</span> <span class="nav-text">“高内聚，低耦合？” 有点小陷阱</span></a></li></ol></div>
             
 
           </div>
