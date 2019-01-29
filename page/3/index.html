@@ -295,6 +295,241 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/23/interprocess-communication-pipe/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/23/interprocess-communication-pipe/" itemprop="url">
+                  进程通信的实现--管道
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-23 12:24:41" itemprop="dateCreated datePublished" datetime="2018-09-23T12:24:41+08:00">2018-09-23</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-09-26 19:04:25" itemprop="dateModified" datetime="2018-09-26T19:04:25+08:00">2018-09-26</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><pre><code>
+  #include &lt;unistd.h&gt;
+
+       int pipe(int pipefd[2]);
+
+       #define _GNU_SOURCE             /* See feature_test_macros(7) */
+       #include &lt;fcntl.h&gt;              /* Obtain O_* constant definitions */
+       #include &lt;unistd.h&gt;
+
+       int pipe2(int pipefd[2], int flags);
+
+</code></pre><h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p><code>pipe()</code> 创建一个单向的可用作进程间通信的数据通道。<code>pipefd</code>数组用作返回管道两端的文件描述符。<code>pipefd[0]</code>代表管道的读取端。<code>pipefd[1]</code>用作写入端。数据被写入到由内核所缓冲的管道写入端。</p>
+<p>如果 <code>flags</code> 为 0，那么<code>pipe2()</code>就和<code>pipe()</code>一样。下面这些变量可以在<code>flags</code>中按位或运算来获得不同的功能：</p>
+<h4 id="O-CLOEXEC"><a href="#O-CLOEXEC" class="headerlink" title="O_CLOEXEC"></a>O_CLOEXEC</h4><p>为两个文件描述符设置<code>close-on-exec (FD_CLOEXEC)</code>标志。在 <a href="http://man7.org/linux/man-pages/man2/open.2.html" target="_blank" rel="noopener">open</a> 中查看相同标志的描述，了解它为什么非常有用。</p>
+<h4 id="O-DIRECT-自从-Linux-3-4"><a href="#O-DIRECT-自从-Linux-3-4" class="headerlink" title="O_DIRECT( 自从 Linux 3.4 )"></a>O_DIRECT( 自从 Linux 3.4 )</h4><p>创建一个在 <strong>packet</strong> 模式下执行 I/O 的管道。每次对管道的 write 都被当作分开的包处理，并且每次从管道中 read 都会依次读取一个包。注意以下几点：</p>
+<ul>
+<li>写入超过 <strong>PIPE_BUF</strong> 字节（查看 <a href="http://man7.org/linux/man-pages/man7/pipe.7.html" target="_blank" rel="noopener">pipe(7)</a>）将会分为多个包。常数 <strong>PIPE_BUF</strong>定义在 <code>&lt;limits.h&gt;</code>中。</li>
+<li>如果 <a href="http://man7.org/linux/man-pages/man2/read.2.html" target="_blank" rel="noopener">read</a> 确定的缓冲区大小比下一个包小，这时，包中需要的字节被读取，超出的字节被丢弃。指定缓冲区大小为 <strong>PIPE_BUF</strong> 就足以读取尽可能大的包。</li>
+<li>不支持 0 长度的包。（read 指定缓冲区大小为 0 是一个空操作，返回 0。）<br>老版本内核不支持这个标志将会通过 <strong>EINVAL</strong> 错误指出。<br>自从 Linux 4.5，可以通过 <a href="http://man7.org/linux/man-pages/man2/fcntl.2.html" target="_blank" rel="noopener">fcntl</a> 改变管道文件描述符的 <strong>O_DIRECT</strong> 设置。</li>
+</ul>
+<h4 id="O-NONBLOCK"><a href="#O-NONBLOCK" class="headerlink" title="O_NONBLOCK"></a>O_NONBLOCK</h4><p>为两个新开的文件描述符设置 O_NONBLOCK 文件状态标志。使用这个标志节省额外的 <strong>fcntl</strong> 调用以达到同样的效果。</p>
+<h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><p>成功，返回 0。错误，返回 -1 并且设置 errno。<br>在 Linux 上（和其他的系统），<strong>pipe()</strong>不在失败时修改<strong>pipefd</strong>。在 POSIX.1-2016 中添加了规范这一行为的要求。Linux 规定的 <strong>pipe2()</strong> 系统调用同样在失败时不修改 <strong>pipefd</strong>。</p>
+<h3 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h3><ul>
+<li>EFAULT 无效 pipefd</li>
+<li>EINVAL（pipe2()）flags 值非法</li>
+<li>EMFILE 达到之前进程所限制的打开文件描述符的数目</li>
+<li>ENFILE 达到系统所限制的打开文件描述符的数目</li>
+<li>ENFILE 管道空间达到用户强行限制的内存，或者调用者没有权限。查看<a href="http://man7.org/linux/man-pages/man7/pipe.7.html" target="_blank" rel="noopener">pipe(7)</a></li>
+</ul>
+<h3 id="版本"><a href="#版本" class="headerlink" title="版本"></a>版本</h3><p><strong>pipe2()</strong>在 Linux 2.6.27 中被添加进去；glibc 支持从 2.9 版本后开始。</p>
+<h3 id="标准"><a href="#标准" class="headerlink" title="标准"></a>标准</h3><p><strong>pipe()</strong>: POSIX.1-2001,POSIX.1-2008。<br><strong>pipe2()</strong> 是 Linux 特有。</p>
+<h3 id="范例"><a href="#范例" class="headerlink" title="范例"></a>范例</h3><p>下面的程序创建一个管道，然后 <strong>frok</strong> 去创建一个子进程。子进程继承了一套指向同一管道的文件描述符。<strong>fork</strong> 之后，每个进程关闭了管道不需要的文件描述符。父进程这时写入管道从命令行参数获取的字符串，然后子进程依次按字节读取这个字符串并显示在标准输出上。</p>
+<pre><code>
+      #include &lt;sys/types.h&gt;
+       #include &lt;sys/wait.h&gt;
+       #include &lt;stdio.h&gt;
+       #include &lt;stdlib.h&gt;
+       #include &lt;unistd.h&gt;
+       #include &lt;string.h&gt;
+
+       int
+       main(int argc, char *argv[])
+       {
+           int pipefd[2];
+           pid_t cpid;
+           char buf;
+
+           if (argc != 2) {
+               fprintf(stderr, &quot;Usage: %s &lt;string&gt;\n&quot;, argv[0]);
+               exit(EXIT_FAILURE);
+           }
+
+           if (pipe(pipefd) == -1) {
+               perror(&quot;pipe&quot;);
+               exit(EXIT_FAILURE);
+           }
+
+           cpid = fork();
+           if (cpid == -1) {
+               perror(&quot;fork&quot;);
+               exit(EXIT_FAILURE);
+           }
+
+           if (cpid == 0) {    /* Child reads from pipe */
+               close(pipefd[1]);          /* Close unused write end */
+
+               while (read(pipefd[0], &amp;buf, 1) &gt; 0)
+                   write(STDOUT_FILENO, &amp;buf, 1);
+
+               write(STDOUT_FILENO, &quot;\n&quot;, 1);
+               close(pipefd[0]);
+               _exit(EXIT_SUCCESS);
+
+           } else {            /* Parent writes argv[1] to pipe */
+               close(pipefd[0]);          /* Close unused read end */
+               write(pipefd[1], argv[1], strlen(argv[1]));
+               close(pipefd[1]);          /* Reader will see EOF */
+               wait(NULL);                /* Wait for child */
+               exit(EXIT_SUCCESS);
+           }
+       }
+</code></pre><hr>
+<p>via: <a href="http://man7.org/linux/man-pages/man2/pipe.2.html" target="_blank" rel="noopener">http://man7.org/linux/man-pages/man2/pipe.2.html</a></p>
+<p>译者：<a href="https://github.com/LuuMing" target="_blank" rel="noopener">LuuMing</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/22/coquettish-operation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1795,175 +2030,6 @@ Java HotSpot(TM) 64-Bit Server VM 18.3 (build 10.0.1+10, mixed mode)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/09/02/linux-nvidia-driver-18-9-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="LuMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LuMing's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/02/linux-nvidia-driver-18-9-2/" itemprop="url">
-                  linux-nvidia-driver-18-9-2
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-09-02 11:51:22 / Modified: 12:25:06" itemprop="dateCreated datePublished" datetime="2018-09-02T11:51:22+08:00">2018-09-02</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>在 <code>linux-ubuntu-14.04</code> 内核版本 <code>linux-headers-4.4.0-134-generic</code> 下安装英伟达驱动，一路坎坷。忙了一早上终于成功了，网上有诸多教程，要么不管用，要么过时了。自己写一下吧。</p>
-<h3 id="1-下载最新驱动"><a href="#1-下载最新驱动" class="headerlink" title="1. 下载最新驱动"></a>1. 下载最新驱动</h3><p>一定要去nvidia 官方网站下载最新最新最新的驱动才行。本文截止时，最新版本为 <code>390</code></p>
-<h3 id="2-安装驱动"><a href="#2-安装驱动" class="headerlink" title="2. 安装驱动"></a>2. 安装驱动</h3><ol>
-<li>首先将下载好的文件放在英文目录下，因为待会需要到终端下执行安装。而终端下是无法正常显示中文的！！！。</li>
-<li>注销当前用户，按 <code>alt + ctrl + f1</code> 进入终端。<br>（坑点：进入终端后，输入用户名和密码后怎么都进不去，原因是终端下默认小键盘未开启）</li>
-<li>进入安装文件目录，使用 <code>sudo NVIDIA-Linux-x86_64-390.87.run</code> 。接下来不出问题的话进入安装界面，继续后会报错，原因是第三方驱动 nouveau 冲突。</li>
-<li>sudo 修改 <code>etc/modprobe.d/blacklist.conf</code>，添加<pre><code>blacklist vga16fb
-blacklist nouveau
-blacklist rivafb
-blacklist nvidiafb
-blacklist rivatv
-</code></pre>禁止加载<code>nouveau</code>模块。</li>
-<li><p>暂停桌面服务，<code>sudo service lightdm stop</code></p>
-</li>
-<li><p>重新安装，成功。</p>
-</li>
-<li><p>重启之后，进入用户名密码登录界面，输入后<code>enter</code>，死循环。无法进入。</p>
-</li>
-<li><code>alt+ctrl+f1</code> 进入终端，发现提示 <code>4.4.0-134-generic SMP mod_unload modversions</code> should be <code>4.4.0-134-generic SMP mod_unload modversions retpoline</code>。</li>
-<li>sudo 修改<code>/usr/src/linux-headers-4.4.0-generic/include/linux/vermagic.h</code> （做好备份）<pre><code>#ifdef PETPOLINE
-#define MODULE_VERMAGIC_RETPOLINE &quot;retpoline&quot;
-</code></pre>为<pre><code>#ifdef 1
-#define MODULE_VERMAGIC_RETPOLINE &quot;retpoline&quot;
-</code></pre>也就是强制替换。</li>
-<li>sudo reboot 重启，发现还是进不去桌面。<h3 id="以下纯属猜测"><a href="#以下纯属猜测" class="headerlink" title="以下纯属猜测"></a>以下纯属猜测</h3>实际上在第10步结束后已经大工告成了，但是由于没有执行内核更新命令<code></code>导致修改后的<code>vermagic.h</code>没有生效。<br>接下来我使用<code>sudo apt-get purge nvidia*</code>清除了所有用<code>apt-get</code>方式安装的英伟达驱动。在卸载过程中，我看到了<code>update-initramfs</code>更新等说明。重启之后成功进入桌面。<br>所以，究竟是因为删除掉 nvidia 驱动成功的还是更新成功的已经不为人知了。<br>总之，最后的状态是<pre><code>英伟达官方驱动安装成功。
-卸载了所有在apt-get 安装的驱动。
-/usr/src/linux-headers-4.4.0-generic/include/linux/vermagic.h 经过修改为第 10 步状态
-blacklist 恢复到原始状态
-</code></pre></li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2011,7 +2077,7 @@ blacklist 恢复到原始状态
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-count">56</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

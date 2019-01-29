@@ -295,6 +295,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/03/22/hackerinstruction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="LuMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LuMing's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/22/hackerinstruction/" itemprop="url">
+                  hackerinstruction
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-03-22 00:12:45" itemprop="dateCreated datePublished" datetime="2018-03-22T00:12:45+08:00">2018-03-22</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-05-27 12:04:54" itemprop="dateModified" datetime="2018-05-27T12:04:54+08:00">2018-05-27</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>nmap</p>
+<pre><code># 扫描主机
+nmap -sP 192.168.43.*
+# 查看端口
+nmap 192.168.1.1
+# 查看系统
+nmap -O 192.168.1.1
+</code></pre><p>hydra</p>
+<pre><code># 破解ssh
+ hydra -l 用户名 -p 密码字典  -t 线程数 -e ns ip ssh
+</code></pre><p>crunch</p>
+<pre><code># 生成密码字典
+crunch  最小长度 最大长度  字符  -o 生成位置
+</code></pre><p>dnsenum</p>
+<pre><code>#查看二级域名
+dnsenum ww.baidu.com
+# 指定字典查看二级域名
+dnsenum -f  wordlist.txt  www.baidu.com
+</code></pre><p>lbd</p>
+<pre><code>#负载均衡
+lbd www.github.com
+</code></pre><p>wafw00f</p>
+<pre><code>#查看防火墙
+wafw00f  -va www.baidu.com
+</code></pre><p>ua-tester</p>
+<pre><code>#查看web环境
+ua-tester  -v  -u  www.baidu.com
+</code></pre><p>sqlmap</p>
+<pre><code># 数据库注入漏洞
+sqlmap -u URL
+</code></pre>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://LuuMing.github.io/2018/03/04/blog-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1263,7 +1444,7 @@ NPM安装- G hexo CLI美元
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">55</span>
+                    <span class="site-state-item-count">56</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
