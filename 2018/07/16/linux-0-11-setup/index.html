@@ -119,7 +119,7 @@
 <meta property="og:image" content="http://luuming.github.io/2018/07/16/linux-0-11-setup/ldt.png">
 <meta property="og:image" content="http://luuming.github.io/2018/07/16/linux-0-11-setup/gdt.png">
 <meta property="og:image" content="http://luuming.github.io/2018/07/16/linux-0-11-setup/gdt2.png">
-<meta property="og:updated_time" content="2018-10-26T16:11:00.226Z">
+<meta property="og:updated_time" content="2019-02-02T09:26:40.587Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于linux0.11的从零开始学操作系统-setup">
 <meta name="twitter:description" content="1.setup中获取扩展内存大小：! Get memory size (extended mem, kB)          mov     ah,#0x88         int     0x15         mov     [2],ax 返回：ax=从0x100000(1M)处开始的扩展内存大小 2.保护模式setup切换保护模式位于[0x00090348] 9020:0148">
@@ -362,7 +362,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-10-27 00:11:00" itemprop="dateModified" datetime="2018-10-27T00:11:00+08:00">2018-10-27</time>
+                <time title="Modified: 2019-02-02 17:26:40" itemprop="dateModified" datetime="2019-02-02T17:26:40+08:00">2019-02-02</time>
               
             
           </span>
@@ -415,7 +415,8 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
 00C09A00000007FF
 </code></pre><p>上面的东西代表的是什么意思呢？其是，它是一段LDT(Local Descriptor Table)。一共64个bit，其解释方式如下图所示：<br><img src="/2018/07/16/linux-0-11-setup/./ldt.png" alt="ldt"><br>重点关心黑色字体部分:<br> <strong>00</strong>C09A<strong>000000</strong>07FF<br> 前面的就是32位保护模式下的基址，后面的就是保护模式下的偏移地址。所以，接下来CPU就到了<code>00:000000</code>处。<br> 用一张图概况保护模式下的寻址方式，一定就是这样了:<br> <img src="/2018/07/16/linux-0-11-setup/./gdt.png" alt="gdt"></p>
 <hr>
-<p> 2018.10/27<br> 为了加深理解，补充一张 GDT 的图片：<br><img src="/2018/07/16/linux-0-11-setup/./gdt2.png" alt="gdt2"><br>可以看到，除了 LDT 外，GDT 还包含有 TSS。而 TSS 却跟任务调度有着莫大的联系…<br>来源：赵炯《Linux 内核完全注释》</p>
+<p> 2018.10/27<br> 为了加深理解，补充一张 GDT 的图片：<br><img src="/2018/07/16/linux-0-11-setup/./gdt2.png" alt="gdt2"><br>可以看到，除了 LDT 外，GDT 还包含有 TSS。而 TSS 却跟任务调度有着莫大的联系…</p>
+<h2 id="来源：赵炯《Linux-内核完全注释》"><a href="#来源：赵炯《Linux-内核完全注释》" class="headerlink" title="来源：赵炯《Linux 内核完全注释》"></a>来源：赵炯《Linux 内核完全注释》</h2><p>2019/2/2<br>可以这样理解，对于计算机来说，操作系统可以当作是一个庞大的进程。这个进程一方面处理用户交互（管理硬件），一方面用于支持其他的进程去运行。<br>分段机制让内存管理变得高效，但需要记录下来每个段的地址。这就需要有一份段表。<br><strong>操作系统的段表就是 GDT，进程的段表就是 LDT</strong></p>
 
       
     </div>
@@ -664,7 +665,7 @@ p.s. 为了方便起见，将低地址放到低位，高地址放到高位于是
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-setup中获取扩展内存大小："><span class="nav-number">1.</span> <span class="nav-text">1.setup中获取扩展内存大小：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-保护模式"><span class="nav-number">2.</span> <span class="nav-text">2.保护模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-setup中获取扩展内存大小："><span class="nav-number">1.</span> <span class="nav-text">1.setup中获取扩展内存大小：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-保护模式"><span class="nav-number">2.</span> <span class="nav-text">2.保护模式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#来源：赵炯《Linux-内核完全注释》"><span class="nav-number"></span> <span class="nav-text">来源：赵炯《Linux 内核完全注释》</span></a></div>
             
 
           </div>
