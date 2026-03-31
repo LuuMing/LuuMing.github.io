@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.luming.avalonhelper2",
+      "sha256_cert_fingerprints": [
+        "CE:9B:B9:65:07:D1:47:A1:2A:2C:23:30:3F:3D:04:41:E6:67:00:73:D3:31:B5:E8:19:13:8B:FF:43:AD:76:2B"
+      ]
+    }
+  }
+]
