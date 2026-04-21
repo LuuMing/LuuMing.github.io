@@ -102,6 +102,61 @@
         .download-btn:hover { background: #c73a52; }
         .download-btn svg { width: 18px; height: 18px; fill: #fff; }
 
+        /* WeChat Mini Program button with QR popover */
+        .wechat-wrap {
+            position: relative;
+            display: inline-block;
+        }
+        .wechat-btn {
+            background: #07c160;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+        .wechat-btn:hover { background: #06ad56; }
+        .wechat-qr {
+            position: absolute;
+            bottom: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%) translateY(6px);
+            background: #fff;
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .wechat-qr img {
+            display: block;
+            width: 180px;
+            height: 180px;
+        }
+        .wechat-qr::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #fff;
+        }
+        .wechat-qr-caption {
+            text-align: center;
+            font-size: 12px;
+            color: #333;
+            margin-top: 6px;
+        }
+        .wechat-wrap:hover .wechat-qr,
+        .wechat-wrap:focus-within .wechat-qr {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+            pointer-events: auto;
+        }
+
         /* Coming Soon */
         .coming-soon {
             text-align: center;
@@ -162,6 +217,16 @@
                             <svg viewBox="0 0 24 24"><path d="M3.18 23.72c-.36-.18-.61-.56-.61-1.02L.85 1.3C.85.84 1.1.46 1.46.28l10.08 11.72L3.18 23.72zm1.06 .94l11.6-6.51-2.77-3.22-8.83 9.73zm14.48-8.14l-3.2-1.8-3.04 3.54 3.04 3.54 3.2-1.8c.89-.5.89-1.76 0-2.26V16.52zm-3.2-5.24l-11.6-6.51.02.01 8.81 9.72 2.77-3.22z"/></svg>
                             Google Play
                         </a>
+                        <span class="wechat-wrap">
+                            <button type="button" class="download-btn wechat-btn" tabindex="0" aria-label="显示微信小程序二维码">
+                                <svg viewBox="0 0 24 24"><path d="M8.5 4C4.36 4 1 6.91 1 10.5c0 2.08 1.13 3.92 2.88 5.12L3 18l2.73-1.36c.78.23 1.61.36 2.47.39l-.1-.7c0-3.04 2.92-5.5 6.5-5.5.28 0 .55.02.82.05C15.05 7.96 12.08 4 8.5 4zM6 9.5a1 1 0 110-2 1 1 0 010 2zm5 0a1 1 0 110-2 1 1 0 010 2zm12 7c0-3-3-5.5-6.5-5.5S10 13.5 10 16.5s3 5.5 6.5 5.5c.73 0 1.43-.12 2.08-.32L20.5 23l-.5-1.88C21.82 20.05 23 18.38 23 16.5zm-9 0a.75.75 0 110-1.5.75.75 0 010 1.5zm4 0a.75.75 0 110-1.5.75.75 0 010 1.5z"/></svg>
+                                微信小程序
+                            </button>
+                            <div class="wechat-qr" role="tooltip">
+                                <img src="/miniprogram.png" alt="阿瓦隆微信小程序二维码">
+                                <div class="wechat-qr-caption">微信扫码打开小程序</div>
+                            </div>
+                        </span>
                         <a href="/avalon_helper.apk" class="download-btn" download>
                             <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18v12.17l3.59-3.58L17 12l-5 5-5-5 1.41-1.41L12 14.17V2z"/></svg>
                             下载 APK
